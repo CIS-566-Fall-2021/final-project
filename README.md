@@ -1,8 +1,5 @@
 # Procedural Flower Tool
 
-### Design Doc
-Start off by forking this repository. In your README, write a design doc to outline your project goals and implementation plan. It must include the following sections:
-
 #### Introduction
 When I first started learning about proceduralism, I was always fascinated by the occurrences of proceduralism in nature such as fractal plants and flowers. Here’s a link to some cool instances of fractals in nature http://eeobcourseblogwolfestudents.blogspot.com/2014/12/qu.html 
 In this project, I will explore how to create a tool that makes various blooming flowers in Houdini. 
