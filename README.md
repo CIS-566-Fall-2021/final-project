@@ -54,27 +54,22 @@ Ashley and Emma
 - Test wing branching method with voronoi and lsystem nodes
 #### Week One:
 
-Emma:
- - Create single version of body including head, eyes, legs, abdomen, keeping in mind which values will be parameterized upon the creation of the hda
- - Create two different wings (one top wing and one bottom wing) using simple primitives combined together.
-
-Emma + Ashley:
-
-- test render with basic shader in order to make sure rendering HDA with a material works
-- Research iridescence for the wing shader
-
-Ashley:
-
-- Create lsystem that will partly follow the edge of whatever 2D mesh it’s bound to. The branches of this lsystem should extend to the edges of the bound mesh, but go no further.
-- Project the lsystem down onto the wing shape mesh (just a basic circle or oval for now)
-- Split the wing shape mesh by the lsystem
-- For each created mesh, scatter points and create voronoi system. Then, get the outline of the voronoi system and create small tubes.
-#### Week Two:
-
 - Emma:
-   - Bug fixes from Week 1
-- Refine wing shape and add more detail to the overall shape
-- Add parameters to wing shape so that multiple variations can be created
+  - Create single version of body including head, eyes, legs, abdomen, keeping in mind which values will be parameterized upon the creation of the hda
+  - Create two different wings (one top wing and one bottom wing) using simple primitives combined together.
+- Emma + Ashley:
+  - test render with basic shader in order to make sure rendering HDA with a material works
+  - Research iridescence for the wing shader
+- Ashley:
+  - Create lsystem that will partly follow the edge of whatever 2D mesh it’s bound to. The branches of this lsystem should extend to the edges of the bound mesh, but go no further.
+  - Project the lsystem down onto the wing shape mesh (just a basic circle or oval for now)
+  - Split the wing shape mesh by the lsystem
+  - For each created mesh, scatter points and create voronoi system. Then, get the outline of the voronoi system and create small tubes.
+#### Week Two:
+- Emma:
+  - Bug fixes from Week 1
+  - Refine wing shape and add more detail to the overall shape
+  - Add parameters to wing shape so that multiple variations can be created
 - Ashley:
   - Bug fixes from Week 1
   - If the lsystem doesn’t follow the shape of the wing, work on that
@@ -86,10 +81,11 @@ Ashley:
    - Create first draft of shader for dragonfly
    - Test renders
 #### Week Three
-- Create hda with parameters for the rest of the body
-- Refine generator based on feedback
-- Refine shader - add parameters to shader
-- Final Renders
+- Ashley and Emma
+  - Create hda with parameters for the rest of the body
+  - Refine generator based on feedback
+  - Refine shader - add parameters to shader
+  - Final Renders
 
 
 Submit your Design doc as usual via pull request against this repository.
