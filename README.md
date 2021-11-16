@@ -46,11 +46,13 @@ The initial wing veins will be some sort of LSystem structure projected onto the
 
 #### Timeline:
 
-#### PreWeek One
+#### PreWeek One:
+
 Ashley and Emma - Research Houdini techniques for the shape and pattern generation in order to see if it would be possible to create in houdini or if we should use WebGL
 Find Houdini tutorial videos that relate to different aspects of our dragonfly generator
 Test wing branching method with voronoi and lsystem nodes
-####Week One
+#### Week One:
+
 Emma
  -Create single version of body including head, eyes, legs, abdomen, keeping in mind which values will be parameterized upon the creation of the hda
  -Create two different wings (one top wing and one bottom wing) using simple primitives combined together.
@@ -62,8 +64,10 @@ Ashley
  -Project the lsystem down onto the wing shape mesh (just a basic circle or oval for now)
  -Split the wing shape mesh by the lsystem
  -For each created mesh, scatter points and create voronoi system. Then, get the outline of the voronoi system and create small tubes.
-####Week Two
-Emma
+#### Week Two:
+
+Emma:
+
  -Bug fixes from Week 1
  -Refine wing shape and add more detail to the overall shape
  -Add parameters to wing shape so that multiple variations can be created
@@ -77,7 +81,7 @@ Ashley and Emma
  -Place wing pattern generation on actual wings. 
  -Create first draft of shader for dragonfly
  -Test renders
-####Week Three
+#### Week Three
 -Create hda with parameters for the rest of the body
 -Refine generator based on feedback
 -Refine shader - add parameters to shader
