@@ -28,7 +28,11 @@ The main goal is to create a topdown dungeon generator that generates at runtime
 The core of this project will be an implementation of Wave Function Collapse, an algorithm for procedurally generating textures or tilemaps using a small input texture or tileset ([WFC overview](https://github.com/mxgmn/WaveFunctionCollapse)). The algorithm will be given a tileset where each tile has a constraint on the types of tiles that could be adjacent to it. The dungeon will consist of a large tilemap, where each tile in the tilemap will begin as a superposition (all tiles could possibly be in this spot), and WFC will begin choosing specific tiles for these spots and propagating adjacency constraints until each superposition has collapsed into a single, specific tile.
 
 #### Design:
-- How will your program fit together? Make a simple free-body diagram illustrating the pieces.
+A tileset along with tile constraints will be fed into the WFC algorithm / tilemap generator. The generator will then modify a Unity tilemap at runtime, editing specific tiles of the tilemap as the possibilities of tiles collapse. This Unity tilemap will then be used in the game. If time allows, tilemap colliders will be created using Unity's builtin Tilemap Collider 2D component. A player character and enemies may also be added into the game.
+
+![](CIS566FinalProjectDiagram.png)
+
+* Diagram of core components
 
 #### Timeline:
 * 11/15 - 11/22: Implement core functionality of WFC. Should be able to generate dungeons.
