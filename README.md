@@ -48,22 +48,23 @@ The initial wing veins will be some sort of LSystem structure projected onto the
 
 #### PreWeek One:
 
-Ashley and Emma - Research Houdini techniques for the shape and pattern generation in order to see if it would be possible to create in houdini or if we should use WebGL
-Find Houdini tutorial videos that relate to different aspects of our dragonfly generator
-Test wing branching method with voronoi and lsystem nodes
+Ashley and Emma
+- Research Houdini techniques for the shape and pattern generation in order to see if it would be possible to create in houdini or if we should use WebGL
+- Find Houdini tutorial videos that relate to different aspects of our dragonfly generator
+- Test wing branching method with voronoi and lsystem nodes
 #### Week One:
 
-Emma
- -Create single version of body including head, eyes, legs, abdomen, keeping in mind which values will be parameterized upon the creation of the hda
- -Create two different wings (one top wing and one bottom wing) using simple primitives combined together.
-Emma + Ashley
- -test render with basic shader in order to make sure rendering HDA with a material works
- -Research iridescence for the wing shader
-Ashley
- -Create lsystem that will partly follow the edge of whatever 2D mesh it’s bound to. The branches of this lsystem should extend to the edges of the bound mesh, but go no further.
- -Project the lsystem down onto the wing shape mesh (just a basic circle or oval for now)
- -Split the wing shape mesh by the lsystem
- -For each created mesh, scatter points and create voronoi system. Then, get the outline of the voronoi system and create small tubes.
+Emma:
+ - Create single version of body including head, eyes, legs, abdomen, keeping in mind which values will be parameterized upon the creation of the hda
+ - Create two different wings (one top wing and one bottom wing) using simple primitives combined together.
+Emma + Ashley:
+- test render with basic shader in order to make sure rendering HDA with a material works
+- Research iridescence for the wing shader
+Ashley:
+- Create lsystem that will partly follow the edge of whatever 2D mesh it’s bound to. The branches of this lsystem should extend to the edges of the bound mesh, but go no further.
+- Project the lsystem down onto the wing shape mesh (just a basic circle or oval for now)
+- Split the wing shape mesh by the lsystem
+- For each created mesh, scatter points and create voronoi system. Then, get the outline of the voronoi system and create small tubes.
 #### Week Two:
 
 Emma:
