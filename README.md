@@ -5,7 +5,7 @@ This is it! The culmination of your procedural graphics experience this semester
 ### Design Doc
 
 #### Introduction
-I have a lot of experience in interior environment modelling, however, not so much exterior. I have once attempted to model a street-view environment piece, however found it time consuming and difficult to get right. I also do love Japanese architecture and Japan itself. Thus, combining those two interests, and drawing some inspiration from this poster in my bedroom wall, I want to create a tool that can procedurally generate traditional 'minka' to be placed in a courtyard scene. 
+I have a lot of experience in interior environment modelling, however, not so much exterior. I have once attempted to model a street-view environment piece, however found it time consuming and difficult to get right. I also do love Japanese architecture and Japan itself. Thus, combining those two interests, and drawing some inspiration from this poster in my bedroom wall, I want to create a tool that can procedurally generate traditional 'minka' to be placed in a courtyard scene. I was really inspired after the Houdini-environment assignment. I had never used Houdini before, and since it is such an industry standard tool, I figured this would be a good opportunity to experiment more with it. 
 
 
 #### Goal
