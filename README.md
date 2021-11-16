@@ -9,26 +9,84 @@ Before submitting your first milestone, _you must get your project idea and scop
 Start off by forking this repository. In your README, write a design doc to outline your project goals and implementation plan. It must include the following sections:
 
 #### Introduction
-- What motivates your project?
-
+Ashley and I plan to build a procedural dragonfly generator in Houdini, in the hopes that we will gain Houdini expertise and have an exportable dragonfly asset at the end. We were inspired by the terrain generation Houdini project to seek further familiarity with Houdini, given that it is an industry standard and a great procedural tool. We noticed that dragonflies’ core features stay consistent, but there are minute differences in the color of the bodies and the branching veins of the wings. We therefore thought that the dragonfly would be a good subject for a procedural asset generator in Houdini.
 #### Goal
-- What do you intend to achieve with this project?
+Our goal is to create a dragonfly generator in Houdini. We want to allow artists to be able to create various different dragonflies by tweaking hda parameters. We want the shape of the body, the wings' shape size and features, as well as the colors of the dragonfly to be editable. 
+At the end, we want to have some nice rendered images of various generated dragonflies, as well as an exportable asset that you could theoretically render with a different engine, if desired. We also want to ensure that we have an hda that could be used in any Houdini project.
+
 
 #### Inspiration/reference:
-- You must have some form of reference material for your final project. Your reference may be a research paper, a blog post, some artwork, a video, another class at Penn, etc.  
-- Include in your design doc links to and images of your reference material.
+Our inspiration is images of both real life dragonflies as well as drawings or pictures of the creatures that better showcase some of their details. We were also inspired by the game Spore. 
+
+![](images/wings.jpg)
+
+![](images/dragonfly1.jpg)
+
+![](images/dragonfly2.jpg)
+
+![](images/dragonfly3.jpg)
+
+
+https://www.youtube.com/watch?v=9U_9SErk9xU This is a Houdini walkthrough of a butterfly that we referenced
 
 #### Specification:
-- Outline the main features of your project.
+Main features include the body shape (main body, eyes, legs, and head), the wing shape, the wing pattern, and the shader. 
+Emma will focus on creating the body and wing shape. Ashley will create the wing pattern and we will both work together to create the dragonfly shader. 
+
 
 #### Techniques:
-- What are the main technical/algorithmic tools you’ll be using? Give an overview, citing specific papers/articles.
+For the body and wing shapes the techniques used will mostly be related to solving problems in Houdini. Vex will be used to make the model more procedural but it will mostly consist of editing various houdini primitives and using nodes such as transforms, for loops, and curves. There will not be any imported models in this project instead all aspects of the dragonfly will be modeled procedurally with houdini in order to add maximum customization for the user. 
+The shader for the dragon will require the use of iridescence on the body and the wings as well as potentially some form of glass for the see through elements on the wings. 
+The initial wing veins will be some sort of LSystem structure projected onto the wing shape (following the wing shape, if possible). The LSystem will split the wing into different primitives, and we will use a foreach loop to create a voronoi pattern on each primitive, either with the built-in voronoi node or with vex. 
+
 
 #### Design:
-- How will your program fit together? Make a simple free-body diagram illustrating the pieces.
+
+![](images/graph.jpg)
 
 #### Timeline:
-- Create a week-by-week set of milestones for each person in your group. Make sure you explicitly outline what each group member's duties will be.
+
+PreWeek One
+-----------
+Ashley and Emma - Research Houdini techniques for the shape and pattern generation in order to see if it would be possible to create in houdini or if we should use WebGL
+Find Houdini tutorial videos that relate to different aspects of our dragonfly generator
+Test wing branching method with voronoi and lsystem nodes
+Week One
+------
+Emma
+ Create single version of body including head, eyes, legs, abdomen, keeping in mind which values will be parameterized upon the creation of the hda
+ Create two different wings (one top wing and one bottom wing) using simple primitives combined together.
+Emma + Ashley
+ test render with basic shader in order to make sure rendering HDA with a material works
+Research iridescence for the wing shader
+Ashley
+Create lsystem that will partly follow the edge of whatever 2D mesh it’s bound to. The branches of this lsystem should extend to the edges of the bound mesh, but go no further.
+Project the lsystem down onto the wing shape mesh (just a basic circle or oval for now)
+Split the wing shape mesh by the lsystem
+For each created mesh, scatter points and create voronoi system. Then, get the outline of the voronoi system and create small tubes.
+Week Two
+--------
+Emma
+	Bug fixes from Week 1
+	Refine wing shape and add more detail to the overall shape
+	Add parameters to wing shape so that multiple variations can be created
+Ashley
+	Bug fixes from Week 1
+	If the lsystem doesn’t follow the shape of the wing, work on that
+	Add iridescent shader to wings
+	Add wing branching parameters
+Ashley and Emma
+	Procedural pattern generation for the body (and potentially wings as well)
+	Place wing pattern generation on actual wings. 
+	Create first draft of shader for dragonfly
+	Test renders
+Week Three
+------
+Create hda with parameters for the rest of the body
+Refine generator based on feedback
+Refine shader - add parameters to shader
+Final Renders
+
 
 Submit your Design doc as usual via pull request against this repository.
 ## Milestone 2: Implementation part 1 (due 11/22)
