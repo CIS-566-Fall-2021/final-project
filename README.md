@@ -71,21 +71,20 @@ Ashley:
 - For each created mesh, scatter points and create voronoi system. Then, get the outline of the voronoi system and create small tubes.
 #### Week Two:
 
-Emma:
-- Bug fixes from Week 1
+- Emma:
+   - Bug fixes from Week 1
 - Refine wing shape and add more detail to the overall shape
 - Add parameters to wing shape so that multiple variations can be created
-Ashley
-- Bug fixes from Week 1
-- If the lsystem doesn’t follow the shape of the wing, work on that
-- Add iridescent shader to wings
-- Add wing branching parameters
-Ashley and Emma:
-
- - Procedural pattern generation for the body (and potentially wings as well)
- - Place wing pattern generation on actual wings. 
- - Create first draft of shader for dragonfly
- - Test renders
+- Ashley:
+  - Bug fixes from Week 1
+  - If the lsystem doesn’t follow the shape of the wing, work on that
+  - Add iridescent shader to wings
+  - Add wing branching parameters
+- Ashley and Emma:
+   - Procedural pattern generation for the body (and potentially wings as well)
+   - Place wing pattern generation on actual wings. 
+   - Create first draft of shader for dragonfly
+   - Test renders
 #### Week Three
 - Create hda with parameters for the rest of the body
 - Refine generator based on feedback
