@@ -37,3 +37,8 @@ We intend to make a city generator in NYC style with procedural roads and buildi
 - 11.22: Find a way to generate the road structure or the city, and visualize the roads in a simple way.
 - 11.29: Define the blocks for procedural buildings generation.
 - 12.06: Integrate the roads with the procedural buildings with other teammates. Polish all the work.
+
+#### MileStone 1:
+- Progress: We have figured out using the grid, scatter, and blast node in Houdini to generate the basic road structure of the city. The city can now generate roads with random citizens, side walks, and street lights. (All represented by simple geometries)
+- Screenshot: \\
+![](./Design.png)
