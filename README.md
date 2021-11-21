@@ -40,5 +40,5 @@ We intend to make a city generator in NYC style with procedural roads and buildi
 
 #### MileStone 1:
 - Progress: We have figured out using the grid, scatter, and blast node in Houdini to generate the basic road structure of the city. The city can now generate roads with random citizens, side walks, and street lights. (All represented by simple geometries)
-- Screenshot: \\
+- Screenshot: \
 ![](./Design.png)
