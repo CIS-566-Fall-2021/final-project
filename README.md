@@ -40,3 +40,6 @@ Week 3:
 Create final scene using tool with at least 5-6 different types of flowers and plants
 Add finishing touches like wind simulation and dust particles 
 
+# Milestone 1
+For this milestone, I followed a tutorial to make a simple flower bloom with textures. It was great to learn about animation and I have started thinking about how to edit the parameters to make the tool customizable for many different types of flowers. 
+
