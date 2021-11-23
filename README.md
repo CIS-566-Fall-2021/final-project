@@ -59,6 +59,7 @@ Use flower tool to fill a bouquet of flowers or populate some organic scene
 
 ![ms_1_example](https://user-images.githubusercontent.com/59979404/142964615-c00c0edc-cea7-43ad-af4a-c0610a54dd8b.PNG)
 
+![ms_5_example](https://user-images.githubusercontent.com/59979404/143037730-60164ee0-e580-407f-b408-9b2c0a4cf2a0.PNG)
 
 ### Progress Report!
 
