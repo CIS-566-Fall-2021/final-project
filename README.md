@@ -48,3 +48,25 @@ Use flower tool to fill a bouquet of flowers or populate some organic scene
 - WEEK 1: Work through some houdini procedural house examples, and adapt what I have learned to create a basic Japanese house tool. Focus on breaking down a Japanese house into distinct features (roof, floors, windows and doors, shape)
 - WEEK 2: Add more polish to the generator tool as well as texture the house. Give users ability to change the colours of the house. Look into courtyard layout and proceduralism if I have time.
 - WEEK 3: Use my tool to create a cool scene in a static/generated courtyard. Render multiple scenes. Add a sky, some trees, etc. to mimic reference images.
+
+## Milestone 2: 
+
+### Images
+
+![ms_2_example](https://user-images.githubusercontent.com/59979404/142963979-001d21b8-8c74-468a-9cae-eaf9351b54de.PNG)
+
+![ms_3_example](https://user-images.githubusercontent.com/59979404/142963949-fd2319b9-1735-425f-9725-1c053f9e7847.PNG)
+
+![ms_4_example](https://user-images.githubusercontent.com/59979404/142963952-1d5a8f4c-2d36-4373-8c10-aba9c59c07eb.PNG)
+
+
+### Progress Report!
+
+#### Implemented the following: 
+
+- Main generator is almost done! The tool is able of generating a traditional Japanese minka-esque looking structure. The house is currently limited to two floors. The minka sits on an elevated platform with a railing, which is reachable via stairs. The house also has windows and doors.
+- The following aspects can be procedurally generated: width and height of the main structure. number of extrusions/divets on the first floor, roof is automatically calculated, number of doors, stairs, windows, dimensions and number of steps of stairs. 
+
+#### To dos: 
+- I need to add more variation to the second floor. Currently to achieve the iconic tapered roof, the second floor's shape is pretty much fixed. I'll have to figure out how to add overhangs to the second floor.
+- Next week I'll add colour/materials, and maybe add more logic so that steps spawn near doors, and windows spawn only on walls that face the outside.
