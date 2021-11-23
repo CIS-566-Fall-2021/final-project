@@ -69,4 +69,5 @@ Use flower tool to fill a bouquet of flowers or populate some organic scene
 
 #### To dos: 
 - I need to add more variation to the second floor. Currently to achieve the iconic tapered roof, the second floor's shape is pretty much fixed. I'll have to figure out how to add overhangs to the second floor.
+
 - Next week I'll add colour/materials, and maybe add more logic so that steps spawn near doors, and windows spawn only on walls that face the outside.
