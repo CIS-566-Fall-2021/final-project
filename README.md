@@ -48,6 +48,9 @@ We have figured out using the grid, scatter, and blast node in Houdini to genera
 #### Screenshots:
 ![](./Result.png)
 
-- The yellow tubes represent the street lamps and the red tube represents the pedestrians. 
+- The yellow tubes represent the street lamps with parameterized interval distance and the red tube represents the pedestrians. 
 
 ![](./Result2.png)
+
+### Issues & planning:
+We are still working on the building generation, and we expect it to be down soon. The plan is to fill the holes left on the ground and we are thinking about is to mimic the approach used in most games where only the outer side of the building is being generated. It is similar the idea of effcient rendering in Mini Minecraft project during CIS 560. So we planed to utilze points on polypath but with boxes to block everything. We are still fixing some weird issues in tight angles so it can support meshes other than boxes. Our approach is to isolate these angles by some attribute wrangle and do something special.
