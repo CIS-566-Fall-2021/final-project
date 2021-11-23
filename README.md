@@ -1,5 +1,6 @@
 # Topdown Dungeon Generator
 
+## Milestone 1 - Proposal
 #### Introduction
 In this project I will be implementing a topdown dungeon generator in Unity using Wave Function Collapse. I am interested in video game development and was curious about how dungeons were being generated in Roguelikes / Roguelites. Through this project I hope to gain exposure in procedural generation techniques for maps and dungeons.
 
@@ -9,15 +10,13 @@ The main goal is to create a topdown dungeon generator that generates at runtime
 #### Inspiration/reference:
 [Martin Donald's Superpositions, Sudoku, the Wave Function Collapse algorithm](https://www.youtube.com/watch?v=2SuvO4Gi7uY)
 
-[Robert Heaton's Wave Function Collapse Explained]()
+[Robert Heaton's Wave Function Collapse Explained](https://robertheaton.com/2018/12/17/wavefunction-collapse-algorithm/)
 
+##### Overworld generation in Caves of Qud
 ![](cavesOfQudImage.png)
 
-* Overworld generation in Caves of Qud
-
+##### Dungeon generation in Moonlighter (not necessarily from WFC)
 ![](moonlighterImage.jpg)
-
-* Dungeon generation in Moonlighter (not necessarily from WFC)
 
 #### Specification and Features:
 * Runtime generation of a tile based, topdown dungeon using WFC trained on a tileset.
@@ -38,3 +37,25 @@ A tileset along with tile constraints will be fed into the WFC algorithm / tilem
 * 11/15 - 11/22: Implement core functionality of WFC. Should be able to generate dungeons.
 * 11/22 - 11/29: Fix bugs and if possible add player character and enemies.
 * 11/29 - 12/6: Add particle effects and GUI.
+
+## Milestone 2 - Implementation
+#### Progress:
+I was able to implement most of the core functionality of my map (instead of dungeon as it has become more general) generator. I decided to design the generator to accept any input tilemap consisting of any tileset instead of designing the generator around a specific tileset. This was a good decision since it increases the versatility of the generator, making it reusable across projects.
+
+#### Setbacks:
+There is a bug where sometimes WFC will converge instantly. Not sure how to reproduce it, but I'm confident I can fix it. I am also considering to implement backtracking or not. Right now I am solving neighbor conflicts by setting conflicting tiles to a user defined fallback tile, but this will lead to inconsistent generated maps depending on the input tilemap.
+
+#### Results:
+##### Grasslands Input
+![](GrasslandsInput.png)
+
+##### Grasslands Output
+![](GeneratorGrasslands.png)
+
+##### Dungeon Input
+![](DungeonInput.png)
+
+##### Dungeon Output
+![](GeneratorDungeon.png)
+
+[Tileset from jamiebrownhill](https://jamiebrownhill.itch.io/solaria-demo)
