@@ -5,3 +5,7 @@
 !.gitignore
 !/Assets/
 !/ProjectSettings/
+
+/Assets/TextMesh Pro
+/Assets/Tiles/CustomTiles/
+/Assets/Tileset/CustomTilesets/

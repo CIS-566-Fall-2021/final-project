@@ -22,11 +22,15 @@ public class WaveFunctionCollapse : MonoBehaviour
 
     private Dictionary<TileBase, Dictionary<Direction, HashSet<TileBase>>> tileConstraints;
 
-    private Dictionary<Vector3Int, Dictionary<TileBase, TileBase>> superpositions;
+    private Dictionary<Vector3Int, List<TileBase>> superpositions;
     private List<Vector3Int> setTiles;
+    private Stack<Dictionary<Vector3Int, List<TileBase>>> history;
+    private Stack<List<Vector3Int>> setHistory;
 
     private BoundsInt inputBounds;
     private BoundsInt outputBounds;
+    private bool firstTile = false;
+    private bool running = false;
 
 
     // Start is called before the first frame update
@@ -34,22 +38,7 @@ public class WaveFunctionCollapse : MonoBehaviour
     {
         if (input != null && output != null && fallbackTile != null)
         {
-            InitializeConstraints();
-
-            InitializeWFC();
-
-            int i = 0;
-            while (!IsBoardConverged() && i < maxIterations)
-            {
-                PerformWFC();
-                i++;
-            }
-            Debug.Log("Iterations: " + i);
-            Debug.Log("Converged: " + IsBoardConverged());
-
-            SetAllTiles();
-
-            output.RefreshAllTiles();
+            StartWFC();
         }
         else
         {
@@ -66,6 +55,48 @@ public class WaveFunctionCollapse : MonoBehaviour
                 Debug.LogError("Fallback tile not set!");
             }
         }
+    }
+
+    public void StartWFC()
+    {
+        if (!running)
+        {
+            running = true;
+            StartCoroutine("RunWFC");
+        }
+    }
+
+    IEnumerator RunWFC()
+    {
+        float startTime = Time.time;
+        InitializeConstraints();
+
+        InitializeWFC();
+
+        int i = 0;
+        while (!IsBoardConverged() && i < maxIterations)
+        {
+            yield return new WaitUntil(PerformWFC);
+            i++;
+        }
+
+        bool converged = IsBoardConverged();
+        Debug.Log("Iterations: " + i);
+        Debug.Log("Converged: " + converged);
+
+        if (i >= maxIterations && !converged)
+        {
+            Debug.LogError("Maxed iterations but did not converge! Refine the input tilemap more.");
+        }
+
+        firstTile = false;
+
+        // SetAllTiles();
+        // output.RefreshAllTiles();
+
+        Debug.Log("Time Elapsed: " + (Time.time - startTime));
+        yield return null;
+        running = false;
     }
 
     void InitializeConstraints()
@@ -122,7 +153,9 @@ public class WaveFunctionCollapse : MonoBehaviour
 
     void InitializeWFC()
     {
-        superpositions = new Dictionary<Vector3Int, Dictionary<TileBase, TileBase>>();
+        history = new Stack<Dictionary<Vector3Int, List<TileBase>>>();
+        setHistory = new Stack<List<Vector3Int>>();
+        superpositions = new Dictionary<Vector3Int, List<TileBase>>();
         output.CompressBounds();
         outputBounds = output.cellBounds;
         int z = output.origin.z;
@@ -141,38 +174,69 @@ public class WaveFunctionCollapse : MonoBehaviour
                         tileset.Add(tile, tile);
                     }
                 }
-                superpositions.Add(new Vector3Int(x, y, z), tileset);
+                superpositions.Add(new Vector3Int(x, y, z), new List<TileBase>(tileset.Keys));
             }
         }
         setTiles = new List<Vector3Int>(superpositions.Keys);
+        // backup board state and tiles we've set randomly, in case there is a conflict
+        Backup();
     }
 
-    void PerformWFC()
+    void Backup()
+    {
+        Dictionary<Vector3Int, List<TileBase>> superBackup = new Dictionary<Vector3Int, List<TileBase>>();
+        foreach (Vector3Int t in superpositions.Keys)
+        {
+            superBackup.Add(t, new List<TileBase>(superpositions[t]));
+        }
+        history.Push(superBackup);
+        setHistory.Push(new List<Vector3Int>(setTiles));
+    }
+
+    bool PerformWFC()
     {
         // get random non converged tile
         Vector3Int tile = GetRandomTile();
 
         // set tile to random tile
-        List<TileBase> tiles = new List<TileBase>(superpositions[tile].Keys);
+        List<TileBase> tiles = superpositions[tile];
         int rand = Random.Range(0, tiles.Count);
         TileBase tileToSet = tiles[rand];
         output.SetTile(tile, tileToSet);
         output.RefreshTile(tile);
         // set superposition to set tile
         superpositions[tile].Clear();
-        superpositions[tile].Add(tileToSet, tileToSet);
+        superpositions[tile].Add(tileToSet);
+        setTiles.Remove(tile);
 
         // propagate removal of invalid tiles from neighbors
         Queue<Vector3Int> tilesToEnforce = new Queue<Vector3Int>();
         tilesToEnforce.Enqueue(tile);
+        bool conflict = false;
         while (tilesToEnforce.Count > 0)
         {
             List<Vector3Int> neighbors = RemoveIllegalTiles(tilesToEnforce.Dequeue());
             foreach (Vector3Int t in neighbors)
             {
+                if (superpositions[t].Count == 0)
+                {
+                    conflict = true;
+                    break;
+                }
                 tilesToEnforce.Enqueue(t);
             }
+            if (conflict)
+            {
+                superpositions = history.Pop();
+                setTiles = setHistory.Pop();
+                break;
+            }
         }
+        if (!conflict)
+        {
+            Backup();
+        }
+        return true;
     }
 
     List<Vector3Int> RemoveIllegalTiles(Vector3Int tile)
@@ -188,7 +252,7 @@ public class WaveFunctionCollapse : MonoBehaviour
         HashSet<TileBase> rVal = new HashSet<TileBase>();
         HashSet<TileBase> uVal = new HashSet<TileBase>();
         HashSet<TileBase> dVal = new HashSet<TileBase>();
-        foreach (TileBase t in superpositions[tile].Keys)
+        foreach (TileBase t in superpositions[tile])
         {
             lVal.UnionWith(tileConstraints[t][Direction.Left]);
             rVal.UnionWith(tileConstraints[t][Direction.Right]);
@@ -198,28 +262,28 @@ public class WaveFunctionCollapse : MonoBehaviour
         // iterate through superpositions in each neighbor and remove tiles not in legal set
         if (superpositions.ContainsKey(left))
         {
-            if (RemoveTilesFromSuperposition(new List<TileBase>(superpositions[left].Keys), left, lVal))
+            if (RemoveTilesFromSuperposition(new List<TileBase>(superpositions[left]), left, lVal))
             {
                 modifiedNeighbors.Add(left);
             }
         }
         if (superpositions.ContainsKey(right))
         {
-            if (RemoveTilesFromSuperposition(new List<TileBase>(superpositions[right].Keys), right, rVal))
+            if (RemoveTilesFromSuperposition(new List<TileBase>(superpositions[right]), right, rVal))
             {
                 modifiedNeighbors.Add(right);
             }
         }
         if (superpositions.ContainsKey(up))
         {
-            if (RemoveTilesFromSuperposition(new List<TileBase>(superpositions[up].Keys), up, uVal))
+            if (RemoveTilesFromSuperposition(new List<TileBase>(superpositions[up]), up, uVal))
             {
                 modifiedNeighbors.Add(up);
             }
         }
         if (superpositions.ContainsKey(down))
         {
-            if (RemoveTilesFromSuperposition(new List<TileBase>(superpositions[down].Keys), down, dVal))
+            if (RemoveTilesFromSuperposition(new List<TileBase>(superpositions[down]), down, dVal))
             {
                 modifiedNeighbors.Add(down);
             }
@@ -238,15 +302,47 @@ public class WaveFunctionCollapse : MonoBehaviour
                 superpositions[tile].Remove(t);
             }
         }
+        if (superpositions[tile].Count <= 1)
+        {
+            if (superpositions[tile].Count == 1)
+            {
+                output.SetTile(tile, superpositions[tile][0]);
+                output.RefreshTile(tile);
+            }
+            setTiles.Remove(tile);
+        }
         return modified;
     }
 
     Vector3Int GetRandomTile()
     {
-        int rand = Random.Range(0, setTiles.Count);
-        Vector3Int randTile = setTiles[rand];
-        setTiles.RemoveAt(rand);
-        return randTile;
+        if (!firstTile)
+        {
+            firstTile = true;
+            int rand = Random.Range(0, setTiles.Count);
+            Vector3Int randTile = setTiles[rand];
+            return randTile;
+        }
+        else
+        {
+            Vector3Int randTile = GetLowestEntropy();
+            return randTile;
+        }
+    }
+
+    Vector3Int GetLowestEntropy()
+    {
+        int entropy = int.MaxValue;
+        Vector3Int lowestEntropy = Vector3Int.back;
+        foreach (Vector3Int tile in setTiles)
+        {
+            if (superpositions[tile].Count < entropy)
+            {
+                entropy = superpositions[tile].Count;
+                lowestEntropy = tile;
+            }
+        }
+        return lowestEntropy;
     }
 
     bool IsConverged(Vector3Int tile)
@@ -256,7 +352,7 @@ public class WaveFunctionCollapse : MonoBehaviour
 
     bool IsBoardConverged()
     {
-        foreach (Dictionary<TileBase, TileBase> tiles in superpositions.Values)
+        foreach (List<TileBase> tiles in superpositions.Values)
         {
             if (tiles.Count > 1)
             {
@@ -270,7 +366,7 @@ public class WaveFunctionCollapse : MonoBehaviour
     {
         foreach (Vector3Int t in superpositions.Keys)
         {
-            List<TileBase> tile = new List<TileBase>(superpositions[t].Keys);
+            List<TileBase> tile = superpositions[t];
             if (tile.Count == 0)
             {
                 output.SetTile(t, fallbackTile);
