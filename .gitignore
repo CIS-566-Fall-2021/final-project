@@ -5,6 +5,7 @@
 !.gitignore
 !/Assets/
 !/ProjectSettings/
+!/img/
 
 /Assets/TextMesh Pro
 /Assets/TextMesh Pro.meta
