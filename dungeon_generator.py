@@ -38,7 +38,301 @@ class Corridor():
         self.rooms: Tuple[Room, Room] = (r1, r2) 
         self.type: int = type
 
+class TiledRoom:
+    def __init__(self, room: List[List[str]]) -> None:
+        self.room: List[List[str]] = room
+        self.free_tiles: List[Tuple(int, int)] = [(row, col) for row in range(len(self.room)) for col in range(len(self.room[row])) if self.room[row][col] == '_']
+
+    def __repr__(self) -> str:
+        return self.room.__repr__()
+    
+    def place_obstacle(self, obstacle: int, direction: Direction):
+        match direction:
+            case Direction.LEFT:
+                exit_char = '<'
+            case Direction.RIGHT:
+                exit_char = '>'
+            case Direction.UP:
+                exit_char = '^'
+            case Direction.DOWN:
+                exit_char = '|'
+            case _:
+                return False
+        
+        for row in range(len(self.room)):
+            for col in range(len(self.room[row])):
+                if self.room[row][col] == exit_char:
+                    self.room[row][col] = '_' if obstacle == 0 else str(obstacle)
+                    return True
+        return False
+    
+    def place_artifact(self, artifact: int):
+        row, col = random.choice(self.free_tiles)
+        self.room[row][col] = str(artifact)
+
+class PresetRooms:
+    '''
+    Preset rooms are of size 5x5 and therefore have at most 3x3 of room tiles since the exterior must be walls
+    '''
+    def __init__(self) -> None:
+        self.rooms = {
+            'L' : [
+                [
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],
+                ['<', '_', '_', '_', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],],
+            ],
+            'R' : [
+                [
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', '_', '_', 'x', 'x'],
+                ['x', '_', '_', '_', '>'],
+                ['x', '_', '_', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],],
+            ],
+            'LR' : [
+                [
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', '_', '_', '_', 'x'],
+                ['<', '_', 'x', '_', '>'],
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],],
+            ],
+            'U' : [
+                [
+                ['x', 'x', '^', 'x', 'x'],
+                ['x', 'x', '_', '_', 'x'],
+                ['x', 'x', 'x', '_', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],],
+            ],
+            'LU' : [
+                [
+                ['x', 'x', '^', 'x', 'x'],
+                ['x', 'x', '_', '_', 'x'],
+                ['<', '_', 'x', '_', 'x'],
+                ['x', '_', '_', '_', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],],
+            ],
+            'RU' : [
+                [
+                ['x', 'x', '^', 'x', 'x'],
+                ['x', '_', '_', 'x', 'x'],
+                ['x', '_', '_', '_', '>'],
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],],
+            ],
+            'LRU' : [
+                [
+                ['x', 'x', '^', 'x', 'x'],
+                ['x', '_', '_', '_', 'x'],
+                ['<', '_', '_', '_', '>'],
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],],
+            ],
+            'D' : [
+                [
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', '_', '_', '_', 'x'],
+                ['x', '_', '_', '_', 'x'],
+                ['x', 'x', '_', 'x', 'x'],
+                ['x', 'x', '|', 'x', 'x'],],
+            ],
+            'LD' : [
+                [
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', '_', '_', '_', 'x'],
+                ['<', '_', 'x', '_', 'x'],
+                ['x', 'x', '_', '_', 'x'],
+                ['x', 'x', '|', 'x', 'x'],],
+            ],
+            'RD' : [
+                [
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', '_', 'x'],
+                ['x', 'x', 'x', '_', '>'],
+                ['x', 'x', '_', '_', 'x'],
+                ['x', 'x', '|', 'x', 'x'],],
+            ],
+            'LRD' : [
+                [
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],
+                ['<', '_', 'x', '_', '>'],
+                ['x', '_', '_', '_', 'x'],
+                ['x', 'x', '|', 'x', 'x'],],
+            ],
+            'UD' : [
+                [
+                ['x', 'x', '^', 'x', 'x'],
+                ['x', 'x', '_', 'x', 'x'],
+                ['x', 'x', '_', 'x', 'x'],
+                ['x', 'x', '_', 'x', 'x'],
+                ['x', 'x', '|', 'x', 'x'],],
+            ],
+            'LUD' : [
+                [
+                ['x', 'x', '^', 'x', 'x'],
+                ['x', 'x', '_', 'x', 'x'],
+                ['<', '_', '_', 'x', 'x'],
+                ['x', 'x', '_', 'x', 'x'],
+                ['x', 'x', '|', 'x', 'x'],],
+            ],
+            'RUD' : [
+                [
+                ['x', 'x', '^', 'x', 'x'],
+                ['x', 'x', '_', '_', 'x'],
+                ['x', 'x', '_', '_', '>'],
+                ['x', 'x', '_', '_', 'x'],
+                ['x', 'x', '|', 'x', 'x'],],
+            ],
+            'LRUD' : [
+                [
+                ['x', 'x', '^', 'x', 'x'],
+                ['x', '_', '_', '_', 'x'],
+                ['<', '_', 'x', '_', '>'],
+                ['x', '_', '_', '_', 'x'],
+                ['x', 'x', '|', 'x', 'x'],],
+            ]
+        }
+    
+    def get_room(self, type: str) -> TiledRoom:
+        return TiledRoom(random.choice(self.rooms[type]))
+
 class Room():
+    presets = {
+            '' : [
+                [
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],],
+            ],
+            'L' : [
+                [
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],
+                ['<', '_', '_', '_', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],],
+            ],
+            'R' : [
+                [
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', '_', '_', 'x', 'x'],
+                ['x', '_', '_', '_', '>'],
+                ['x', '_', '_', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],],
+            ],
+            'LR' : [
+                [
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', '_', '_', '_', 'x'],
+                ['<', '_', 'x', '_', '>'],
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],],
+            ],
+            'U' : [
+                [
+                ['x', 'x', '^', 'x', 'x'],
+                ['x', 'x', '_', '_', 'x'],
+                ['x', 'x', 'x', '_', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],],
+            ],
+            'LU' : [
+                [
+                ['x', 'x', '^', 'x', 'x'],
+                ['x', 'x', '_', '_', 'x'],
+                ['<', '_', 'x', '_', 'x'],
+                ['x', '_', '_', '_', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],],
+            ],
+            'RU' : [
+                [
+                ['x', 'x', '^', 'x', 'x'],
+                ['x', '_', '_', 'x', 'x'],
+                ['x', '_', '_', '_', '>'],
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],],
+            ],
+            'LRU' : [
+                [
+                ['x', 'x', '^', 'x', 'x'],
+                ['x', '_', '_', '_', 'x'],
+                ['<', '_', '_', '_', '>'],
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],],
+            ],
+            'D' : [
+                [
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', '_', '_', '_', 'x'],
+                ['x', '_', '_', '_', 'x'],
+                ['x', 'x', '_', 'x', 'x'],
+                ['x', 'x', '|', 'x', 'x'],],
+            ],
+            'LD' : [
+                [
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', '_', '_', '_', 'x'],
+                ['<', '_', 'x', '_', 'x'],
+                ['x', 'x', '_', '_', 'x'],
+                ['x', 'x', '|', 'x', 'x'],],
+            ],
+            'RD' : [
+                [
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', '_', 'x'],
+                ['x', 'x', 'x', '_', '>'],
+                ['x', 'x', '_', '_', 'x'],
+                ['x', 'x', '|', 'x', 'x'],],
+            ],
+            'LRD' : [
+                [
+                ['x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x'],
+                ['<', '_', 'x', '_', '>'],
+                ['x', '_', '_', '_', 'x'],
+                ['x', 'x', '|', 'x', 'x'],],
+            ],
+            'UD' : [
+                [
+                ['x', 'x', '^', 'x', 'x'],
+                ['x', 'x', '_', 'x', 'x'],
+                ['x', 'x', '_', 'x', 'x'],
+                ['x', 'x', '_', 'x', 'x'],
+                ['x', 'x', '|', 'x', 'x'],],
+            ],
+            'LUD' : [
+                [
+                ['x', 'x', '^', 'x', 'x'],
+                ['x', 'x', '_', 'x', 'x'],
+                ['<', '_', '_', 'x', 'x'],
+                ['x', 'x', '_', 'x', 'x'],
+                ['x', 'x', '|', 'x', 'x'],],
+            ],
+            'RUD' : [
+                [
+                ['x', 'x', '^', 'x', 'x'],
+                ['x', 'x', '_', '_', 'x'],
+                ['x', 'x', '_', '_', '>'],
+                ['x', 'x', '_', '_', 'x'],
+                ['x', 'x', '|', 'x', 'x'],],
+            ],
+            'LRUD' : [
+                [
+                ['x', 'x', '^', 'x', 'x'],
+                ['x', '_', '_', '_', 'x'],
+                ['<', '_', 'x', '_', '>'],
+                ['x', '_', '_', '_', 'x'],
+                ['x', 'x', '|', 'x', 'x'],],
+            ]
+        }
+
     def __init__(self):
         self.left: bool = False
         self.right: bool = False
@@ -70,14 +364,29 @@ class Room():
             case Direction.DOWN:
                 self.down = value
 
+    def get_dirs(self) -> str:
+        def get_str(d: str):
+            match d:
+                case 'L': return 'L' if self.left else ''
+                case 'R': return 'R' if self.right else ''
+                case 'U': return 'U' if self.up else ''
+                case 'D': return 'D' if self.down else ''
+        return "".join([get_str(d) for d in 'LRUD'])
+
     def __repr__(self):
         return "(" + " ".join([direction.name if self[direction] else "XXXX" for direction in Direction]) + ")"
     
     def get_txt_repr(self):
-        top = f"x{self.corridors[Direction.UP].type if self.up else 'x'}x "
-        mid = f"{self.corridors[Direction.LEFT].type if self.left else 'x'}{self.artifact if self.artifact is not None else '_'}{self.corridors[Direction.RIGHT].type if self.right else 'x'} "
-        bot = f"x{self.corridors[Direction.DOWN].type if self.down else 'x'}x "
-        return top, mid, bot
+        rooms = Room.presets[self.get_dirs()]
+        
+        tiled_room = TiledRoom(random.choice(rooms))
+        for direction, corridor in self.corridors.items():
+            tiled_room.place_obstacle(corridor.type, direction)
+        if self.artifact:
+            tiled_room.place_artifact(self.artifact)
+
+        tup = tuple(["".join(row) + " " for row in tiled_room.room])
+        return tup
 
 class Dungeon():
     '''

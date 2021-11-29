@@ -1,0 +1,24 @@
+xxxxx xxxxx xxxxx xxxxx 
+xxx4x x___x x___x xxxxx 
+xxx_4 4_x__ 4_x__ 6___x 
+xx__x xxxxx xxxxx xxxxx 
+xx8xx xxxxx xxxxx xxxxx 
+
+xx8xx xxxxx xxxxx xxxxx 
+x__xx xxxxx xxxxx xxxxx 
+x__81 1_x_7 6___x xxxxx 
+xxxxx x___x xxxxx xxxxx 
+xxxxx xx_xx xxxxx xxxxx 
+
+xxxxx xx_xx xxxxx xxxxx 
+x__xx x___x xxxxx xxxxx 
+x__1_ _____ 1_x_7 6___x 
+x__xx xxxxx x___x xxxxx 
+xxxxx xxxxx xx_xx xxxxx 
+
+xxxxx xxxxx xx_xx xxxxx 
+x__xx x___x x___x xxxxx 
+x__1_ 4_x__ _____ 6___x 
+x__xx xxxxx xxxxx xxxxx 
+xxxxx xxxxx xxxxx xxxxx 
+

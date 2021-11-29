@@ -85,6 +85,13 @@ Submission: Add a new section to your README titled: Milestone #1, which should 
 - written description of progress on your project goals. If you haven't hit all your goals, what's giving you trouble?
 - Examples of your generators output so far
 We'll check your repository for updates. No need to create a new pull request.
+
+UPDATE:
+
+The goals for this milestone was to have the generator produce a map that contains different types of "doors" and "keys", and have it be such that the map is solvable. Another goal was to have the map be renderable by webgl, and have a playable game.
+
+What is implemented right now is the core logic component for the map generator. Doors and keys are placed in such a way that the map is guaranteed to be solvable. The current output right now is a crude text file with 3x3 boxes that represent rooms and other symbols representing door and key types. As of now we do not have the game renderable and playable.
+
 ## Milestone 3: Implementation part 2 (due 11/29)
 We're over halfway there! This week should be about fixing bugs and extending the core of your generator. Make sure by the end of this week _your generator works and is feature complete._ Any core engine features that don't make it in this week should be cut! Don't worry if you haven't managed to exactly hit your goals. We're more interested in seeing proof of your development effort than knowing your planned everything perfectly. 
 
