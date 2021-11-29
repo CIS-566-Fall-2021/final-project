@@ -58,9 +58,6 @@ We are still working on the building generation, and we expect it to be down soo
 ## MileStone 2:
 ### Progress: 
 We have the road and building generation working seperately now. This week we focus more on the building generation. Firstly we tried to map some nice 2D wall & window texture to random size boxes and struggled with calculating UV, which didn't work very well both visually and mathmatically. Thus we switch to model generation. To simplify, all the building will be cuboid and we modeled several pattern like plain wall, brick wall, door etc and assemble them randomly. 
-![](./1.png)
-![](./2.png)
-
 #### Screenshots:
 ![](./result.gif)
 
