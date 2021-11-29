@@ -93,10 +93,14 @@ Instead of creating a game using my WFC implementation I decided to create a pro
 
 ## Credits
 [Dungeon and Islands tilemaps made with tileset from jamiebrownhill](https://jamiebrownhill.itch.io/solaria-demo)
+
 [UI and Town tilemap made with tilesets from KenneyNL](https://kenney.nl/)
 
 #### Helpful References
 [Martin Donald's Superpositions, Sudoku, the Wave Function Collapse algorithm](https://www.youtube.com/watch?v=2SuvO4Gi7uY)
+
 [Robert Heaton's Wave Function Collapse Explained](https://robertheaton.com/2018/12/17/wavefunction-collapse-algorithm/)
+
 [WFC Tilemap Implementation Steps from Rémy Devaux](https://trasevol.dog/2017/09/01/di19/)
+
 [WFC Tips and Tricks from BorisTheBrave](https://www.boristhebrave.com/2020/02/08/wave-function-collapse-tips-and-tricks/)
