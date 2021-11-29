@@ -69,6 +69,9 @@ public class WaveFunctionCollapse : MonoBehaviour
 
     public bool weighted = true;
 
+    [SerializeField]
+    InputManager inputManager;
+
     private enum Direction {Left, Right, Up, Down};
 
     [SerializeField]
@@ -162,6 +165,7 @@ public class WaveFunctionCollapse : MonoBehaviour
         Debug.Log("Time Elapsed: " + (Time.time - startTime));
         yield return null;
         running = false;
+        inputManager.ToggleInput(true);
     }
 
     void InitializeConstraints()
@@ -553,6 +557,19 @@ public class WaveFunctionCollapse : MonoBehaviour
             {
                 output.SetTile(t, tile[0]);
             }
+        }
+    }
+
+    public void setWeighted()
+    {
+        weighted = !weighted;
+    }
+
+    public void SetInputTilemap(Tilemap i)
+    {
+        if (!running)
+        {
+            input = i;
         }
     }
 }
