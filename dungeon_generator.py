@@ -3,6 +3,7 @@ from enum import Enum
 from collections import deque
 from collections import defaultdict
 from typing import Dict, List, Set, Tuple
+from copy import deepcopy
 
 class Direction(Enum):
     LEFT = 1
@@ -40,7 +41,7 @@ class Corridor():
 
 class TiledRoom:
     def __init__(self, room: List[List[str]]) -> None:
-        self.room: List[List[str]] = room
+        self.room: List[List[str]] = deepcopy(room)
         self.free_tiles: List[Tuple(int, int)] = [(row, col) for row in range(len(self.room)) for col in range(len(self.room[row])) if self.room[row][col] == '_']
 
     def __repr__(self) -> str:
@@ -66,7 +67,7 @@ class TiledRoom:
                     return True
         return False
     
-    def place_artifact(self, artifact: int):
+    def place_artifact(self, artifact: int | str):
         row, col = random.choice(self.free_tiles)
         self.room[row][col] = str(artifact)
 
@@ -342,6 +343,9 @@ class Room():
         self.cc: int = None #type: ignore
         self.artifact: int | None = None
 
+        self.start = False
+        self.end = False
+
     def __getitem__(self, index: Direction):
         match index:
             case Direction.LEFT:
@@ -384,6 +388,10 @@ class Room():
             tiled_room.place_obstacle(corridor.type, direction)
         if self.artifact:
             tiled_room.place_artifact(self.artifact)
+        if self.start:
+            tiled_room.place_artifact('*')
+        if self.end:
+            tiled_room.place_artifact('$')
 
         tup = tuple(["".join(row) + " " for row in tiled_room.room])
         return tup
@@ -419,6 +427,9 @@ class Dungeon():
         self.insert_corridors()
         self.find_connected_components()
         self.place_artifacts()
+
+        self.board[self.start[0]][self.start[1]].start = True
+        self.board[self.end[0]][self.end[1]].end = True
 
     def build_solution(self):
         r, c = self.start
@@ -566,6 +577,7 @@ def gen_txt(dungeon: Dungeon, filename: str):
 
 if __name__ == '__main__':
     random.seed(1)
-    dungeon = Dungeon(4, 4, 0.0, 0.5, 9)
+    'w, h, p_corridor, p_door, num_types'
+    dungeon = Dungeon(4, 4, 0.5, 0.5, 9)
     gen_txt(dungeon, 'dungeon.txt')
     print('yay')
