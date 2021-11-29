@@ -13,10 +13,10 @@ The main goal is to create a topdown dungeon generator that generates at runtime
 [Robert Heaton's Wave Function Collapse Explained](https://robertheaton.com/2018/12/17/wavefunction-collapse-algorithm/)
 
 ##### Overworld generation in Caves of Qud
-![](cavesOfQudImage.png)
+![](/img/cavesOfQudImage.png)
 
 ##### Dungeon generation in Moonlighter (not necessarily from WFC)
-![](moonlighterImage.jpg)
+![](/img/moonlighterImage.jpg)
 
 #### Specification and Features:
 * Runtime generation of a tile based, topdown dungeon using WFC trained on a tileset.
@@ -29,7 +29,7 @@ The core of this project will be an implementation of Wave Function Collapse, an
 #### Design:
 A tileset along with tile constraints will be fed into the WFC algorithm / tilemap generator. The generator will then modify a Unity tilemap at runtime, editing specific tiles of the tilemap as the possibilities of tiles collapse. This Unity tilemap will then be used in the game. If time allows, tilemap colliders will be created using Unity's builtin Tilemap Collider 2D component. A player character and enemies may also be added into the game.
 
-![](CIS566FinalProjectDiagram.png)
+![](/img/CIS566FinalProjectDiagram.png)
 
 * Diagram of core components
 
@@ -47,15 +47,57 @@ There is a bug where sometimes WFC will converge instantly. Not sure how to repr
 
 #### Results:
 ##### Grasslands Input
-![](GrasslandsInput.png)
+![](/img/GrasslandsInput.png)
 
 ##### Grasslands Output
-![](GeneratorGrasslands.png)
+![](/img/GeneratorGrasslands.png)
 
 ##### Dungeon Input
-![](DungeonInput.png)
+![](/img/dungeonInput.png)
 
 ##### Dungeon Output
-![](GeneratorDungeon.png)
+![](/img/GeneratorDungeon.png)
 
 [Tileset from jamiebrownhill](https://jamiebrownhill.itch.io/solaria-demo)
+
+## Milestone 3 - Bugfixes and Features
+#### Progress:
+I was able to fix the bug in milestone 2 and also added in a form of backtracking. I originally wanted the generator to backtrack to the immediate, previous board whenever a conflict was made, and track "bad boards" by storing them into a hashset, but realized that this was very inefficient for large outputs and would take a very large amount of iterations to converge (>3000 iterations). Instead whenever there is a conflict the board will backtrack half the amount of steps it took from the beginning to the conflict. From very limited testing on an input tilemap that was prone to conflicts without backtracking, the board was able to converge every time with this backtracking implementation. In the event that the board cannot converge the program will report failure by showing the incomplete output (it will not crash).
+
+I also added a UI for the program. Right now the user can see the input and output tilemaps, change the input tilemap to one of three options using a dropdown menu, change whether to use weighted generation or not, and recalculate the board.
+
+I refined the map generation by choosing blank tiles with the least entropy (least number of remaining tiles in superposition) to randomly assign a tile to. I also added a weighted option to the generation. By weighting how WFC randomly assigns tiles to based on the frequency they show up in the input tilemap, the output will more closely match the input.
+
+Instead of creating a game using my WFC implementation I decided to create a program that allows the user to generate tilemaps. I was more interested in the interactavity of tilemap generation. I plan to allow the user to paint input tilemaps using the three existing tilesets, and if time permits, allow them to constrain the output by painting tiles in the output before generation. Apart from these extra features, I've accomplished what I sought to do.
+
+#### Results:
+##### Program in Action
+![](/img/generatorInAction.gif)
+
+##### Town Input
+![](/img/townInput.png)
+
+##### Weighted (left) vs. Unweighted (right) Output
+<img src="/img/townOutputWeighted.png" width="40%"/> <img src="/img/townOutputUnweighted.png" width="40%"/>
+
+##### Dungeon Input
+![](/img/dungeonInput.png)
+
+##### Dungeon Output (weighted)
+![](/img/dungeonOutputWeighted.png)
+
+##### Islands Input
+![](/img/islandsInput.png)
+
+##### Islands Output (weighted)
+![](/img/islandsOutputWeighted.png)
+
+## Credits
+[Dungeon and Islands tilemaps made with tileset from jamiebrownhill](https://jamiebrownhill.itch.io/solaria-demo)
+[UI and Town tilemap made with tilesets from KenneyNL](https://kenney.nl/)
+
+#### Helpful References
+[Martin Donald's Superpositions, Sudoku, the Wave Function Collapse algorithm](https://www.youtube.com/watch?v=2SuvO4Gi7uY)
+[Robert Heaton's Wave Function Collapse Explained](https://robertheaton.com/2018/12/17/wavefunction-collapse-algorithm/)
+[WFC Tilemap Implementation Steps from Rémy Devaux](https://trasevol.dog/2017/09/01/di19/)
+[WFC Tips and Tricks from BorisTheBrave](https://www.boristhebrave.com/2020/02/08/wave-function-collapse-tips-and-tricks/)
