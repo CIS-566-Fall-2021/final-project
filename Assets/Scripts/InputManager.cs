@@ -25,6 +25,18 @@ public class InputManager : MonoBehaviour
         SetInputTilemap(0);
         ToggleInput(false);    
     }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Exit();
+        }    
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
+    }
     
     public void ToggleInput(bool val)
     {
