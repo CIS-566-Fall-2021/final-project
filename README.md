@@ -64,15 +64,7 @@ There is a bug where sometimes WFC will converge instantly. Not sure how to repr
 #### Progress:
 I was able to fix the bug in milestone 2 and also added in a form of backtracking. I originally wanted the generator to backtrack to the immediate, previous board whenever a conflict was made, and track "bad boards" by storing them into a hashset, but realized that this was very inefficient for large outputs and would take a very large amount of iterations to converge (>3000 iterations). Instead whenever there is a conflict the board will backtrack half the amount of steps it took from the beginning to the conflict. From very limited testing on an input tilemap that was prone to conflicts without backtracking, the board was able to converge every time with this backtracking implementation. In the event that the board cannot converge the program will report failure by showing the incomplete output (it will not crash).
 
-I also added a UI for the program. Right now the user can see the input and output tilemaps, change the input tilemap to one of three options using a dropdown menu, change whether to use weighted generation or not, and recalculate the board.
-
 I refined the map generation by choosing blank tiles with the least entropy (least number of remaining tiles in superposition) to randomly assign a tile to. I also added a weighted option to the generation. By weighting how WFC randomly assigns tiles to based on the frequency they show up in the input tilemap, the output will more closely match the input.
-
-Instead of creating a game using my WFC implementation I decided to create a program that allows the user to generate tilemaps. I was more interested in the interactavity of tilemap generation. I plan to allow the user to paint input tilemaps using the three existing tilesets, and if time permits, allow them to constrain the output by painting tiles in the output before generation. Apart from these extra features, I've accomplished what I sought to do.
-
-#### Results:
-##### Program in Action
-![](/img/generatorInAction.gif)
 
 ##### Town Input
 ![](/img/townInput.png)
@@ -91,6 +83,13 @@ Instead of creating a game using my WFC implementation I decided to create a pro
 
 ##### Islands Output (weighted)
 ![](/img/islandsOutputWeighted.png)
+
+I also added a UI for the program. Right now the user can see the input and output tilemaps, change the input tilemap to one of three options using a dropdown menu, change whether to use weighted generation or not, and recalculate the board.
+
+##### Program in Action
+![](/img/generatorInAction.gif)
+
+Instead of creating a game using my WFC implementation I decided to create a program that allows the user to generate tilemaps. I was more interested in the interactavity of tilemap generation. I plan to allow the user to paint input tilemaps using the three existing tilesets, and if time permits, allow them to constrain the output by painting tiles in the output before generation. Apart from these extra features, I've accomplished what I sought to do.
 
 ## Credits
 [Dungeon and Islands tilemaps made with tileset from jamiebrownhill](https://jamiebrownhill.itch.io/solaria-demo)
