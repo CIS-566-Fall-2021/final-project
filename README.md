@@ -43,3 +43,23 @@ Add finishing touches like wind simulation and dust particles
 # Milestone 2
 For this milestone, I followed a tutorial to make a simple flower bloom with textures. It was great to learn about animation and I have started thinking about how to edit the parameters to make the tool customizable for many different types of flowers. 
 
+# Milestone 3
+
+### Golden Ratio Petal Structure
+Originally, the way I was creating the petal pattern for the flower was a simple loop around a circle. However I wanted to create a tool with more complex features that outputed an organic looking flower. I found this interesting rose render: https://www.youtube.com/watch?v=SN6por9uaCI&ab_channel=MotionDesignersCommunity and followed Vladyslav Lavrenov's scene files to produce a set of points that spiral based on the golden ratio.
+
+Here is a quick summary of the algorithm used:
+For every petal in the flower, I want to calculate the petal's position by finding its polar coordinates (radius and angle). The radius is proportional to the number of petals, so that the spiral continues to grow as we increase the petals. The golden angle is added to the angle for every petal, driving the spiral's curve.
+
+### Flower and Petal Parameters
+Parameters are categorized into flower paraemeters, for changes to the overall shape of the flower, and petal parameters, for changes to individual petals. I wanted to focus on improving the usability of the tool and fine tuning the parameters of the petal subnetwork to maximize flower variance and allow artistic specificity. 
+
+After studying many different types of flowers, it became apparent that there is a relationship between the petal's distance from the center and the petal's size and bend amount. For this reason, I thought it would be best to have the petal size and bend amount be ramp parameters based on the petal's distance from the center. "Petal Bend" controls the overall concavity of the petal, while "Petal Top Bend" controls how much the petal flares out from the top, and the "Petal Side Bend" controls how much the petal folds in on itself. Based on the values and positions of these parameters, a user can create a rose or a tulip!
+
+Link to demo of parameters: https://vimeo.com/650966824
+
+### Goals
+Now that I have successfully created a tool that procedurally models various types of flowers, I would like to acheive the following for the final submission: 
+1. Create at least 3 different types of flowers using the tool and output high quality renders.
+2. Add a stem feature (potentially having the user draw a curve for the stem to follow and have the flower blossom on the end of it)
+3. Add more procedural details to model the center of the flower: filaments, anthers, stigma, etc. 
