@@ -59,8 +59,9 @@ Use flower tool to fill a bouquet of flowers or populate some organic scene
 
 ![ms_1_example](https://user-images.githubusercontent.com/59979404/142964615-c00c0edc-cea7-43ad-af4a-c0610a54dd8b.PNG)
 
+![ms_5_example](https://user-images.githubusercontent.com/59979404/143037730-60164ee0-e580-407f-b408-9b2c0a4cf2a0.PNG)
 
-### Progress Report!
+### Progress Report 1!
 
 #### Implemented the following: 
 
@@ -71,3 +72,27 @@ Use flower tool to fill a bouquet of flowers or populate some organic scene
 - I need to add more variation to the second floor. Currently to achieve the iconic tapered roof, the second floor's shape is pretty much fixed. I'll have to figure out how to add overhangs to the second floor.
 
 - Next week I'll add colour/materials, and maybe add more logic so that steps spawn near doors, and windows spawn only on walls that face the outside.
+
+
+## Milestone 2: 
+
+### Images
+
+![ms2_example](https://user-images.githubusercontent.com/59979404/143985218-20257670-92e8-40d1-bad2-9cf41fd4efb0.PNG)
+![ms2_example_3](https://user-images.githubusercontent.com/59979404/143985219-6cf46255-e6ee-405a-b76c-760093cf38c7.PNG)
+![ms2_example_2](https://user-images.githubusercontent.com/59979404/143985221-88da0d74-a5ef-4047-b53d-dce3664cedd6.PNG)
+
+### Progress Report 2!
+
+#### Implemented the following: 
+
+- Added a courtyard functionality. So far, you can add a singular courtyard in the center of the structure and adjust the size. If there is a courtyard, there will be no second floor, however. I decided to go with this feature instead of window overhangs as I thought this courtyard cutout had the biggest visual impact.
+- Added some materials to everything except the windows and doors. The windows and doors are an fbx I created in maya that I have not textured. I am thinking of replacing it with a procedurally modelled ones so I can easily texture them and adjust their look
+- Didn't manage to fix the second floor or add overhangs due to time constraints
+
+#### To dos: 
+- Texture the windows
+- Create a scene with multiple houses. Add grass, trees, a background and render a nice scene
+- My tool runs really slowly (due to the number of computations and nodes). I want to find a way to simplify it a little to improve run time
+- Add more sliders for maximum variability
+
