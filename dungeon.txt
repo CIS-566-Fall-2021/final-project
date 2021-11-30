@@ -1,24 +1,24 @@
 xxxxx xxxxx xxxxx xxxxx 
-xxx_x x___x x__$x x___x 
-xxx_4 4_x__ __x_6 6_x_x 
-xx_4x xxxxx xxxxx xx__x 
-xx8xx xxxxx xxxxx xx1xx 
+xxx2x x___x x___x x___x 
+xxx_2 2_x__ __x$3 3_x_x 
+xx__x xxxxx xxxxx xx__x 
+xx4xx xxxxx xxxxx xx1xx 
 
-xx8xx xxxxx xxxxx xx1xx 
+xx4xx xxxxx xxxxx xx1xx 
 x__xx xxxxx x___x xx__x 
 x____ __x__ __x__ __x_x 
-xxxxx x_8_x xxxxx x___x 
-xxxxx xx7xx xxxxx xxxxx 
+xxxxx x___x xxxxx x___x 
+xxxxx xx4xx xxxxx xxxxx 
 
-xxxxx xx7xx xxxxx xxxxx 
+xxxxx xx4xx xxxxx xxxxx 
 xxx_x x___x xxxxx xxxxx 
 xxx__ _____ __x__ ____x 
-xx__x xxxxx x__7x xxxxx 
+xx__x xxxxx x_4_x xxxxx 
 xx_xx xxxxx xx_xx xxxxx 
 
 xx_xx xxxxx xx_xx xxxxx 
 x__xx x___x x___x xxxxx 
-x___4 4_x*_ _____ ____x 
+x___2 2_x*_ _____ ____x 
 xxxxx xxxxx xxxxx xxxxx 
 xxxxx xxxxx xxxxx xxxxx 
 

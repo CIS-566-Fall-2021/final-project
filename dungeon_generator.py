@@ -70,6 +70,7 @@ class TiledRoom:
     def place_artifact(self, artifact: int | str):
         row, col = random.choice(self.free_tiles)
         self.room[row][col] = str(artifact)
+        self.free_tiles.remove((row, col))
 
 class PresetRooms:
     '''
@@ -578,6 +579,6 @@ def gen_txt(dungeon: Dungeon, filename: str):
 if __name__ == '__main__':
     random.seed(1)
     'w, h, p_corridor, p_door, num_types'
-    dungeon = Dungeon(4, 4, 0.5, 0.5, 9)
+    dungeon = Dungeon(4, 4, 0.5, 0.5, 4)
     gen_txt(dungeon, 'dungeon.txt')
     print('yay')
