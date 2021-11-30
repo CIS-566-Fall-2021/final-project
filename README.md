@@ -134,9 +134,9 @@ This week I worked on tweaking different aspects of the dragonfly to make it mor
 
 ![](images/dragonflyMS2-1.png)
 
-![](images/dragonfly_MS2-2.png)
+![](images/dragonfy_MS2-2.png)
 
 ![](images/dragonfly_MS2-3.png)
 ![](images/dragonfly_MS2-4.png)
-![](images/dragonfy_MS2-5.png)
+![](images/dragonfly_MS2-5.png)
 
