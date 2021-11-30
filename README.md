@@ -111,3 +111,25 @@ Ashley and Emma
 
 7. Added a transparent material
 ![Progress7](images/wing_progress7.png)
+
+## Body and Wing shape Progress - Emma
+
+This week I worked on creating a generator for the wing shape and body parts to make the dragonfly. I currently have all of the aspects of the dragonfly and the user can control the overall transformation of the bug, the length of the body, and the size of the eyes. This next week I want to focus on allowing the user to edit more parameters and add a little more detail to the indivial aspects of the body to make the overall appearance more realistic. I also want to expand on the materials that Ashley started and have the whole dragonfly be textured. These are some dragonflies the generator can create and the current houdini node network
+
+![](images/bug1.png)
+
+![](images/bug2.png)
+
+![](images/bug3.png)
+
+![](images/bug5.png)
+
+![](images/bug4.png)
+
+## Mileston 3 Progress 
+
+## Emma
+
+This week I worked on tweaking different aspects of the dragonfly to make it more artistically pleasing. I also worked on adding additional paramters and changed some of the functionality of the body to make it more procedural to better work with the parameters. The additional paramets I added include the ability to change the number of divisions in the tail, as well as the legnth of the tail, the eye size, the angle of the outside part of the wing, the head size which also changes the eye size as well, and the width of the middle part of the body. I have included some images of the updates. After critique today I got a lot of great suggestions about parameters to add and edit and changes to make which I am excited to implement. We are also planning on adding materials and textures to the final generator. 
+
+
