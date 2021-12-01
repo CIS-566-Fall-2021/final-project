@@ -60,9 +60,6 @@ let treeBases: Mesh[] = [];
 let treeBranches: Mesh[] = [];
 let treeLeaves: Mesh[] = [];
 
-let digitalTreeBranches: Mesh[] = [];
-let digitalTreeLeaves: Mesh[] = [];
-
 const camera = new Camera(
   vec3.fromValues(30, 10, 30),
   vec3.fromValues(100, 0, 100)
@@ -133,8 +130,8 @@ function createTrees() {
         //treeIters = 5 + Math.floor(distanceFromOrigin / 30);
         treeIters = 5;
         // clamp angle and tree iters
-        if (angle > 40) {
-          angle = 40;
+        if (angle > 42) {
+          angle = 42;
         }
 
         if (treeIters > 7) {

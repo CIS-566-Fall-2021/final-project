@@ -119,17 +119,19 @@ class LSystem {
       // let rule2: ExpansionRule = new ExpansionRule();
       // rule2.addOutput("[+FX][-FX][*FX][/FX][&FX][^FX]", 1.0);
       // this.expansionRules.set("X", rule2);
-      if (this.distFromPlayer < 70) {
+      if (this.distFromPlayer < 100) {
         let rule1: ExpansionRule = new ExpansionRule();
         rule1.addOutput("F[B#]//[+BX#]//BX", 1.0);
         this.expansionRules.set("X", rule1);
   
         let rule2: ExpansionRule = new ExpansionRule();
-        rule2.addOutput("&FFX", 1.0);
+        rule2.addOutput("&FFX", 0.7);
+        rule2.addOutput("&BX//+", 0.3);
         this.expansionRules.set("B", rule2);
       } else {
         let rule1: ExpansionRule = new ExpansionRule();
-        rule1.addOutput("F[B]//[+BX]/-BX", 1.0);
+        rule1.addOutput("FFB/+[BX#]/-BX/", 0.7);
+        rule1.addOutput("F+[X]/B+", 0.3);
         this.expansionRules.set("X", rule1);
   
         let rule2: ExpansionRule = new ExpansionRule();
@@ -186,7 +188,7 @@ class LSystem {
     this.putBranch = (scale: vec3) => {
       // Calculate transformation
 
-      if (this.distFromPlayer > 130) {
+      if (this.distFromPlayer > 100) {
         this.turtle.angle = 90;
       }
 
@@ -219,7 +221,7 @@ class LSystem {
       // Calculate transformation
       let transform: mat4 = mat4.create();
       let q: quat = quat.create();
-      let s : vec3 = vec3.scale(vec3.create(), vec3.fromValues(6.5, 6.5, 6.5), 1.0);
+      let s : vec3 = vec3.scale(vec3.create(), vec3.fromValues(6.5, 6.5, 6.5), 1.5);
       quat.fromMat3(q, this.turtle.orientation);
       mat4.fromRotationTranslationScale(
         transform,
@@ -268,6 +270,11 @@ class LSystem {
 
       // Draw based on grammar
       let count = 0;
+
+      if (this.distFromPlayer > 100) {
+        this.iterations = Math.ceil(this.iterations / 2);
+      }
+
       for (let i = 0; i < this.axioms[this.iterations].length; i++) {
         let func = this.drawingRules
           .get(this.axioms[this.iterations].charAt(i))
@@ -329,9 +336,9 @@ class LSystem {
       this.turtle.moveForward();
       this.putBranch(
         vec3.fromValues(
-          6.5 - this.turtle.depth * 0.85,
+          9.5 - this.turtle.depth * 2.5,
           15.0,
-          6.5 - this.turtle.depth * 0.85
+          9.5 - this.turtle.depth * 2.5
         )
       );
     };
