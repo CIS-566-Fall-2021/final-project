@@ -126,7 +126,7 @@ This week I worked on creating a generator for the wing shape and body parts to 
 
 ![](images/bug4.png)
 
-## Mileston 3 Progress 
+## Milestone 3 Progress 
 
 ## Emma
 
@@ -140,3 +140,12 @@ This week I worked on tweaking different aspects of the dragonfly to make it mor
 ![](images/dragonfly_MS2-5.png)
 ![](images/dragonfly_MS2-4.png)
 
+## Ashley
+This week, I worked on generating the veins in a more procedural fashion so that the wings could be parameterized. I extracted the top curve of the wing, then proportionally generated the remainder of the veins, using sine and other utility interpolations. I also incorporated the wings into Emma's file and tweaked the wings so that they would work no matter the parameter change. 
+
+![](images/m2_1.png)
+
+| Wing Type | Wing | Unique Colors Showing Proper Mesh Division |
+| --------- | ---- | ------------------------------------------ |
+| Least Tapered | ![](images/m2_2.png) | ![](images/m2_5.png) |
+| Most Tapered | ![](images/m2_3.png) | ![](images/m2_4.png) |
