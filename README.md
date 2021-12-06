@@ -108,6 +108,16 @@ Please look at minka_tool.hdanc, and final-project-scene.hipnc as my final submi
 
 ### Progress Report 3!
 
-I think my project went really well! I started off with little to no exerperience in procedural modelling, but after milestone 1 I felt as if I had greatly developed my understanding of Houdini. My traditional Japanese house generator TBC.
+I think my project went really well! I started off with little to no exerperience in procedural modelling, but after milestone 1 I felt as if I had greatly developed my understanding of Houdini. My traditional Japanese house generator is capable of creating 1-2 story high houses, with an optional courtyard (which sacrifices the second floor). The following aspects can be edited/changed through the HDA UI:
+- House base shape, base height, number of wall extrusions
+- Size of courtyard in the center(can be 0 for no courtyard)
+- Number of doors, windows, stairs
+- Railing, platform depth and height
+- Colours of all elements
+- Most features have seeds to allow users to adjust variation with the same count
 
-how did your project go overall? Did you accomplish your goals? Did you have to pivot?
+The features are best visualised in the renders above. I tried to create a small scene with multiple minkas of varying heights, shapes, etc. I will continue to work on creating better renders, since there is some visible material issues/stretching. 
+
+I think I checked off all of my original minimum viable product goals. The only stretch goal I did not achieve was that the houses themselves were going to be procedurally placed. The houses we're placed manually in the scene above. However, the the trees were procedurally placed so that it would spawn on the outer perimeter of the houses.
+
+There are a few remaining bugs or issues. Stairs warp a little bit when the height of the platform is too high. Due to the scale of the generator, the tool runs a little slow at times. 
