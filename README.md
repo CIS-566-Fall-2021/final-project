@@ -96,3 +96,18 @@ Use flower tool to fill a bouquet of flowers or populate some organic scene
 - My tool runs really slowly (due to the number of computations and nodes). I want to find a way to simplify it a little to improve run time
 - Add more sliders for maximum variability
 
+
+## Milestone 3:
+
+Please look at minka_tool.hdanc, and final-project-scene.hipnc as my final submissions! Sorry there are a lot of texture files, and a few fbxes.
+
+### Images
+![test_render_04](https://user-images.githubusercontent.com/59979404/144917022-de85d0f1-7dd3-4e08-9c8c-359438dc6c6e.png)
+![test_render_02](https://user-images.githubusercontent.com/59979404/144917024-6bd69639-13a0-4b60-b6b8-0f6d44c7314d.png)
+![test_render_03](https://user-images.githubusercontent.com/59979404/144917027-6f8507d3-4684-4129-a5d7-36bd1a55b8e1.png)
+
+### Progress Report 3!
+
+I think my project went really well! I started off with little to no exerperience in procedural modelling, but after milestone 1 I felt as if I had greatly developed my understanding of Houdini. My traditional Japanese house generator TBC.
+
+how did your project go overall? Did you accomplish your goals? Did you have to pivot?
