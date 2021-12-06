@@ -1,4 +1,8 @@
 # Topdown Dungeon Generator
+#### By An Duong
+![](/img/generatorDrawOutput.gif)
+
+[Live demo](https://onlyname4.itch.io/tilemap-generator)
 
 ## Milestone 1 - Proposal
 #### Introduction
@@ -91,6 +95,18 @@ I also added a UI for the program. Right now the user can see the input and outp
 
 Instead of creating a game using my WFC implementation I decided to create a program that allows the user to generate tilemaps. I was more interested in the interactavity of tilemap generation. I plan to allow the user to paint input tilemaps using the three existing tilesets, and if time permits, allow them to constrain the output by painting tiles in the output before generation. Apart from these extra features, I've accomplished what I sought to do.
 
+## Final Results
+[Live demo](https://onlyname4.itch.io/tilemap-generator)
+
+I added in the ability to draw on the input tilemap with a tile palette, as well as constrain the output by also drawing on it.
+
+![](/img/generatorFinalUI.png)
+
+![](/img/generatorDrawOutput.gif)
+
+## Post Mortem
+Overall, I am very satisfied with how the project turned out. The end result was a playable toy that meets the polish and interactivity that I wanted, whilst showcasing tilemap generation using WFC. I originally planned to make a game using the tilemap generation, but instead opted to turn the focus onto the generation itself, which turned out well.
+
 ## Credits
 [Dungeon and Islands tilemaps made with tileset from jamiebrownhill](https://jamiebrownhill.itch.io/solaria-demo)
 
@@ -104,3 +120,5 @@ Instead of creating a game using my WFC implementation I decided to create a pro
 [WFC Tilemap Implementation Steps from Rémy Devaux](https://trasevol.dog/2017/09/01/di19/)
 
 [WFC Tips and Tricks from BorisTheBrave](https://www.boristhebrave.com/2020/02/08/wave-function-collapse-tips-and-tricks/)
+
+[Inspiration for the application from Oskar Stålberg](https://oskarstalberg.com/game/wave/wave.html);
