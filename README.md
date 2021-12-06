@@ -73,7 +73,7 @@ We intend to make a city generator in NYC style with procedural roads and buildi
 ### Lanqing Bao:
 - 11.22: ~~Find a nice building texture and calculate the uv texture mapping for a random size building.~~ updated 11/20: find this way not very doable, switch to generate mesh instead
 - 11.29: ~~Integrate the uv calculation into teammate ground generation.~~ updated 11/28: finish the basic building mesh generation
-- 12.06: Touch up and maybe add more texture maps. updated 11/28: plus intergation with road generation
+- 12.06: Touch up and maybe add more texture maps. updated 11/28: plus intergation with road generation, import the generated scene into Unreal!
 
 ### Yilei Li:
 - 11.22: Find a way to procedurally generate a building from a blank ground. Visualize the building in a simple way.
