@@ -26,6 +26,31 @@ We intend to make a city generator in NYC style with procedural roads and buildi
 ## Design:
 ![](./Design.png)
 
+## Final Submission:
+### Final Results:
+#### Result in Houdini: 
+![](houdini_result_1.png)
+
+![](houdini_result_2.png)
+
+![](houdini_result_3.png)
+
+#### Control Parameters:
+
+#### Result in Unreal Engine 4
+
+### Post Mortem:
+#### Accomplished: 
+- We have successfully implemented the city structure generation with roads, sidewalks, street lights, and citizens.
+- We have successfully implemented the functionality of generating a colored building.
+- We have combined the building generation and the road generation to generate a lively city with colored buildings.
+- We have successfully collapsed our houdini nodes into an HDA in which users could generate their own cities simply by adjusting some given values and click the "generate building" button.
+
+#### Have to pivot:
+- We did not use UV maps to texture the buildings. Instead, we combined geometries with color together to form a building-like geometry.
+- Due to the time limit, we are not able to generate curly roads in the city. All roads are straight.
+- Due to unknown efficiency problems, our colored buildings generated on the city structure could only be seen after we render the scene, but not visible in the viewport.
+
 ## Timeline:
 ### Lanqing Bao:
 - 11.22: ~~Find a nice building texture and calculate the uv texture mapping for a random size building.~~ updated 11/20: find this way not very doable, switch to generate mesh instead
@@ -68,18 +93,3 @@ We have the road and building generation working seperately now. This week we fo
 
 ### Issues & planning:
 Next we are going to combine building and road generation together and polish them. Right now everything is plain colored so we will probably add some textures. We have to work on more about tiling to ensure there is no weird repetition. 
-
-## Final Submission:
-### Final Results:
-
-### Post Mortem:
-#### Accomplished: 
-- We have successfully implemented the city structure generation with roads, sidewalks, street lights, and citizens.
-- We have successfully implemented the functionality of generating a colored building.
-- We have combined the building generation and the road generation to generate a lively city with colored buildings.
-- We have successfully collapsed our houdini nodes into an HDA in which users could generate their own cities simply by adjusting some given values and click the "generate building" button.
-
-#### Have to pivot:
-- We did not use UV maps to texture the buildings. Instead, we combined geometries with color together to form a building-like geometry.
-- Due to the time limit, we are not able to generate curly roads in the city. All roads are straight.
-- Due to unknown efficiency problems, our colored buildings generated on the city structure could only be seen after we render the scene, but not visible in the viewport.
