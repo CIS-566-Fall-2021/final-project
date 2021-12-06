@@ -44,7 +44,7 @@ We intend to make a city generator in NYC style with procedural roads and buildi
 - City structure generation with roads, sidewalks, street lights, and citizens
 - Procedural building generation
 - Combined the building generation and the road generation to a lively city
-- Collapsed our houdini nodes into an HDA in which users could generate their own cities simply by adjusting some given values and click the "generate building" button.
+- Created an HDA in which users could generate cities simply by adjusting parameters and click the "generate building" button.
 - Successfully export the HDA to Unreal Engine 4
 
 #### Have to pivot:
