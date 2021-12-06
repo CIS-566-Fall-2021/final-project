@@ -37,7 +37,7 @@ We intend to make a city generator in NYC style with procedural roads and buildi
 ### Control Parameters:
 #### City:
 - ```City Grid Size``` : define the overall boundary of the city 
-- ```Road Desity``` :   
+- ```Road Desity``` : define the density of roads within the grid
 - ```Random Seed```: add some randomness 
 - ```Street Light Interval```: the interval between street lights 
 - ```Citizen Number```:  number of citizen scattered 
@@ -50,8 +50,11 @@ We intend to make a city generator in NYC style with procedural roads and buildi
 - ```Upper level window``` : the frequency of windows at upper level
 - ```Upper level door``` : the frequency of doors at upper level
 
-
 ### Final Result in Unreal Engine 4
+
+![](./ue4_result.png)
+
+![](./ue4_result_2.png)
 
 ### Post Mortem:
 #### Accomplished: 
