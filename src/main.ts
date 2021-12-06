@@ -15,10 +15,10 @@ import Terrain from "./terrain/terrain";
 import FrameBuffer from "./rendering/gl/FrameBuffer";
 import { FOREST_RADIUS } from "./player/Player";
 
-var palette = {
-  color1: [255, 127.0, 80.0, 1.0], // branch
-  color2: [57, 217, 222, 1.0], // leaf
-};
+// var palette = {
+//   color1: [255, 127.0, 80.0, 1.0], // branch
+//   color2: [57, 217, 222, 1.0], // leaf
+// };
 
 function addMusic() {
   var x = document.createElement("audio");
@@ -30,24 +30,24 @@ function addMusic() {
 }
 
 // controls:
-let prevIters = 3;
-let prevAngle = 15;
-let prevScale = 1;
+// let prevIters = 3;
+// let prevAngle = 15;
+// let prevScale = 1;
 let prevTransitionType = 1;
 let postON = false;
 let musicON = false;
-let prevColor1: vec4 = vec4.fromValues(
-  palette.color1[0],
-  palette.color1[1],
-  palette.color1[2],
-  1.0
-);
-let prevColor2: vec4 = vec4.fromValues(
-  palette.color2[0],
-  palette.color2[1],
-  palette.color2[2],
-  1.0
-);
+// let prevColor1: vec4 = vec4.fromValues(
+//   palette.color1[0],
+//   palette.color1[1],
+//   palette.color1[2],
+//   1.0
+// );
+// let prevColor2: vec4 = vec4.fromValues(
+//   palette.color2[0],
+//   palette.color2[1],
+//   palette.color2[2],
+//   1.0
+// );
 
 let screenQuad: ScreenQuad;
 
@@ -61,37 +61,37 @@ let treeBranches: Mesh[] = [];
 let treeLeaves: Mesh[] = [];
 
 const camera = new Camera(
-  vec3.fromValues(30, 10, 30),
+  vec3.fromValues(800, 10, 800),
   vec3.fromValues(100, 0, 100)
 );
 
 let player: Player = new Player(camera, camera.position, camera.forward);
 
-function createBase(x: number, z: number) {
-  let base = new Mesh(
-    readTextFile("resources/base.obj"),
-    vec3.fromValues(x, 0, z)
-  );
+// function createBase(x: number, z: number) {
+//   let base = new Mesh(
+//     readTextFile("resources/base.obj"),
+//     vec3.fromValues(x, 0, z)
+//   );
 
-  base.create();
+//   base.create();
 
-  let base1 = [5, 0, 0, 0];
-  let base2 = [0, 10, 0, 0];
-  let base3 = [0, 0, 5, 0];
-  let base4 = [0, 2, 0, 1];
+//   let base1 = [5, 0, 0, 0];
+//   let base2 = [0, 10, 0, 0];
+//   let base3 = [0, 0, 5, 0];
+//   let base4 = [0, 2, 0, 1];
 
-  let cols = [0.761, 0.698, 0.502, 1.0];
+//   let cols = [0.761, 0.698, 0.502, 1.0];
 
-  let bCol1: Float32Array = new Float32Array(base1);
-  let bCol2: Float32Array = new Float32Array(base2);
-  let bCol3: Float32Array = new Float32Array(base3);
-  let bCol4: Float32Array = new Float32Array(base4);
-  let bcolors: Float32Array = new Float32Array(cols);
-  base.setInstanceVBOs(bCol1, bCol2, bCol3, bCol4, bcolors);
-  base.setNumInstances(1);
+//   let bCol1: Float32Array = new Float32Array(base1);
+//   let bCol2: Float32Array = new Float32Array(base2);
+//   let bCol3: Float32Array = new Float32Array(base3);
+//   let bCol4: Float32Array = new Float32Array(base4);
+//   let bcolors: Float32Array = new Float32Array(cols);
+//   base.setInstanceVBOs(bCol1, bCol2, bCol3, bCol4, bcolors);
+//   base.setNumInstances(1);
 
-  treeBases.push(base);
-}
+//   treeBases.push(base);
+// }
 
 // Define an object with application parameters and button callbacks
 // This will be referred to by dat.GUI's functions that add GUI elements.
@@ -121,9 +121,9 @@ function createTrees() {
 
         let treePos = vec4.fromValues(x, -10.0, z, 1.0);
 
-        let px = i - player.startPosition[0];
-        let pz = j - player.startPosition[2];
-        let distanceFromOrigin = Math.sqrt(i * i + j * j);
+        let px = i - player.startPosition[0] / terrainClass.squareDims;
+        let pz = j - player.startPosition[2] / terrainClass.squareDims;
+        let distanceFromOrigin = Math.sqrt(px * px + pz * pz);
 
         let angle = 10 + distanceFromOrigin / 2;
 
@@ -253,6 +253,11 @@ function main() {
     ),
   ]);
 
+  const leafShader = new ShaderProgram([
+    new Shader(gl.VERTEX_SHADER, require("./shaders/instanced-vert.glsl")),
+    new Shader(gl.FRAGMENT_SHADER, require("./shaders/instanced-leaf-frag.glsl")),
+  ]);
+
   const flat = new ShaderProgram([
     new Shader(gl.VERTEX_SHADER, require("./shaders/flat-vert.glsl")),
     new Shader(gl.FRAGMENT_SHADER, require("./shaders/flat-frag.glsl")),
@@ -263,9 +268,9 @@ function main() {
     new Shader(gl.FRAGMENT_SHADER, require("./shaders/lambert-frag.glsl")),
   ]);
 
-  function vec4Equals(a: vec4, b: vec4) {
-    return vec4.len(vec4.subtract(vec4.create(), a, b)) < 0.1;
-  }
+  // function vec4Equals(a: vec4, b: vec4) {
+  //   return vec4.len(vec4.subtract(vec4.create(), a, b)) < 0.1;
+  // }
 
   function checkTransition() {
     if (vec3.length(player.distanceFromStart) > 0.95 * FOREST_RADIUS) {
@@ -285,8 +290,13 @@ function main() {
     postShader.setTransitionType(prevTransitionType);
     lambert.setForestRadius(FOREST_RADIUS);
     instancedShader.setForestRadius(FOREST_RADIUS);
+
+    leafShader.setForestRadius(FOREST_RADIUS);
+    leafShader.setTime(time);
+
     flat.setForestRadius(FOREST_RADIUS);
     flat.setTime(time++);
+    
     gl.viewport(0, 0, texWidth, texHeight);
     renderer.clear();
     // set clear color based on player's position
@@ -348,7 +358,7 @@ function main() {
       renderer.render(player, camera, lambert, [terrainClass]);
       renderer.render(player, camera, instancedShader, treeBases);
       renderer.render(player, camera, instancedShader, treeBranches);
-      renderer.render(player, camera, instancedShader, treeLeaves);
+      renderer.render(player, camera, leafShader, treeLeaves);
     }
 
     if (prevTransitionType != controls.transition_type) {
