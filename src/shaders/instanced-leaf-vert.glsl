@@ -1,15 +1,25 @@
 #version 300 es
-precision highp float;
 
-uniform mat4 u_Model;
+uniform mat4 u_ViewProj;
+uniform float u_Time;
 
-uniform vec3 u_DistFromStart;
-uniform float u_ForestRadius;
-in vec4 fs_Col;
-in vec4 fs_Pos;
-in vec4 fs_Nor;
+uniform mat3 u_CameraAxes; // Used for rendering particles as billboards (quads that are always looking at the camera)
+// gl_Position = center + vs_Pos.x * camRight + vs_Pos.y * camUp;
 
-out vec4 out_Col;
+in vec4 vs_Pos; // Non-instanced; each particle is the same quad drawn in a different place
+in vec4 vs_Nor; // Non-instanced, and presently unused
+in vec4 vs_Col; // An instanced rendering attribute; each particle instance has a different color
+in vec3 vs_Translate; // Another instance rendering attribute used to position each quad instance in the scene
+in vec4 vs_Transform1;
+in vec4 vs_Transform2;
+in vec4 vs_Transform3;
+in vec4 vs_Transform4;
+
+in vec2 vs_UV; // Non-instanced, and presently unused in main(). Feel free to use it for your meshes.
+
+out vec4 fs_Col;
+out vec4 fs_Pos;
+out vec4 fs_Nor;
 
 float random3D(vec3 p) {
     return sin(length(vec3(fract(dot(p, vec3(161.1, 121.8, 160.2))), 
@@ -101,34 +111,27 @@ vec4 getNewNormal(vec4 norm) {
     //return vec4(normalize(cross(normalize(pos))))
 } 
 
+
 void main()
 {
+    fs_Col = vs_Col;
+    fs_Pos = vs_Pos;
 
-    float ratio = 1.0 - (length(u_DistFromStart) / u_ForestRadius);
-    vec3 inverse = vec3(1.0) - vec3(fs_Col);
-    vec4 diffuseColor = vec4(vec3(1.0) - vec3(inverse * ratio), 1.0);
+    vec3 noiseInput = modelposition.xyz;
+    noiseInput += getAnimation();
 
-    // Calculate the diffuse term for Lambert shading
+    vec3 noise = fbmNoise(noiseInput) * noiseInput;
 
-    vec4 fs_LightVec = vec4(2000.0, 1000.0, 2000.0, 1.0);
+    float noiseScale = noise.r;
 
-    vec4 newNorm = getNewNormal(fs_Nor);
+    vec3 offsetAmount = vec3(vs_Nor) * noiseScale;
 
-    float diffuseTerm = dot(normalize(fs_Nor), normalize(fs_LightVec));
-    // Avoid negative lighting values
-    diffuseTerm = clamp(diffuseTerm, 0.10, 1.0);
+    mat4 TransformMatrix = mat4(vs_Transform1, vs_Transform2, vs_Transform3, vs_Transform4);
+    fs_Nor = TransformMatrix * vs_Nor;
+    vec4 newPos = TransformMatrix * vs_Pos;
 
-    float ambientTerm = 0.1;
+    vec3 noisyModelPosition = newPos.xyz + 2 * offsetAmount;
+    
 
-    float lightIntensity = diffuseTerm + ambientTerm;   //Add a small float value to the color multiplier
-                                                        //to simulate ambient lighting. This ensures that faces that are not
-                                                        //lit by our point light are not completely black.
-
-    // adjust light intensity so ground and sky turn white at the same time
-        lightIntensity *= 2.75 - (ratio);
-        lightIntensity = clamp(lightIntensity, 0.50, 1.2);
-        
-    // Compute final shaded color
-    out_Col = vec4(diffuseColor.rgb * lightIntensity, diffuseColor.a);
-
+    gl_Position = u_ViewProj * vec4(noisyModelPosition, 1.0);
 }

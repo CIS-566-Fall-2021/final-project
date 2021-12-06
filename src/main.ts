@@ -61,7 +61,7 @@ let treeBranches: Mesh[] = [];
 let treeLeaves: Mesh[] = [];
 
 const camera = new Camera(
-  vec3.fromValues(800, 10, 800),
+  vec3.fromValues(2000, 10, 2000),
   vec3.fromValues(100, 0, 100)
 );
 
@@ -140,8 +140,8 @@ function createTrees() {
 
         let s = 1;
 
-        let col1 = vec4.fromValues(64, 46, 18, 1.0);
-        let col2 = vec4.fromValues(60, 84, 32, 1.0);
+        let col1 = vec4.fromValues(74, 72, 61, 1.0);
+        let col2 = vec4.fromValues(58, 89, 94, 1.0);
 
         let tree = new LSystem(
           treePos,
@@ -170,14 +170,18 @@ function loadScene() {
 
   createTrees();
 
-  // background
+  // post processing
   screenQuad = new ScreenQuad();
+  screenQuad.setPositions(new Float32Array([-1, -1, 0.999, 1,
+                                            1, -1, 0.999, 1,
+                                            1, 1, 0.999, 1,
+                                            -1, 1, 0.999, 1]));
   screenQuad.create();
 }
 
 function calculateClearColor(player: Player) {
   let dist: vec3 = vec3.clone(player.distanceFromStart);
-  let clearColor: vec3 = vec3.fromValues(0.0, 0.0, 0.0);
+  let clearColor: vec3 = vec3.fromValues(3 / 255, 11 / 255, 20 / 255);
   let distScale: number = vec3.length(dist) / FOREST_RADIUS;
   clearColor = vec3.scaleAndAdd(
     clearColor,
@@ -285,11 +289,13 @@ function main() {
     stats.begin();
 
     instancedShader.setTime(time);
+    instancedShader.setForestRadius(FOREST_RADIUS);
+
     postShader.setTime(time++);
     postShader.setForestRadius(FOREST_RADIUS);
     postShader.setTransitionType(prevTransitionType);
+
     lambert.setForestRadius(FOREST_RADIUS);
-    instancedShader.setForestRadius(FOREST_RADIUS);
 
     leafShader.setForestRadius(FOREST_RADIUS);
     leafShader.setTime(time);
@@ -330,7 +336,7 @@ function main() {
       renderer.render(player, camera, lambert, [terrainClass]);
       renderer.render(player, camera, instancedShader, treeBases);
       renderer.render(player, camera, instancedShader, treeBranches);
-      renderer.render(player, camera, instancedShader, treeLeaves);
+      renderer.render(player, camera, leafShader, treeLeaves);      
       // nothing should appear bc we are rendering to the buffer
 
       //2. Bind to the default framebuffer.

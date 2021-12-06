@@ -21,9 +21,9 @@ void main()
     vec4 fs_LightVec = vec4(10.0, 10.0, 10.0, 1.0);
     float diffuseTerm = dot(normalize(fs_Nor), normalize(fs_LightVec));
     // Avoid negative lighting values
-    diffuseTerm = clamp(diffuseTerm, 0.15, 1.0);
+    diffuseTerm = clamp(diffuseTerm, 0.1, 0.7);
 
-    float ambientTerm = 0.4;
+    float ambientTerm = 0.1;
 
     float lightIntensity = diffuseTerm + ambientTerm;   //Add a small float value to the color multiplier
                                                         //to simulate ambient lighting. This ensures that faces that are not

@@ -86,6 +86,8 @@ class Mesh extends Drawable {
     gl.bufferData(gl.ARRAY_BUFFER, this.uvs, gl.STATIC_DRAW);
 
     this.objString = "";
+
+    //console.log("created Mesh");
   }
 
   setInstanceVBOs(

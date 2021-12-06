@@ -16,14 +16,14 @@ class Terrain extends Drawable {
   constructor() {
     super();
     this.origin = vec3.fromValues(0, 0, 0);
-    this.sideLength = 200;
+    this.sideLength = 225;
     this.squareDims = 20;
   }
 
   noise(x: number, z: number) {
     // REALLY BASIC NOISE FOR NOW
-    // return(Math.sin(x + z));
-    return 0.0;
+    return(4 * Math.sin(x + z));
+   //return 0.0;
   }
 
   create() {
@@ -34,17 +34,17 @@ class Terrain extends Drawable {
 
     let numFaces = this.sideLength * this.sideLength;
 
-    for (let i = 0; i < this.sideLength; i++) {
-      for (let j = 0; j < this.sideLength; j++) {
+    for (let i = this.origin[0]; i < this.sideLength; i++) {
+      for (let j = this.origin[2]; j < this.sideLength; j++) {
         // offset x and z so we always start drawing boxes at the right position
         let x = i * this.squareDims;
         let z = j * this.squareDims;
 
         // create square at x, z
-        let y0 = this.noise(x, z);
-        let y1 = this.noise(x + this.squareDims, z);
-        let y2 = this.noise(x + this.squareDims, z + this.squareDims);
-        let y3 = this.noise(x, z + this.squareDims);
+        let y0 = this.origin[1] + this.noise(x, z);
+        let y1 = this.origin[1] + this.noise(x + this.squareDims, z);
+        let y2 = this.origin[1] + this.noise(x + this.squareDims, z + this.squareDims);
+        let y3 = this.origin[1] + this.noise(x, z + this.squareDims);
 
         // push position vertices
 

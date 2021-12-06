@@ -119,10 +119,10 @@ class LSystem {
       // let rule2: ExpansionRule = new ExpansionRule();
       // rule2.addOutput("[+FX][-FX][*FX][/FX][&FX][^FX]", 1.0);
       // this.expansionRules.set("X", rule2);
-      if (this.distFromPlayer < 30) {
+      if (this.distFromPlayer < 20) {
         let rule1: ExpansionRule = new ExpansionRule();
-        rule1.addOutput("F[B#]//[+BX#]//BX", 0.5);
-        rule1.addOutput("^[F#]**[B]", 0.5)
+        rule1.addOutput("F[BF#]//[+BXF#]//BX[F#]", 0.5);
+        rule1.addOutput("^[F#]**[B#]", 0.5)
         this.expansionRules.set("X", rule1);
   
         let rule2: ExpansionRule = new ExpansionRule();
@@ -131,7 +131,7 @@ class LSystem {
         //rule2.addOutput("&BX//+", 0.3);
         this.expansionRules.set("B", rule2);
       }
-      else if (this.distFromPlayer < 100) {
+      else if (this.distFromPlayer < 80) {
         let rule1: ExpansionRule = new ExpansionRule();
         rule1.addOutput("F[B#]//[+BX#]//BX", 1.0);
         this.expansionRules.set("X", rule1);
@@ -141,8 +141,8 @@ class LSystem {
         this.expansionRules.set("B", rule2);
       } else {
         let rule1: ExpansionRule = new ExpansionRule();
-        rule1.addOutput("FFB/+[BFXFFFF#]/-BFFFFFFX#/", 0.7);
-        rule1.addOutput("F+[XFF#]/BFFF+#", 0.3);
+        rule1.addOutput("FFB/+[BFXFFFF#]/-BFFFFFFX/", 0.7);
+        rule1.addOutput("F+[XFF#]/BFFF+", 0.3);
         this.expansionRules.set("X", rule1);
   
         let rule2: ExpansionRule = new ExpansionRule();
@@ -233,7 +233,12 @@ class LSystem {
       // Calculate transformation
       let transform: mat4 = mat4.create();
       let q: quat = quat.create();
-      let s : vec3 = vec3.scale(vec3.create(), vec3.fromValues(6.5, 6.5, 6.5), 2.0);
+
+      let scaleX = Math.random() * 6.0 + 4.5;
+      let scaleY = Math.random() * 6.0 + 4.5;
+      let scaleZ = Math.random() * 6.0 + 4.5;
+
+      let s : vec3 = vec3.scale(vec3.create(), vec3.fromValues(scaleX, scaleY, scaleZ), 2.0);
       quat.fromMat3(q, this.turtle.orientation);
       mat4.fromRotationTranslationScale(
         transform,
