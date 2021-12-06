@@ -320,14 +320,6 @@ public class WaveFunctionCollapse : MonoBehaviour
             TileBase tile = output.GetTile(t);
             if (tile != null) 
             {
-                if (!tileWeights.ContainsKey(tile))
-                {
-                    tileWeights.Add(tile, 1);
-                }
-                else
-                {
-                    tileWeights[tile] += 1;
-                }
                 if (!tileConstraints.ContainsKey(tile))
                 {
                     Dictionary<Direction, HashSet<TileBase>> nDict = new Dictionary<Direction, HashSet<TileBase>>();
