@@ -70,8 +70,10 @@ This week, Serena and Di implemented better L-systems grammar although now we ar
 ## Post-Mortem:
 
 ### How'd it go overall?
+It went well! After we had the basic framework (tree and terrain generation, player physics, post-processing support), we were able to get creative. We discovered grammars, colors, textures, shaders and even music that fit the spooky theme and add some spice to our generator.
 
 ### Did we accomplish our goals?
+We did! 
 
 ### Did we have to pivot?
-
+Not really. We chose a project that was in-scope, so we were able to be true to the theme and our original ideas.
