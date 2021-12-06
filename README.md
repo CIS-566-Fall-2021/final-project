@@ -27,17 +27,31 @@ We intend to make a city generator in NYC style with procedural roads and buildi
 ![](./Design.png)
 
 ## Final Submission:
-### Final Results:
-#### Result in Houdini: 
+### Final Result in Houdini: 
 ![](houdini_result_1.png)
 
 ![](houdini_result_2.png)
 
 ![](houdini_result_3.png)
 
-#### Control Parameters:
+### Control Parameters:
+#### City:
+- ```City Grid Size``` : define the overall boundary of the city 
+- ```Road Desity``` :   
+- ```Random Seed```: add some randomness 
+- ```Street Light Interval```: the interval between street lights 
+- ```Citizen Number```:  number of citizen scattered 
+- ```Sidewalk Color``` ```Road Color``` ```Pedestrian color``` ```Street Lamp Color```: define the color of sidewalk, road, pedestrian and streep lamp
 
-#### Result in Unreal Engine 4
+#### Building:
+- ```Height``` ```Width``` ```Depth```: define the dimesion of the building
+- ```Lower level wall type``` : switch between different mesh for lower level wall
+- ```Upper level wall type``` : switch between different mesh for upper level wall
+- ```Upper level window``` : the frequency of windows at upper level
+- ```Upper level door``` : the frequency of doors at upper level
+
+
+### Final Result in Unreal Engine 4
 
 ### Post Mortem:
 #### Accomplished: 
