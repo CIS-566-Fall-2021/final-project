@@ -1,66 +1,159 @@
 # Final Project!
 
-This is it! The culmination of your procedural graphics experience this semester. For your final project, we'd like to give you the time and space to explore a topic of your choosing. You may choose any topic you please, so long as you vet the topic and scope with an instructor or TA. We've provided some suggestions below. The scope of your project should be roughly 1.5 homework assignments). To help structure your time, we're breaking down the project into 4 milestones:
-
-## Milestone 1: Project planning (due 11/15)
-Before submitting your first milestone, _you must get your project idea and scope approved by Rachel, Adam or a TA._
-
-### Design Doc
-Start off by forking this repository. In your README, write a design doc to outline your project goals and implementation plan. It must include the following sections:
+Demo: https://jakelem.github.io/final-project/
 
 #### Introduction
-- What motivates your project?
+For this project, I will create a WebGL-based procedural bird generator that mimics the style of scientific illustrations. This will be based on an SDF generator connected to a post-process shader pipeline. Users will be able to modify the bird's anatomy and colors using various dat.GUI parameters.
 
 #### Goal
-- What do you intend to achieve with this project?
+My goal is to build a parameterized and highly stylized toy that incorporates  2D and 3D SDF modeling along with NPR stylizations for crosshatching and painterly rendering.
+
 
 #### Inspiration/reference:
-- You must have some form of reference material for your final project. Your reference may be a research paper, a blog post, some artwork, a video, another class at Penn, etc.  
-- Include in your design doc links to and images of your reference material.
+<p align="center">
+<img src="images/bird1.jpeg" alt="drawing" width="200"/>
+<img src="images/bird2.jpeg" alt="drawing" width="200"/>
+<img src="images/bird3.jpeg" alt="drawing" width="400"/>
+</p>
+<p align= "center">
 
 #### Specification:
-- Outline the main features of your project.
+- Bird SDF Generator: A bird model constructed using SDF modeling. This will be structured based on a scene graph. Different aspects of the bird (such as beak size/shape, wing size, etc.) will be editable through the WebGL GUI.
+
+- Procedural bird textures: These will be generated using noise and 2D SDFs, then projected onto the bird SDF model. Users will be able to control the bird's color palette through the WebGL GUI as well.
+
+- Scientific illustration shading model: A combination of cross hatching, edge detection, and painterly rendering filters. These will all be done in a single GLSL post-process shader and layered on top of one another. For painterly rendering, I will adapt the shading model from the paper Art-directed watercolor stylization of 3D animations in real-time, by Montesdeoca et al, which I previously worked with in my Senior Design project last year.
 
 #### Techniques:
-- What are the main technical/algorithmic tools you’ll be using? Give an overview, citing specific papers/articles.
+- Cross Hatching using Tonal Art Maps: https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.9.5039&rep=rep1&type=pdf
+
+- Cross Hatching in a shader: https://www.shadertoy.com/view/MsKfRw
+
+- Watercolor shading model: https://artineering.io/publications/Art-Directed-Watercolor-Stylization-of-3D-Animations-in-Real-Time/
 
 #### Design:
-- How will your program fit together? Make a simple free-body diagram illustrating the pieces.
+<p align="center">
+<img src="images/design.png" alt="drawing" width="500"/>
+</p>
+<p align= "center">
 
 #### Timeline:
-- Create a week-by-week set of milestones for each person in your group. Make sure you explicitly outline what each group member's duties will be.
+- Week 1: Implement base WebGL pipeline that allows buffers to be passed properly between SDF flat shader, post process shader, and final output buffer. Create base SDF bird model with flat shading and noise-based textures.
+
+- Week 2: Complete scientific illustration model with cross hatching and painterly shading. Continue refining bird model, refine lighting, and create 2D SDF textures.
+
+- Week 3: Refine bird scene and post process shaders. Add background/polish elements such as tree trunk and shadowed floor.
 
 Submit your Design doc as usual via pull request against this repository.
 ## Milestone 2: Implementation part 1 (due 11/22)
-Begin implementing your engine! Don't worry too much about polish or parameter tuning -- this week is about getting together the bulk of your generator implemented. By the end of the week, even if your visuals are crude, the majority of your generator's functionality should be done.
 
-Put all your code in your forked repository.
+#### Progress:
 
-Submission: Add a new section to your README titled: Milestone #1, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what's giving you trouble?
-- Examples of your generators output so far
-We'll check your repository for updates. No need to create a new pull request.
+- Implemented WebGL pipeline with post process shader (currently a no operation passthrough).
+
+- Modeled basic bird anatomy with SDFs.
+
+- Added several parameters for bird generation, such as weight, skull size, and beak size.
+
+#### Output Examples:
+<p align="center">
+<img src="images/m2_bird1.png" alt="drawing" width="400"/>
+</p>
+<p align= "center">
+
+<p align="center">
+<img src="images/m2_bird2.png" alt="drawing" width="400"/>
+</p>
+<p align= "center">
+
+<p align="center">
+<img src="images/m2_bird3.png" alt="drawing" width="400"/>
+</p>
+<p align= "center">
+
+<p align="center">
+<img src="images/m2_bird4.png" alt="drawing" width="400"/>
+</p>
+<p align= "center">
+
 ## Milestone 3: Implementation part 2 (due 11/29)
-We're over halfway there! This week should be about fixing bugs and extending the core of your generator. Make sure by the end of this week _your generator works and is feature complete._ Any core engine features that don't make it in this week should be cut! Don't worry if you haven't managed to exactly hit your goals. We're more interested in seeing proof of your development effort than knowing your planned everything perfectly. 
+#### Progress:
+- Implemented various procedural bird textures that are projected onto the bird. These are a combination of sin-wave based textures and 2D SDF textures.
 
-Put all your code in your forked repository.
+- Created custom shading model in order to simulate colored pencil drawing/tapestry. This takes aspects of the watercolor and hatching shading models and plays around with parameters for a new aesthetic. Much of the coloring is done through textures rather than actual physically based lighting, because I wanted it to look like a flat illustration. In the current pipeline, I take the luminosity values from the fragment shader and passes them to the post process shader as a displacement map, which is then used to offset the normals of the flat image. This creates an embossed effect and gives a little more dimensionality to the output.
 
-Submission: Add a new section to your README titled: Milestone #3, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what did you have to cut and why? 
-- Detailed output from your generator, images, video, etc.
-We'll check your repository for updates. No need to create a new pull request.
+- The final result doesn't really look like a hand drawn illustration, so I want to play around more for the final milestone and try to match my references as closely as I can.
 
-Come to class on the due date with a WORKING COPY of your project. We'll be spending time in class critiquing and reviewing your work so far.
+#### Output Examples:
+<p align="center">
+<img src="images/m3_bird1.png" alt="drawing" width="400"/>
+</p>
+<p align= "center">
+
+<p align="center">
+<img src="images/m3_bird2.png" alt="drawing" width="400"/>
+</p>
+<p align= "center">
+
+<p align="center">
+<img src="images/m3_bird3.png" alt="drawing" width="400"/>
+</p>
+<p align= "center">
+
+<p align="center">
+<img src="images/m3_bird4.png" alt="drawing" width="400"/>
+</p>
+<p align= "center">
+
+<p align="center">
+<img src="images/m3_bird6.png" alt="drawing" width="400"/>
+</p>
+<p align= "center">
 
 ## Final submission (due 12/6)
-Time to polish! Spen this last week of your project using your generator to produce beautiful output. Add textures, tune parameters, play with colors, play with camera animation. Take the feedback from class critques and use it to take your project to the next level.
 
-Submission:
-- Push all your code / files to your repository
-- Come to class ready to present your finished project
-- Update your README with two sections 
-  - final results with images and a live demo if possible
-  - post mortem: how did your project go overall? Did you accomplish your goals? Did you have to pivot?
+#### Final Progress:
+- Added a randomize button that toggles all bird parameters.
+- Made the bird's eyes follow the camera.
+- Added an FBM based paper texture in the background that distorts the bird based on substrate height.
+- Added parameters for wing design, posture, and body length.
+- Enabled flat coloring as a potential random texture on the bird.
+- Added subtle edge darkening/detection.
+- Refined various parameters and fixed bugs to make shading model look more hand-drawn.
+
+#### Output Examples:
+<p align="center">
+<img src="images/m4_bird1.png" alt="drawing" width="400"/>
+</p>
+<p align= "center">
+
+<p align="center">
+<img src="images/m4_bird2.png" alt="drawing" width="400"/>
+</p>
+<p align= "center">
+
+<p align="center">
+<img src="images/m4_bird3.png" alt="drawing" width="400"/>
+</p>
+<p align= "center">
+
+<p align="center">
+<img src="images/m4_bird4.png" alt="drawing" width="400"/>
+</p>
+<p align= "center">
+
+<p align="center">
+<img src="images/m4_bird6.png" alt="drawing" width="400"/>
+</p>
+<p align= "center">
+
+<p align="center">
+<img src="images/m4_bird7.png" alt="drawing" width="400"/>
+</p>
+<p align= "center">
+
+#### Post Mortem:
+I think the project went fairly smoothly, and I got to go deep into SDF design and 2D texture generation in a really fun way. I feel like I accomplished my basic goals of having a generator and shading model, but I definitely feel like both could still be refined with more time. Specifically, I want to add more detail to the bird's feathers and play around with alpha blending in order to render more complex bird designs. I also want to add small refinements like edge blurring and anti aliasing to make the bird as clean as possible. There are also other textures such as fur that I still want to experiment with. Finally, I want to optimize the SDF shader so that the toy can run as smoothly and quickly as possible.  
 
 ## Topic Suggestions
 
@@ -68,7 +161,7 @@ Submission:
 
 ### A CLASSIC 4K DEMO
 - In the spirit of the demo scene, create an animation that fits into a 4k executable that runs in real-time. Feel free to take inspiration from the many existing demos. Focus on efficiency and elegance in your implementation.
-- Example: 
+- Example:
   - [cdak by Quite & orange](https://www.youtube.com/watch?v=RCh3Q08HMfs&list=PLA5E2FF8E143DA58C)
 
 ### A RE-IMPLEMENTATION
