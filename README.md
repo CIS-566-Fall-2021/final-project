@@ -68,3 +68,10 @@ We have the road and building generation working seperately now. This week we fo
 
 ### Issues & planning:
 Next we are going to combine building and road generation together and polish them. Right now everything is plain colored so we will probably add some textures. We have to work on more about tiling to ensure there is no weird repetition. 
+
+## Final Submission:
+### Final Results:
+
+### Post Mortem:
+- Accomplished:
+- Not Accomplished:
