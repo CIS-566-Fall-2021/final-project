@@ -21,6 +21,7 @@ class Board
         }
     }
 
+    // not used
     public override int GetHashCode()
     {
         int hashCode = 0;
@@ -67,7 +68,9 @@ public class WaveFunctionCollapse : MonoBehaviour
 {
     public int maxIterations = 1000;
 
-    public bool weighted = true;
+    private bool weighted = true;
+
+    private bool drawOutput = false;
 
     [SerializeField]
     InputManager inputManager;
@@ -82,6 +85,9 @@ public class WaveFunctionCollapse : MonoBehaviour
 
     [SerializeField]
     private Tilemap output;
+
+    [SerializeField]
+    private Tilemap outputDraw;
     
     [SerializeField]
     private TileBase fallbackTile;
@@ -139,30 +145,31 @@ public class WaveFunctionCollapse : MonoBehaviour
         float startTime = Time.time;
         InitializeConstraints();
 
-        InitializeWFC();
-
-        int i = 0;
-        while (!IsBoardConverged() && i < maxIterations)
+        if(!InitializeWFC())
         {
-            yield return new WaitUntil(PerformWFC);
-            i++;
+            int i = 0;
+            while (!IsBoardConverged() && i < maxIterations)
+            {
+                yield return new WaitUntil(PerformWFC);
+                i++;
+            }
+
+            bool converged = IsBoardConverged();
+            Debug.Log("Iterations: " + i);
+            Debug.Log("Converged: " + converged);
+
+            if (i >= maxIterations && !converged)
+            {
+                inputManager.ShowError("Could not fix conflicts! Change the input tilemap.");
+            }
+
+            Debug.Log("Time Elapsed: " + (Time.time - startTime));
         }
-
-        bool converged = IsBoardConverged();
-        Debug.Log("Iterations: " + i);
-        Debug.Log("Converged: " + converged);
-
-        if (i >= maxIterations && !converged)
+        else
         {
-            Debug.Log("Maxed iterations but did not converge! Refine the input tilemap more.");
+            inputManager.ShowError("Starting output has conflicts!");
         }
-
         firstTile = false;
-
-        // SetAllTiles();
-        // output.RefreshAllTiles();
-
-        Debug.Log("Time Elapsed: " + (Time.time - startTime));
         yield return null;
         running = false;
         inputManager.ToggleInput(true);
@@ -229,7 +236,7 @@ public class WaveFunctionCollapse : MonoBehaviour
         }
     }
 
-    void InitializeWFC()
+    bool InitializeWFC()
     {
         // boardBlacklist = new HashSet<Board>();
         history = new Stack<Board>();
@@ -240,25 +247,146 @@ public class WaveFunctionCollapse : MonoBehaviour
         int z = output.origin.z;
         seenTiles = new List<TileBase>(tileConstraints.Keys);
         // initialize set of possible tiles for every tile
+        List<Vector3Int> drawnTiles = new List<Vector3Int>();
         for (int x = outputBounds.min.x; x < outputBounds.max.x; x++) 
         {
             for (int y = outputBounds.min.y; y < outputBounds.max.y; y++) 
             {
-                output.SetTile(new Vector3Int(x, y, z), fallbackTile);
-                Dictionary<TileBase, TileBase> tileset = new Dictionary<TileBase, TileBase>();
-                foreach (TileBase tile in seenTiles)
+                if (!drawOutput)
                 {
-                    if (!tileset.ContainsKey(tile))
+                    output.SetTile(new Vector3Int(x, y, z), fallbackTile);
+                    Dictionary<TileBase, TileBase> tileset = new Dictionary<TileBase, TileBase>();
+                    foreach (TileBase tile in seenTiles)
                     {
-                        tileset.Add(tile, tile);
+                        if (!tileset.ContainsKey(tile))
+                        {
+                            tileset.Add(tile, tile);
+                        }
+                    }
+                    board.superpositions.Add(new Vector3Int(x, y, z), new List<TileBase>(tileset.Keys));
+                }
+                else
+                {
+                    TileBase drawTile = outputDraw.GetTile(new Vector3Int(x, y, z));
+                    if (drawTile != null)
+                    {
+                        Vector3Int pos = new Vector3Int(x, y, z);
+                        output.SetTile(pos, drawTile);
+                        List<TileBase> temp = new List<TileBase>();
+                        temp.Add(drawTile);
+                        output.SetTile(pos, drawTile);
+                        board.superpositions.Add(pos, temp);
+                        drawnTiles.Add(pos);
+                    }
+                    else
+                    {
+                        output.SetTile(new Vector3Int(x, y, z), fallbackTile);
+                        Dictionary<TileBase, TileBase> tileset = new Dictionary<TileBase, TileBase>();
+                        foreach (TileBase tile in seenTiles)
+                        {
+                            if (!tileset.ContainsKey(tile))
+                            {
+                                tileset.Add(tile, tile);
+                            }
+                        }
+                        board.superpositions.Add(new Vector3Int(x, y, z), new List<TileBase>(tileset.Keys));
                     }
                 }
-                board.superpositions.Add(new Vector3Int(x, y, z), new List<TileBase>(tileset.Keys));
             }
         }
         setTiles = new List<Vector3Int>(board.superpositions.Keys);
+        if (drawOutput && drawnTiles.Count > 0)
+        {
+            firstTile = true;
+            foreach (Vector3Int drawnTile in drawnTiles)
+            {
+                setTiles.Remove(drawnTile);
+            }
+            AddDrawnConstraints(drawnTiles);
+            if (RemoveStartSuperpositions(drawnTiles))
+            {
+                return true;
+            }
+        }
         // backup board state and tiles we've set randomly, in case there is a conflict
         Backup();
+        return false;
+    }
+
+    void AddDrawnConstraints(List<Vector3Int> tiles)
+    {
+        foreach (Vector3Int t in tiles)
+        {
+            TileBase tile = output.GetTile(t);
+            if (tile != null) 
+            {
+                if (!tileWeights.ContainsKey(tile))
+                {
+                    tileWeights.Add(tile, 1);
+                }
+                else
+                {
+                    tileWeights[tile] += 1;
+                }
+                if (!tileConstraints.ContainsKey(tile))
+                {
+                    Dictionary<Direction, HashSet<TileBase>> nDict = new Dictionary<Direction, HashSet<TileBase>>();
+                    nDict.Add(Direction.Left, new HashSet<TileBase>());
+                    nDict.Add(Direction.Right, new HashSet<TileBase>());
+                    nDict.Add(Direction.Up, new HashSet<TileBase>());
+                    nDict.Add(Direction.Down, new HashSet<TileBase>());
+                    tileConstraints.Add(tile, nDict);
+                }
+
+                // look at neighbors and fill in legal neighbor set
+                Dictionary<Direction, HashSet<TileBase>> neighbors = tileConstraints[tile];
+                TileBase leftN = output.GetTile(new Vector3Int(t.x - 1, t.y, t.z));
+                TileBase rightN = output.GetTile(new Vector3Int(t.x + 1, t.y, t.z));
+                TileBase upN = output.GetTile(new Vector3Int(t.x, t.y + 1, t.z));
+                TileBase downN = output.GetTile(new Vector3Int(t.x, t.y - 1, t.z));
+
+                if (leftN != null && leftN != fallbackTile)
+                {
+                    neighbors[Direction.Left].Add(leftN);
+                }
+                if (rightN != null && rightN != fallbackTile)
+                {
+                    neighbors[Direction.Right].Add(rightN);
+                }
+                if (upN != null && upN != fallbackTile)
+                {
+                    neighbors[Direction.Up].Add(upN);
+                }
+                if (downN != null && downN != fallbackTile)
+                {
+                    neighbors[Direction.Down].Add(downN);
+                }
+            }
+        }
+    }
+
+    bool RemoveStartSuperpositions(List<Vector3Int> tiles)
+    {
+        Queue<Vector3Int> tilesToEnforce = new Queue<Vector3Int>(tiles);
+        bool conflict = false;
+        while (tilesToEnforce.Count > 0)
+        {
+            List<Vector3Int> neighbors = RemoveIllegalTiles(tilesToEnforce.Dequeue());
+            foreach (Vector3Int t in neighbors)
+            {
+                if (board.superpositions[t].Count == 0)
+                {
+                    conflict = true;
+                    break;
+                }
+                tilesToEnforce.Enqueue(t);
+            }
+            if (conflict)
+            {
+                break;
+            }
+        }
+        return conflict;
     }
 
     void Backup()
@@ -560,9 +688,14 @@ public class WaveFunctionCollapse : MonoBehaviour
         }
     }
 
-    public void setWeighted()
+    public void SetWeighted()
     {
         weighted = !weighted;
+    }
+
+    public void SetDrawOutput()
+    {
+        drawOutput = !drawOutput;
     }
 
     public void SetInputTilemap(Tilemap i)
@@ -570,6 +703,18 @@ public class WaveFunctionCollapse : MonoBehaviour
         if (!running)
         {
             input = i;
+        }
+    }
+
+    public void ClearOutput()
+    {
+        int z = output.origin.z;
+        for (int x = outputBounds.min.x; x < outputBounds.max.x; x++) 
+        {
+            for (int y = outputBounds.min.y; y < outputBounds.max.y; y++) 
+            {
+                output.SetTile(new Vector3Int(x, y, z), fallbackTile);
+            }
         }
     }
 }
