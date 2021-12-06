@@ -41,15 +41,16 @@ We intend to make a city generator in NYC style with procedural roads and buildi
 
 ### Post Mortem:
 #### Accomplished: 
-- We have successfully implemented the city structure generation with roads, sidewalks, street lights, and citizens.
-- We have successfully implemented the functionality of generating a colored building.
-- We have combined the building generation and the road generation to generate a lively city with colored buildings.
-- We have successfully collapsed our houdini nodes into an HDA in which users could generate their own cities simply by adjusting some given values and click the "generate building" button.
+- City structure generation with roads, sidewalks, street lights, and citizens
+- Procedural building generation
+- Combined the building generation and the road generation to a lively city
+- Collapsed our houdini nodes into an HDA in which users could generate their own cities simply by adjusting some given values and click the "generate building" button.
+- Successfully export the HDA to Unreal Engine 4
 
 #### Have to pivot:
 - We did not use UV maps to texture the buildings. Instead, we combined geometries with color together to form a building-like geometry.
 - Due to the time limit, we are not able to generate curly roads in the city. All roads are straight.
-- Due to unknown efficiency problems, our colored buildings generated on the city structure could only be seen after we render the scene, but not visible in the viewport.
+- Due to unknown efficiency problems, our buildings generated on the city structure could only be seen after we render the scene or exported to Unreal Engine 4, but not visible in the Houdini viewport.
 
 ## Timeline:
 ### Lanqing Bao:
