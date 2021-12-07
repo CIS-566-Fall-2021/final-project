@@ -1036,7 +1036,7 @@ def gen_txt(dungeon: Dungeon, filename: str):
             # f.write('\n')
 
 if __name__ == '__main__':
-    random.seed(123456)
+    random.seed(12345)
     'w, h, p_corridor, p_door, num_types'
     dungeon = Dungeon(6, 6, 0.7, 0.75, 3)
     gen_txt(dungeon, 'dungeon.txt')
