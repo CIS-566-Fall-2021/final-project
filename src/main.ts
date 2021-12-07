@@ -25,14 +25,13 @@ let center: number[] = new Array();
 
 let wallTile: Square;
 let pathTile: Square;
-let obstacleTile: Square;
+let obstacleTile1: Square;
+let obstacleTile2: Square;
+let obstacleTile3: Square;
 let startTile: Square;
 let endTile: Square;
 let screenQuad: ScreenQuad;
 let time: number = 0.0;
-let usedSquares: Square[];
-let numberToCoords: Map<number, [number, number]>;
-let coordsToSquare: Map<[number, number], Square>;
 
 function loadTexture(gl: WebGL2RenderingContext, url: string) {
   const texture = gl.createTexture();
@@ -123,8 +122,12 @@ function loadScene(gl: WebGL2RenderingContext) {
   wallTile.create();
   pathTile = new Square();
   pathTile.create();
-  obstacleTile = new Square();
-  obstacleTile.create();
+  obstacleTile1 = new Square();
+  obstacleTile1.create();
+  obstacleTile2 = new Square();
+  obstacleTile2.create();
+  obstacleTile3 = new Square();
+  obstacleTile3.create();
 
 
   let dungeonString = readTextFile(textFilePath);
@@ -153,19 +156,26 @@ function loadScene(gl: WebGL2RenderingContext) {
 
   let pathCount = 0;
   let wallCount = 0;
-  let obstacleCount = 0;
+  let obstacleCount1 = 0;
+  let obstacleCount2 = 0;
+  let obstacleCount3 = 0;
 
   let startOffsetArray = [];
   let endOffsetArray = [];
   let pathOffsetsArray = [];
   let wallOffsetsArray = [];
-  let obstacleOffsetsArray = [];
+  let obstacleOffsets1Array = [];
+  let obstacleOffsets2Array = [];
+  let obstacleOffsets3Array = [];
 
   let startUVArray = [];
   let endUVArray = [];
   let pathUVArray = [];
   let wallUVArray = [];
-  let obstacleUVArray = [];
+  let obstacleUVArray1 = [];
+  let obstacleUVArray2 = [];
+  let obstacleUVArray3 = [];
+
 
   for (let i = 0; i < mapWidth; i++) {
     for(let j = 0; j < mapHeight; j++) {
@@ -195,27 +205,27 @@ function loadScene(gl: WebGL2RenderingContext) {
         wallUVArray.push(0.0, 0.0, 0.25, 0.0, 0.25, 0.25, 0.0, 0.25);
       }
         if (obstacleSymbol1 === symbol) {
-          obstacleCount++;
-          obstacleOffsetsArray.push(i);
-          obstacleOffsetsArray.push(j);
-          obstacleOffsetsArray.push(0);
-          obstacleUVArray.push(0.5, 0.0, 0.75, 0.0, 0.75, 0.25, 0.5, 0.25);
+          obstacleCount1++;
+          obstacleOffsets1Array.push(i);
+          obstacleOffsets1Array.push(j);
+          obstacleOffsets1Array.push(0);
+          obstacleUVArray1.push(0.5, 0.0, 0.75, 0.0, 0.75, 0.25, 0.5, 0.25);
         }
       
         if (obstacleSymbol2 === symbol) {
-          obstacleCount++;
-          obstacleOffsetsArray.push(i);
-          obstacleOffsetsArray.push(j);
-          obstacleOffsetsArray.push(0);
-          obstacleUVArray.push(0.5, 0.0, 0.75, 0.0, 0.75, 0.25, 0.5, 0.25);
+          obstacleCount2++;
+          obstacleOffsets2Array.push(i);
+          obstacleOffsets2Array.push(j);
+          obstacleOffsets2Array.push(0);
+          obstacleUVArray2.push(0.75, 0.0, 1.0, 0.0, 1.0, 0.25, 0.75, 0.25);
         }
       
         if (obstacleSymbol3 === symbol) {
-          obstacleCount++;
-          obstacleOffsetsArray.push(i);
-          obstacleOffsetsArray.push(j);
-          obstacleOffsetsArray.push(0);
-          obstacleUVArray.push(0.5, 0.0, 0.75, 0.0, 0.75, 0.25, 0.5, 0.25);
+          obstacleCount3++;
+          obstacleOffsets3Array.push(i);
+          obstacleOffsets3Array.push(j);
+          obstacleOffsets3Array.push(0);
+          obstacleUVArray3.push(0.5, 0.25, 0.75, 0.25, 0.75, 0.5, 0.5, 0.5);
         }
     }
     
@@ -224,13 +234,19 @@ function loadScene(gl: WebGL2RenderingContext) {
   let endOffset: Float32Array = new Float32Array(endOffsetArray);
   let pathOffsets: Float32Array = new Float32Array(pathOffsetsArray);
   let wallOffsets: Float32Array = new Float32Array(wallOffsetsArray);
-  let obstacleOffsets: Float32Array = new Float32Array(obstacleOffsetsArray);
+  let obstacleOffsets1: Float32Array = new Float32Array(obstacleOffsets1Array);
+  let obstacleOffsets2: Float32Array = new Float32Array(obstacleOffsets2Array);
+  let obstacleOffsets3: Float32Array = new Float32Array(obstacleOffsets3Array);
+
 
   let startUV: Float32Array = new Float32Array(startUVArray);
   let endUV: Float32Array = new Float32Array(endUVArray);
   let pathUVs: Float32Array = new Float32Array(pathUVArray);
   let wallUVs: Float32Array = new Float32Array(wallUVArray);
-  let obstacleUVs: Float32Array = new Float32Array(obstacleUVArray);
+  let obstacleUVs1: Float32Array = new Float32Array(obstacleUVArray1);
+  let obstacleUVs2: Float32Array = new Float32Array(obstacleUVArray2);
+  let obstacleUVs3: Float32Array = new Float32Array(obstacleUVArray3);
+
 
   startTile.setUVs(startUV);
   startTile.setInstanceVBOs(startOffset);
@@ -248,10 +264,17 @@ function loadScene(gl: WebGL2RenderingContext) {
   wallTile.setInstanceVBOs(wallOffsets);
   wallTile.setNumInstances(wallCount);
 
-  obstacleTile.setUVs(obstacleUVs);
-  obstacleTile.setInstanceVBOs(obstacleOffsets);
-  obstacleTile.setNumInstances(obstacleCount);
+  obstacleTile1.setUVs(obstacleUVs1);
+  obstacleTile1.setInstanceVBOs(obstacleOffsets1);
+  obstacleTile1.setNumInstances(obstacleCount1);
 
+  obstacleTile2.setUVs(obstacleUVs2);
+  obstacleTile2.setInstanceVBOs(obstacleOffsets2);
+  obstacleTile2.setNumInstances(obstacleCount2);
+
+  obstacleTile3.setUVs(obstacleUVs3);
+  obstacleTile3.setInstanceVBOs(obstacleOffsets3);
+  obstacleTile3.setNumInstances(obstacleCount3);
 }
 
 function main() {
@@ -306,7 +329,7 @@ function main() {
     renderer.clear();
     renderer.render(camera, flat, [screenQuad]);
     renderer.render(camera, instancedShader, [
-      pathTile, wallTile, obstacleTile,
+      pathTile, wallTile, obstacleTile1, obstacleTile2, obstacleTile3, startTile, endTile,
     ]);
     stats.end();
 
