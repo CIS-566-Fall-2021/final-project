@@ -15,13 +15,19 @@ const controls = {
 
 let pathSymbol: string = '_';
 let wallSymbol: string = 'x';
-let obstacleSymbols = ['1', '2', '3', '4'];
+let obstacleSymbol1 = '1';
+let obstacleSymbol2 = '2';
+let obstacleSymbol3 = '3';
+let startSymbol = '*';
+let endsSymbol = '$';
 let textFilePath: string = 'dungeon.txt';
 let center: number[] = new Array();
 
 let wallTile: Square;
 let pathTile: Square;
 let obstacleTile: Square;
+let startTile: Square;
+let endTile: Square;
 let screenQuad: ScreenQuad;
 let time: number = 0.0;
 let usedSquares: Square[];
@@ -97,21 +103,6 @@ function readTextFile(file: string): string {
   return text;
 }
 
-function mapSymbolToUV(symbol: string) {
-  if (symbol === pathSymbol) {
-    return [0.25, 0.0, 0.5, 0.0, 0.5, 0.25, 0.25, 0.25];
-  }
-  if (symbol === wallSymbol) {
-    return [0.0, 0.0, 0.25, 0.0, 0.25, 0.25, 0.0, 0.25];
-  }
-  for (let i = 0; i < obstacleSymbols.length; i++) {
-    if (obstacleSymbols[i] === symbol) {
-      return [0.5, 0.0, 0.75, 0.0, 0.75, 0.25, 0.5, 0.25];
-    }
-  }
-  return [0.0, 0.25, 0.25, 0.25, 0.25, 0.5, 0.0, 0.5];
-}
-
 function loadScene(gl: WebGL2RenderingContext) {
 
   const texture = loadTexture(gl, 'src/assets/basictex.png');
@@ -124,6 +115,10 @@ function loadScene(gl: WebGL2RenderingContext) {
 
   screenQuad = new ScreenQuad();
   screenQuad.create();
+  startTile = new Square();
+  startTile.create();
+  endTile = new Square();
+  endTile.create();
   wallTile = new Square();
   wallTile.create();
   pathTile = new Square();
@@ -149,19 +144,25 @@ function loadScene(gl: WebGL2RenderingContext) {
     }
   }
   dungeonArray.pop();
-  console.log(dungeonArray);
 
   let mapWidth = dungeonArray.length;
   let mapHeight = dungeonArray[0].length;
+
+  center.push(mapWidth);
+  center.push(mapHeight);
 
   let pathCount = 0;
   let wallCount = 0;
   let obstacleCount = 0;
 
+  let startOffsetArray = [];
+  let endOffsetArray = [];
   let pathOffsetsArray = [];
   let wallOffsetsArray = [];
   let obstacleOffsetsArray = [];
 
+  let startUVArray = [];
+  let endUVArray = [];
   let pathUVArray = [];
   let wallUVArray = [];
   let obstacleUVArray = [];
@@ -169,6 +170,16 @@ function loadScene(gl: WebGL2RenderingContext) {
   for (let i = 0; i < mapWidth; i++) {
     for(let j = 0; j < mapHeight; j++) {
       let symbol = dungeonArray[i][j];
+      if (symbol === startSymbol) {
+        startOffsetArray.push(i)
+        startOffsetArray.push(j);
+        startOffsetArray.push(0);
+        startUVArray.push(0.0, 0.25, 0.25, 0.25, 0.25, 0.5, 0.0, 0.5);
+      }
+      if (symbol === endsSymbol) {
+        endOffsetArray.push(i, j, 0);
+        endUVArray.push(0.25, 0.25, 0.5, 0.25, 0.5, 0.5, 0.25, 0.5);
+      }
       if (symbol === pathSymbol) {
         pathCount++;
         pathOffsetsArray.push(i);
@@ -183,24 +194,51 @@ function loadScene(gl: WebGL2RenderingContext) {
         wallOffsetsArray.push(0);
         wallUVArray.push(0.0, 0.0, 0.25, 0.0, 0.25, 0.25, 0.0, 0.25);
       }
-      for (let i = 0; i < obstacleSymbols.length; i++) {
-        if (obstacleSymbols[i] === symbol) {
+        if (obstacleSymbol1 === symbol) {
           obstacleCount++;
           obstacleOffsetsArray.push(i);
           obstacleOffsetsArray.push(j);
           obstacleOffsetsArray.push(0);
           obstacleUVArray.push(0.5, 0.0, 0.75, 0.0, 0.75, 0.25, 0.5, 0.25);
         }
-      }
+      
+        if (obstacleSymbol2 === symbol) {
+          obstacleCount++;
+          obstacleOffsetsArray.push(i);
+          obstacleOffsetsArray.push(j);
+          obstacleOffsetsArray.push(0);
+          obstacleUVArray.push(0.5, 0.0, 0.75, 0.0, 0.75, 0.25, 0.5, 0.25);
+        }
+      
+        if (obstacleSymbol3 === symbol) {
+          obstacleCount++;
+          obstacleOffsetsArray.push(i);
+          obstacleOffsetsArray.push(j);
+          obstacleOffsetsArray.push(0);
+          obstacleUVArray.push(0.5, 0.0, 0.75, 0.0, 0.75, 0.25, 0.5, 0.25);
+        }
     }
+    
   }
+  let startOffset: Float32Array = new Float32Array(startOffsetArray);
+  let endOffset: Float32Array = new Float32Array(endOffsetArray);
   let pathOffsets: Float32Array = new Float32Array(pathOffsetsArray);
   let wallOffsets: Float32Array = new Float32Array(wallOffsetsArray);
   let obstacleOffsets: Float32Array = new Float32Array(obstacleOffsetsArray);
 
+  let startUV: Float32Array = new Float32Array(startUVArray);
+  let endUV: Float32Array = new Float32Array(endUVArray);
   let pathUVs: Float32Array = new Float32Array(pathUVArray);
   let wallUVs: Float32Array = new Float32Array(wallUVArray);
   let obstacleUVs: Float32Array = new Float32Array(obstacleUVArray);
+
+  startTile.setUVs(startUV);
+  startTile.setInstanceVBOs(startOffset);
+  startTile.setNumInstances(1);
+
+  endTile.setUVs(endUV);
+  endTile.setInstanceVBOs(endOffset);
+  endTile.setNumInstances(1);
 
   pathTile.setUVs(pathUVs);
   pathTile.setInstanceVBOs(pathOffsets);
@@ -241,12 +279,12 @@ function main() {
   // Initial call to load scene
   loadScene(gl);
 
-  const camera = new Camera(vec3.fromValues(0, 0, 10), vec3.fromValues(0, 0, 0));
+  const camera = new Camera(vec3.fromValues(center[0] / 2, center[1] / 2, 10), vec3.fromValues(center[0] / 2, center[1] / 2, 0));
 
   const renderer = new OpenGLRenderer(canvas);
   renderer.setClearColor(0.2, 0.2, 0.2, 1);
   gl.enable(gl.BLEND);
-  gl.blendFunc(gl.ONE, gl.ONE); // Additive blending
+  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
   const instancedShader = new ShaderProgram([
     new Shader(gl.VERTEX_SHADER, require('./shaders/instanced-vert.glsl')),
