@@ -214,7 +214,7 @@ class Room():
                 ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
                 ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
                 ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-                ['<', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
+                ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
                 ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
                 ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
                 ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
@@ -1036,7 +1036,7 @@ def gen_txt(dungeon: Dungeon, filename: str):
             # f.write('\n')
 
 if __name__ == '__main__':
-    random.seed(1234)
+    random.seed(123456)
     'w, h, p_corridor, p_door, num_types'
     dungeon = Dungeon(4, 4, 0.5, 0.75, 3)
     gen_txt(dungeon, 'dungeon.txt')
