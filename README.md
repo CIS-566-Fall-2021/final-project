@@ -44,12 +44,15 @@ Add finishing touches like wind simulation and dust particles
 For this milestone, I followed a tutorial to make a simple flower bloom with textures. It was great to learn about animation and I have started thinking about how to edit the parameters to make the tool customizable for many different types of flowers. 
 
 # Milestone 3
+![image](renders/Active_Render.0001.0.png) ![image](renders/rose.png)
 
 ### Golden Ratio Petal Structure
 Originally, the way I was creating the petal pattern for the flower was a simple loop around a circle. However I wanted to create a tool with more complex features that outputed an organic looking flower. I found this interesting rose render: https://www.youtube.com/watch?v=SN6por9uaCI&ab_channel=MotionDesignersCommunity and followed Vladyslav Lavrenov's scene files to produce a set of points that spiral based on the golden ratio.
 
 Here is a quick summary of the algorithm used:
 For every petal in the flower, I want to calculate the petal's position by finding its polar coordinates (radius and angle). The radius is proportional to the number of petals, so that the spiral continues to grow as we increase the petals. The golden angle is added to the angle for every petal, driving the spiral's curve.
+
+![image](renders/spiral_points.PNG)
 
 ### Flower and Petal Parameters
 Parameters are categorized into flower paraemeters, for changes to the overall shape of the flower, and petal parameters, for changes to individual petals. I wanted to focus on improving the usability of the tool and fine tuning the parameters of the petal subnetwork to maximize flower variance and allow artistic specificity. 
