@@ -13,7 +13,7 @@ Our dragonfly generator is an hda, Houdini Digital Asset, that you can install a
 
 We wanted to create not only an hda but also a render which showcases a potential use for our tool. We were inspired by images of of swarms and groups of dragonfly and artistic renderings of these groups.
 
-#References 
+# References 
 
 ![](/images/dragonflySwarm.jpeg)
 
@@ -31,6 +31,10 @@ TODO (should we just share the otl? What is the proper way to make an hda access
 # Usage
 | Parameter | Default | Description |
 | --------- | ----- | ----------- |
+| Random Seed | 9 | Seed value used to randomize the parameters|
+|Randomize Checkbox | off | this checkbox changes the dragonfly from using parameters to be randomly generated |
+| | |
+| | |
 | Tail Divisions | 3 | Number of tail segments | 
 | Tail Division Size | 1 | Length of each tail segment |
 | Tail Length | 1.15 | Total Length of the tail |
@@ -39,6 +43,8 @@ TODO (should we just share the otl? What is the proper way to make an hda access
 | | |
 | Top Wing Taper | 1.1 | Width of the tips of the top wings |
 | Top Wing Angle | 0 | Controls curve of the top wings |
+| Bottom Wing Taper | 1.1 | Width of the inside tips of the bottom wings |
+| Bottom Wing Angle | 0 | Controls curve of the bottom wings |
 | | |
 | | |
 | | |
