@@ -57,7 +57,7 @@ This week, Serena and Di implemented player state, player movement, random scatt
 
 Milestone 2:
 
-![image](bloopes/Progress2Trees.png)
+![](bloopes/progress2Trees.png)
 ![](bloopes/christ above.png)
 ![](bloopes/lovecraftian.png)
 
