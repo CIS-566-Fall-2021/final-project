@@ -51,4 +51,7 @@ Or
 | Tinge Wings with Body Color | on | Let some of the body color seep into the wings |
 | Color Coverage | 0.9 | Amount of black in the tail |
 
+# Milestone Upates
+
+We have a different file with the milestone updates includign for the final upload as well as a video demo of the tool
 
