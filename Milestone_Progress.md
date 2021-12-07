@@ -152,6 +152,17 @@ This week, I worked on generating the veins in a more procedural fashion so that
 
 ## Final Progress
 
+![](/images/dragonflySwarm.jpeg)
+
+![](/images/dragonflySwarm2.jpeg)
+
+![](images/dragonflyGroup.png)
+
 ## Emma
 
 This week I focused on adding a few more features based on in class critique as well as finalizing elements and polishing to create the render and final HDA. Based on some addional feedback during critue last week I added some more parameters to artistically control the wings. The user can now edit the end taper amount and the angle of the wing for the top wing and the inside taper amount and the angle of the wing for the bottom of the wing as well as the "flapability" of the wing to make the dragonfly look more dynamic. We also wanted to add a feature to help create a wide variety of dragonflies quickly. I created a checkbox that creates a dragonfly with randomized version of all of the attributes based off a an input seed. The seed parameter can be adjusted to create a variety of different creatures. The randomize checkbox is used for the render shown in the readme. When the checkbox is on it also greys out the rest of the parameters to reinformce that the randomess is different from setting the parameters  yourself. In addition to adding new features I also worked on polsihing some aspects as well. I modified the head and eyes so that the eyes growth with the head size but can also be independently scaled. I also worked to make the individual elements of the body relative to each other. To do this I used the bbox expression in conjunction with my transforms. Ashely did most of the texturing but I added an additional material for the eyes so that the eyes could be a separate color from the body. 
+
+## Ashley
+I focused on texturing the body and wings this week, and on creating a basic material network. The tinge of black on the front of the tail was calculated simply based on z-distance (this works because the changes are local -- any transformations to the dragonfly afterwards will not affect this). The lines of the tails were highlighted in black based on similarity to world up. 
+
+The body just has a darker color on the top, with some color noise applied to make it look less normalized. The wings are tinged with the body colors, and interpolated based on distance from the x-origin. 
