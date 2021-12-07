@@ -13,13 +13,18 @@ import ShaderProgram, {Shader} from './rendering/gl/ShaderProgram';
 const controls = {
 };
 
+let roomW = 11;
+let roomH = 11;
+
 let pathSymbol: string = '_';
 let wallSymbol: string = 'x';
 let obstacleSymbol1 = '1';
 let obstacleSymbol2 = '2';
 let obstacleSymbol3 = '3';
+let obstacleSymbol4 = '4';
 let startSymbol = '*';
 let endsSymbol = '$';
+
 let textFilePath: string = 'dungeon.txt';
 let center: number[] = new Array();
 
@@ -28,6 +33,11 @@ let pathTile: Square;
 let obstacleTile1: Square;
 let obstacleTile2: Square;
 let obstacleTile3: Square;
+let obstacleTile4: Square;
+let keyTile1: Square;
+let keyTile2: Square;
+let keyTile3: Square;
+let keyTile4: Square;
 let startTile: Square;
 let endTile: Square;
 let screenQuad: ScreenQuad;
@@ -102,6 +112,13 @@ function readTextFile(file: string): string {
   return text;
 }
 
+function isObstacle(roomWidth: number, roomHeight: number, valx: number, valy: number) {
+  return ((valx % roomWidth == 0) && (valy % roomHeight == Math.floor(roomHeight / 2))) || 
+  ((valx % roomWidth == roomWidth - 1) && (valy % roomHeight == Math.floor(roomHeight / 2))) ||
+  ((valx % roomWidth == Math.floor(roomWidth / 2)) && (valy % roomHeight == 0)) ||
+  ((valx % roomWidth == Math.floor(roomWidth / 2)) && (valy % roomHeight == roomHeight - 1))
+}
+
 function loadScene(gl: WebGL2RenderingContext) {
 
   const texture = loadTexture(gl, 'src/assets/basictex.png');
@@ -128,7 +145,16 @@ function loadScene(gl: WebGL2RenderingContext) {
   obstacleTile2.create();
   obstacleTile3 = new Square();
   obstacleTile3.create();
-
+  obstacleTile4 = new Square();
+  obstacleTile4.create();
+  keyTile1 = new Square();
+  keyTile1.create();
+  keyTile2 = new Square();
+  keyTile2.create();
+  keyTile3 = new Square();
+  keyTile3.create();
+  keyTile4 = new Square();
+  keyTile4.create();
 
   let dungeonString = readTextFile(textFilePath);
 
@@ -159,6 +185,11 @@ function loadScene(gl: WebGL2RenderingContext) {
   let obstacleCount1 = 0;
   let obstacleCount2 = 0;
   let obstacleCount3 = 0;
+  let obstacleCount4 = 0;
+  let keyCount1 = 0;
+  let keyCount2 = 0;
+  let keyCount3 = 0;
+  let keyCount4 = 0;
 
   let startOffsetArray = [];
   let endOffsetArray = [];
@@ -167,6 +198,11 @@ function loadScene(gl: WebGL2RenderingContext) {
   let obstacleOffsets1Array = [];
   let obstacleOffsets2Array = [];
   let obstacleOffsets3Array = [];
+  let obstacleOffsets4Array = [];
+  let keyOffsetsArray1 = [];
+  let keyOffsetsArray2 = [];
+  let keyOffsetsArray3 = [];
+  let keyOffsetsArray4 = [];
 
   let startUVArray = [];
   let endUVArray = [];
@@ -175,7 +211,11 @@ function loadScene(gl: WebGL2RenderingContext) {
   let obstacleUVArray1 = [];
   let obstacleUVArray2 = [];
   let obstacleUVArray3 = [];
-
+  let obstacleUVArray4 = [];
+  let keyUVArray1 = [];
+  let keyUVArray2 = [];
+  let keyUVArray3 = [];
+  let keyUVArray4 = [];
 
   for (let i = 0; i < mapWidth; i++) {
     for(let j = 0; j < mapHeight; j++) {
@@ -186,10 +226,12 @@ function loadScene(gl: WebGL2RenderingContext) {
         startOffsetArray.push(0);
         startUVArray.push(0.0, 0.25, 0.25, 0.25, 0.25, 0.5, 0.0, 0.5);
       }
+     
       if (symbol === endsSymbol) {
         endOffsetArray.push(i, j, 0);
         endUVArray.push(0.25, 0.25, 0.5, 0.25, 0.5, 0.5, 0.25, 0.5);
       }
+      
       if (symbol === pathSymbol) {
         pathCount++;
         pathOffsetsArray.push(i);
@@ -197,6 +239,7 @@ function loadScene(gl: WebGL2RenderingContext) {
         pathOffsetsArray.push(0);
         pathUVArray.push(0.25, 0.0, 0.5, 0.0, 0.5, 0.25, 0.25, 0.25);
       }
+      
       if (symbol === wallSymbol) {
         wallCount++;
         wallOffsetsArray.push(i);
@@ -204,31 +247,69 @@ function loadScene(gl: WebGL2RenderingContext) {
         wallOffsetsArray.push(0);
         wallUVArray.push(0.0, 0.0, 0.25, 0.0, 0.25, 0.25, 0.0, 0.25);
       }
-        if (obstacleSymbol1 === symbol) {
+      
+      if (obstacleSymbol1 === symbol) { // BLUE-GREY
+        if (!isObstacle(roomW, roomH, i, j)) {
+          keyCount1++;
+          keyOffsetsArray1.push(i, j, 0);
+          keyUVArray1.push(.75, .5, 1.0, .5, 1.0, .75, .75, .75);
+        }
+        else {
           obstacleCount1++;
           obstacleOffsets1Array.push(i);
           obstacleOffsets1Array.push(j);
           obstacleOffsets1Array.push(0);
           obstacleUVArray1.push(0.5, 0.0, 0.75, 0.0, 0.75, 0.25, 0.5, 0.25);
         }
-      
-        if (obstacleSymbol2 === symbol) {
+      }
+    
+      if (obstacleSymbol2 === symbol) { // GREEN
+        if (!isObstacle(roomW, roomH, i, j)) {
+          console.log(i, j);
+          keyCount2++;
+          keyOffsetsArray2.push(i, j, 0);
+          keyUVArray2.push(.25, .5, .5, .5, .5, .75, .25, .75);
+        }
+        else {
+          console.log(i, j);
           obstacleCount2++;
           obstacleOffsets2Array.push(i);
           obstacleOffsets2Array.push(j);
           obstacleOffsets2Array.push(0);
           obstacleUVArray2.push(0.75, 0.0, 1.0, 0.0, 1.0, 0.25, 0.75, 0.25);
+        }   
+      }
+    
+      if (obstacleSymbol3 === symbol) { // PINK-PURPLE
+        if (!isObstacle(roomW, roomH, i, j)) {
+          keyCount3++;
+          keyOffsetsArray3.push(i, j, 0);
+          keyUVArray3.push(.5, .5, .75, .5, .75, .75, .5, .75);
         }
-      
-        if (obstacleSymbol3 === symbol) {
+        else {
           obstacleCount3++;
           obstacleOffsets3Array.push(i);
           obstacleOffsets3Array.push(j);
           obstacleOffsets3Array.push(0);
           obstacleUVArray3.push(0.5, 0.25, 0.75, 0.25, 0.75, 0.5, 0.5, 0.5);
         }
+      }
+
+      if (obstacleSymbol4 === symbol) { // RED
+        if (!isObstacle(roomW, roomH, i, j)) {
+          keyCount4++;
+          keyOffsetsArray4.push(i, j, 0);
+          keyUVArray4.push(.0, .5, .25, .5, .25, .75, .0, .75);
+        }
+        else {
+          obstacleCount4++;
+          obstacleOffsets4Array.push(i);
+          obstacleOffsets4Array.push(j);
+          obstacleOffsets4Array.push(0);
+          obstacleUVArray4.push(0.75, 0.25, 1., 0.25, 1., 0.5, 0.75, 0.5);
+        }
+      }
     }
-    
   }
   let startOffset: Float32Array = new Float32Array(startOffsetArray);
   let endOffset: Float32Array = new Float32Array(endOffsetArray);
@@ -237,6 +318,11 @@ function loadScene(gl: WebGL2RenderingContext) {
   let obstacleOffsets1: Float32Array = new Float32Array(obstacleOffsets1Array);
   let obstacleOffsets2: Float32Array = new Float32Array(obstacleOffsets2Array);
   let obstacleOffsets3: Float32Array = new Float32Array(obstacleOffsets3Array);
+  let obstacleOffsets4: Float32Array = new Float32Array(obstacleOffsets4Array);
+  let keyOffsets1: Float32Array = new Float32Array(keyOffsetsArray1);
+  let keyOffsets2: Float32Array = new Float32Array(keyOffsetsArray2);
+  let keyOffsets3: Float32Array = new Float32Array(keyOffsetsArray3);
+  let keyOffsets4: Float32Array = new Float32Array(keyOffsetsArray4);
 
 
   let startUV: Float32Array = new Float32Array(startUVArray);
@@ -246,7 +332,11 @@ function loadScene(gl: WebGL2RenderingContext) {
   let obstacleUVs1: Float32Array = new Float32Array(obstacleUVArray1);
   let obstacleUVs2: Float32Array = new Float32Array(obstacleUVArray2);
   let obstacleUVs3: Float32Array = new Float32Array(obstacleUVArray3);
-
+  let obstacleUVs4: Float32Array = new Float32Array(obstacleUVArray4);
+  let keyUVs1: Float32Array = new Float32Array(keyUVArray1);
+  let keyUVs2: Float32Array = new Float32Array(keyUVArray2);
+  let keyUVs3: Float32Array = new Float32Array(keyUVArray3);
+  let keyUVs4: Float32Array = new Float32Array(keyUVArray4);
 
   startTile.setUVs(startUV);
   startTile.setInstanceVBOs(startOffset);
@@ -275,6 +365,26 @@ function loadScene(gl: WebGL2RenderingContext) {
   obstacleTile3.setUVs(obstacleUVs3);
   obstacleTile3.setInstanceVBOs(obstacleOffsets3);
   obstacleTile3.setNumInstances(obstacleCount3);
+
+  obstacleTile4.setUVs(obstacleUVs4);
+  obstacleTile4.setInstanceVBOs(obstacleOffsets4);
+  obstacleTile4.setNumInstances(obstacleCount4);
+
+  keyTile1.setUVs(keyUVs1);
+  keyTile1.setInstanceVBOs(keyOffsets1);
+  keyTile1.setNumInstances(keyCount1);
+
+  keyTile2.setUVs(keyUVs2);
+  keyTile2.setInstanceVBOs(keyOffsets2);
+  keyTile2.setNumInstances(keyCount2);
+
+  keyTile3.setUVs(keyUVs3);
+  keyTile3.setInstanceVBOs(keyOffsets3);
+  keyTile3.setNumInstances(keyCount3);
+
+  keyTile4.setUVs(keyUVs4);
+  keyTile4.setInstanceVBOs(keyOffsets4);
+  keyTile4.setNumInstances(keyCount4);
 }
 
 function main() {
@@ -329,7 +439,10 @@ function main() {
     renderer.clear();
     renderer.render(camera, flat, [screenQuad]);
     renderer.render(camera, instancedShader, [
-      pathTile, wallTile, obstacleTile1, obstacleTile2, obstacleTile3, startTile, endTile,
+      pathTile, wallTile, obstacleTile1, 
+      obstacleTile2, obstacleTile3, 
+      obstacleTile4, keyTile1, keyTile2,
+      keyTile3, keyTile4, startTile, endTile,
     ]);
     stats.end();
 
