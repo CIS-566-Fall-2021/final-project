@@ -26,6 +26,12 @@ We intend to make a city generator in NYC style with procedural roads and buildi
 ## Design:
 ![](./Design.png)
 
+### Final Result in Unreal Engine 4
+
+![](./ue4_result.png)
+
+![](./ue4_result_2.png)
+
 ## Final Submission:
 ### Final Result in Houdini: 
 ![](houdini_result_1.png)
@@ -35,6 +41,7 @@ We intend to make a city generator in NYC style with procedural roads and buildi
 ![](houdini_result_3.png)
 
 ### Control Parameters:
+
 #### City:
 - ```City Grid Size``` : define the overall boundary of the city 
 - ```Road Desity``` : define the density of roads within the grid
@@ -50,11 +57,9 @@ We intend to make a city generator in NYC style with procedural roads and buildi
 - ```Upper level window``` : the frequency of windows at upper level
 - ```Upper level door``` : the frequency of doors at upper level
 
-### Final Result in Unreal Engine 4
+You can tune the parameter in Unreal using Houdini engine as well!
+![](./unrealcontrol.png)
 
-![](./ue4_result.png)
-
-![](./ue4_result_2.png)
 
 ### Post Mortem:
 #### Accomplished: 
