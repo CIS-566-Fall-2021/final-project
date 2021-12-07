@@ -61,7 +61,25 @@ Milestone 2:
 ![](bloopes/christ above.png)
 ![](bloopes/lovecraftian.png)
 
-This week, Serena and Di implemented better L-systems grammar although now we are struggling with the trees becoming taller and appearing more menacing. Serena implemented a post-processing effect when the player teleports back to the origin.
+This week, Serena and Di implemented better L-systems grammar although now we are struggling with the trees becoming taller and appearing more menacing. Serena implemented a post-processing effect when the player teleports back to the origin. 
+
+Milestone 3:
+
+![](bloopes/final1.png)
+![](bloopes/final2.png)
+![](bloopes/final3.png)
+![](bloopes/final4.png)
+![](bloopes/final5.png)
+![](bloopes/final6.png)
+![](bloopes/final7.png)
+![](bloopes/final8.png)
+![](bloopes/final9.png)
+![](bloopes/final10.png)
+![](bloopes/final11.png)
+
+
+
+This week, Serena and Di worked on refining the different systems of the project. Di worked on improving the L-systems grammar and adding leaves to the trees. Now the trees have three separate grammar that depending on the distance from where the player spawned. Serena added more post processing shaders like Night Vision, Pixel, and inversion shading. They also added noise to the terrain plane and fiddled with the colors. 
 
 ## Final submission (due 12/6)
 
