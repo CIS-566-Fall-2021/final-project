@@ -1,5 +1,6 @@
 # Houdini Dragonfly Generator
 **Authors:** Ashley Alexander-Lee, Emma Holthouser
+
 **For:** CIS566 - Procedural Graphics
 
 # Introduction
@@ -9,24 +10,16 @@ Our dragonfly generator is an hda, Houdini Digital Asset, that you can install a
 1. Body Generator
 2. Wing Generator
 
-![Overview](/images/overview.gif)
+![Overview](/images/dragonfly.png)
+![](images/dragonflyGroup.png)
 
 We wanted to create not only an hda but also a render which showcases a potential use for our tool. We were inspired by images of of swarms and groups of dragonfly and artistic renderings of these groups.
 
-# References 
-
-![](/images/dragonflySwarm.jpeg)
-
-![](/images/dragonflySwarm2.jpeg)
-
-# Final Render
-
-![](images/dragonflyGroup.png)
-
-
-
 # Installation
-TODO (should we just share the otl? What is the proper way to make an hda accessible?)
+1. Download dragonfly.hdanc
+2. In a new Houdini file, go to File -> Import
+3. Choose the dragonfly.hdanc file
+4. Select "Install and Create"
 
 # Usage
 | Parameter | Default | Description |
