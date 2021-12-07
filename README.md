@@ -57,6 +57,10 @@ This week, Serena and Di implemented player state, player movement, random scatt
 
 Milestone 2:
 
+![image](bloopes/Progress2Trees.png)
+![](bloopes/christ above.png)
+![](bloopes/lovecraftian.png)
+
 This week, Serena and Di implemented better L-systems grammar although now we are struggling with the trees becoming taller and appearing more menacing. Serena implemented a post-processing effect when the player teleports back to the origin.
 
 ## Final submission (due 12/6)
