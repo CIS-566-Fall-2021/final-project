@@ -149,3 +149,9 @@ This week, I worked on generating the veins in a more procedural fashion so that
 | --------- | ---- | ------------------------------------------ |
 | Least Tapered | ![](images/m2_2.png) | ![](images/m2_5.png) |
 | Most Tapered | ![](images/m2_3.png) | ![](images/m2_4.png) |
+
+## Final Progress
+
+## Emma
+
+This week I focused on adding a few more features based on in class critique as well as finalizing elements and polishing to create the render and final HDA. Based on some addional feedback during critue last week I added some more parameters to artistically control the wings. The user can now edit the end taper amount and the angle of the wing for the top wing and the inside taper amount and the angle of the wing for the bottom of the wing as well as the "flapability" of the wing to make the dragonfly look more dynamic. We also wanted to add a feature to help create a wide variety of dragonflies quickly. I created a checkbox that creates a dragonfly with randomized version of all of the attributes based off a an input seed. The seed parameter can be adjusted to create a variety of different creatures. The randomize checkbox is used for the render shown in the readme. When the checkbox is on it also greys out the rest of the parameters to reinformce that the randomess is different from setting the parameters  yourself. In addition to adding new features I also worked on polsihing some aspects as well. I modified the head and eyes so that the eyes growth with the head size but can also be independently scaled. I also worked to make the individual elements of the body relative to each other. To do this I used the bbox expression in conjunction with my transforms. Ashely did most of the texturing but I added an additional material for the eyes so that the eyes could be a separate color from the body. 
