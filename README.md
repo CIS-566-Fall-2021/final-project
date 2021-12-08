@@ -18,7 +18,9 @@ of these abilities. For the generator, we want to be able to take in a set of in
 #### Goal
 - What have you achieved with this project?
 
-We generate a solvable horror level with obstacle and unlockable elements. The obstacles are represented by tombstones, and the unlockable element is the corresponding colored flower. Once you've picked up a flower, you can "unlock" all tombstones of that corresponding color. The level is solvable, meaning that the player is able to get to the final room without encountering a configuration where the player can't get to the end because an ability is locked behind an unbypassable obstacle. Currently our project is not playable, and only generates a map.
+We generate a solvable horror level with obstacle and unlockable elements. The start point is represented by a purple tile, and the endpoint is represented by a yellow tile. The obstacles are represented by tombstones, and the unlockable element is the corresponding colored flower.
+
+Once you've picked up a flower, you can "unlock" all tombstones of that corresponding color. The level is solvable, meaning that the player is able to get to the final room without encountering a configuration where the player can't get to the end because an ability is locked behind an unbypassable obstacle. Currently our project is not playable, and only generates a map.
 
 To be more technical about how the map is being generated, we !!!!BEN PLEASE ADD STUFF HERE!!!!
 
