@@ -1,8 +1,12 @@
 # Final Project!
 
+Example of a full map:
+
 ![](fullmap.png)
+
+Single room to better see the textures:
+
 ![](room.png)
-![](src/assets/basictex.png)
 
 #### Introduction
 - What motivates your project?
@@ -12,10 +16,15 @@ proceed to the next level. We want there to be some number of "abilities" that t
 of these abilities. For the generator, we want to be able to take in a set of inputs (placements of points of interests, obstacle/puzzle elements, start and end positions) which would then be used to generate a solvable dungeon. There may or may not be combat elements based on time contraints, but basic combat elements with enemies/boss seem very possible. This game would be played from a top-down view (like 2.5d) on a grid (although this could probably be changed to free-form/hexagonal/etc with enough persuasion).
 
 #### Goal
-- What do you intend to achieve with this project?
+- What have you achieved with this project?
 
-We want to be able to generate a solvable dungeon with obstacle and unlockable abilty elements. We also want to be able to incorporate a level of "hand-craftedness" by being
-able to generate the dungeon when given placements of key elements and perhaps path retrictions (like placed walls). Solvable here means the player is able to get to the final room without encountering a configuration where the player can't get to the end because an ability is locked behind an unbypassable obstacle. It'd be nice to have the game be playable.
+We generate a solvable horror level with obstacle and unlockable elements. The obstacles are represented by tombstones, and the unlockable element is the corresponding colored flower. Once you've picked up a flower, you can "unlock" all tombstones of that corresponding color. The level is solvable, meaning that the player is able to get to the final room without encountering a configuration where the player can't get to the end because an ability is locked behind an unbypassable obstacle. Currently our project is not playable, and only generates a map.
+
+To be more technical about how the map is being generated, we !!!!BEN PLEASE ADD STUFF HERE!!!!
+
+This then outputs a text file, where different symbols correspond to different elements. We store this file in an array, and use it as a reference for which tile to draw. All tiles of the same type are drawn using instanced shading.
+
+The interactive demo also supports camera movement. You can zoom in and out of the map by scrolling, and pan around using the right mouse button click and drag.
 
 #### Inspiration/reference:
 
