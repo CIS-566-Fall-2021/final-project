@@ -22,6 +22,7 @@ class Camera {
     this.controls = CameraControls(canvas, {
       position: position,
       center: target,
+      eye: position,
     });
     //this.controls.rotateSpeed = 0;
 
@@ -44,8 +45,11 @@ class Camera {
     mat4.perspective(this.projectionMatrix, this.fovy, this.aspectRatio, this.near, this.far);
   }
 
-  update() {
+  update(position: vec3, target: vec3) {
     this.controls.tick();
+    
+    this.position = position;
+    this.target = target;
 
     vec3.add(this.target, this.position, this.direction);
     this.position = vec3.fromValues(this.controls.eye[0], this.controls.eye[1], this.controls.eye[2]);

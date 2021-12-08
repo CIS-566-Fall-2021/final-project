@@ -221,30 +221,24 @@ function loadScene(gl: WebGL2RenderingContext) {
     for(let j = 0; j < mapHeight; j++) {
       let symbol = dungeonArray[i][j];
       if (symbol === startSymbol) {
-        startOffsetArray.push(i)
-        startOffsetArray.push(j);
-        startOffsetArray.push(0);
-        startUVArray.push(0.0, 0.25, 0.25, 0.25, 0.25, 0.5, 0.0, 0.5);
+        startOffsetArray.push(i, j, 0);
+        startUVArray.push(0.25, 0.5,  0.0, 0.5, 0.0, 0.25, 0.25, 0.25);
       }
      
       if (symbol === endsSymbol) {
         endOffsetArray.push(i, j, 0);
-        endUVArray.push(0.25, 0.25, 0.5, 0.25, 0.5, 0.5, 0.25, 0.5);
+        endUVArray.push( 0.5, 0.5, 0.25, 0.5, 0.25, 0.25, 0.5, 0.25);
       }
       
       if (symbol === pathSymbol) {
         pathCount++;
-        pathOffsetsArray.push(i);
-        pathOffsetsArray.push(j);
-        pathOffsetsArray.push(0);
-        pathUVArray.push(0.25, 0.0, 0.5, 0.0, 0.5, 0.25, 0.25, 0.25);
+        pathOffsetsArray.push(i, j, 0);
+        pathUVArray.push(0.5, 0.25, 0.25, 0.25, 0.25, 0.0, 0.5, 0.0);
       }
       
       if (symbol === wallSymbol) {
         wallCount++;
-        wallOffsetsArray.push(i);
-        wallOffsetsArray.push(j);
-        wallOffsetsArray.push(0);
+        wallOffsetsArray.push(i, j, 0);
         wallUVArray.push(0.0, 0.0, 0.25, 0.0, 0.25, 0.25, 0.0, 0.25);
       }
       
@@ -252,31 +246,25 @@ function loadScene(gl: WebGL2RenderingContext) {
         if (!isObstacle(roomW, roomH, i, j)) {
           keyCount1++;
           keyOffsetsArray1.push(i, j, 0);
-          keyUVArray1.push(.75, .5, 1.0, .5, 1.0, .75, .75, .75);
+          keyUVArray1.push(1.0, .75, .75, .75, .75, .5, 1.0, .5);
         }
         else {
           obstacleCount1++;
-          obstacleOffsets1Array.push(i);
-          obstacleOffsets1Array.push(j);
-          obstacleOffsets1Array.push(0);
-          obstacleUVArray1.push(0.5, 0.0, 0.75, 0.0, 0.75, 0.25, 0.5, 0.25);
+          obstacleOffsets1Array.push(i, j , 0);
+          obstacleUVArray1.push(0.75, 0.25, 0.5, 0.25, 0.5, 0.0, 0.75, 0.0);
         }
       }
     
       if (obstacleSymbol2 === symbol) { // GREEN
         if (!isObstacle(roomW, roomH, i, j)) {
-          console.log(i, j);
           keyCount2++;
           keyOffsetsArray2.push(i, j, 0);
-          keyUVArray2.push(.25, .5, .5, .5, .5, .75, .25, .75);
+          keyUVArray2.push(.5, .75, .25, .75, .25, .5, .5, .5);
         }
         else {
-          console.log(i, j);
           obstacleCount2++;
-          obstacleOffsets2Array.push(i);
-          obstacleOffsets2Array.push(j);
-          obstacleOffsets2Array.push(0);
-          obstacleUVArray2.push(0.75, 0.0, 1.0, 0.0, 1.0, 0.25, 0.75, 0.25);
+          obstacleOffsets2Array.push(i, j, 0);
+          obstacleUVArray2.push(1.0, 0.25, 0.75, 0.25, 0.75, 0.0, 1.0, 0.0);
         }   
       }
     
@@ -284,14 +272,12 @@ function loadScene(gl: WebGL2RenderingContext) {
         if (!isObstacle(roomW, roomH, i, j)) {
           keyCount3++;
           keyOffsetsArray3.push(i, j, 0);
-          keyUVArray3.push(.5, .5, .75, .5, .75, .75, .5, .75);
+          keyUVArray3.push(.75, .75, .5, .75, .5, .5, .75, .5);
         }
         else {
           obstacleCount3++;
-          obstacleOffsets3Array.push(i);
-          obstacleOffsets3Array.push(j);
-          obstacleOffsets3Array.push(0);
-          obstacleUVArray3.push(0.5, 0.25, 0.75, 0.25, 0.75, 0.5, 0.5, 0.5);
+          obstacleOffsets3Array.push(i, j, 0);
+          obstacleUVArray3.push(0.75, 0.5, 0.5, 0.5, 0.5, 0.25, 0.75, 0.25);
         }
       }
 
@@ -299,14 +285,12 @@ function loadScene(gl: WebGL2RenderingContext) {
         if (!isObstacle(roomW, roomH, i, j)) {
           keyCount4++;
           keyOffsetsArray4.push(i, j, 0);
-          keyUVArray4.push(.0, .5, .25, .5, .25, .75, .0, .75);
+          keyUVArray4.push(.25, .75, .0, .75, .0, .5, .25, .5);
         }
         else {
           obstacleCount4++;
-          obstacleOffsets4Array.push(i);
-          obstacleOffsets4Array.push(j);
-          obstacleOffsets4Array.push(0);
-          obstacleUVArray4.push(0.75, 0.25, 1., 0.25, 1., 0.5, 0.75, 0.5);
+          obstacleOffsets4Array.push(i, j, 0);
+          obstacleUVArray4.push( 1., 0.5, 0.75, 0.5, 0.75, 0.25, 1., 0.25);
         }
       }
     }
@@ -388,6 +372,32 @@ function loadScene(gl: WebGL2RenderingContext) {
 }
 
 function main() {
+  // window.addEventListener('keypress', function (e) {
+  //   // console.log(e.key);
+  //   switch(e.key) {
+  //     case 'w':
+  //       center[1] += 1;
+  //       console.log(center);
+  //       break;
+  //     case 's':
+  //       center[1] -= 1;
+  //       break;
+  //     case 'a':
+  //       center[0] -= 1;
+  //       break;
+  //     case 'd':
+  //       center[0] += 1;
+  //       break;
+  //     // Use this if you wish
+  //   }
+  // }, false);
+
+  // window.addEventListener('keyup', function (e) {
+  //   switch(e.key) {
+  //     // Use this if you wish
+  //   }
+  // }, false);
+
   // Initial display for framerate
   const stats = Stats();
   stats.setMode(0);
@@ -412,7 +422,7 @@ function main() {
   // Initial call to load scene
   loadScene(gl);
 
-  const camera = new Camera(vec3.fromValues(center[0] / 2, center[1] / 2, 10), vec3.fromValues(center[0] / 2, center[1] / 2, 0));
+  let camera = new Camera(vec3.fromValues(center[0] / 2, center[1] / 2, -10), vec3.fromValues(center[0] / 2, center[1] / 2, 0));
 
   const renderer = new OpenGLRenderer(canvas);
   renderer.setClearColor(0.2, 0.2, 0.2, 1);
@@ -431,8 +441,7 @@ function main() {
 
   // This function will be called every frame
   function tick() {
-    camera.update();
-    stats.begin();
+    camera.update(vec3.fromValues(center[0] / 2, center[1] / 2, -10), vec3.fromValues(center[0] / 2, center[1] / 2, 0));
     instancedShader.setTime(time);
     flat.setTime(time++);
     gl.viewport(0, 0, window.innerWidth, window.innerHeight);
