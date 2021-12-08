@@ -372,31 +372,6 @@ function loadScene(gl: WebGL2RenderingContext) {
 }
 
 function main() {
-  // window.addEventListener('keypress', function (e) {
-  //   // console.log(e.key);
-  //   switch(e.key) {
-  //     case 'w':
-  //       center[1] += 1;
-  //       console.log(center);
-  //       break;
-  //     case 's':
-  //       center[1] -= 1;
-  //       break;
-  //     case 'a':
-  //       center[0] -= 1;
-  //       break;
-  //     case 'd':
-  //       center[0] += 1;
-  //       break;
-  //     // Use this if you wish
-  //   }
-  // }, false);
-
-  // window.addEventListener('keyup', function (e) {
-  //   switch(e.key) {
-  //     // Use this if you wish
-  //   }
-  // }, false);
 
   // Initial display for framerate
   const stats = Stats();
