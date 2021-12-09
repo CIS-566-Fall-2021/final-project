@@ -22,15 +22,15 @@ We generate a solvable horror level with obstacle and unlockable elements. The s
 
 Once you've picked up a flower, you can "unlock" all tombstones of that corresponding color. The level is solvable, meaning that the player is able to get to the final room without encountering a configuration where the player can't get to the end because an ability is locked behind an unbypassable obstacle. Currently our project is not playable, and only generates a map.
 
-To be more technical about how the map is being generated, we !!!!BEN PLEASE ADD STUFF HERE!!!!
+To generate the map, we first have an empty grid of rooms. An initial path is carved starting from a room on the bottom row. To construct the path, a random direction from left, right, up is chosen to continue the path. An exit room is placed when up is chosen on the top row. Then we iterate through each room left to right, top to bottom, and place an exit to the bottom and/or to the right with some probability. We also place exits if the rooms adjacent have an exit leading in as well. After all the exits are added, each "corridor" has a chance of getting a tombstone added as an obstacle, and the tombstone is chosen from one of 4 different types. To place the keys (bouqets) to these obstacles ensure the map be solvable, we use BFS to construct a connected component graph where each connected component is a set of rooms that are connected without obstacles. Edges in this graph are corridors which contain an obstacle. We then find the shortest path from the start connected component to the end connected component in this graph using BFS again. Then for each connected component in this graph we add the key corresponding to the obstacle in a random room in the connected component.
 
-This then outputs a text file, where different symbols correspond to different elements. We store this file in an array, and use it as a reference for which tile to draw. All tiles of the same type are drawn using instanced shading.
+The output of the map generator is text file, where different symbols correspond to different elements. We read in and store this file in an array, and use it as a reference for which tile to draw. All tiles of the same type are drawn using instanced shading.
 
 The interactive demo also supports camera movement. You can zoom in and out of the map by scrolling, and pan around using the right mouse button click and drag.
 
 #### Inspiration/reference:
 
-Our inpiration comes from a couple games, Crypt of the Necrodancer and some of the older 2D Legend of Zelda games as well as other dungeon generators online.
+Our inpiration comes from a few games: [Spelunky](https://tinysubversions.com/spelunkyGen/), Crypt of the Necrodancer and some of the older 2D Legend of Zelda games as well as other dungeon generators online.
 
 Crypt of the Necrodancer gameplay: https://youtu.be/3dQU5QK_Bh8
 We like how in this game the dungeon is generated using a start and end goal, and the entire level is filled with enemies to get past in order to descend the staircase.

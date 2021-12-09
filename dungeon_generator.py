@@ -2,8 +2,19 @@ import random
 from enum import Enum
 from collections import deque
 from collections import defaultdict
-from typing import Dict, List, Set, Tuple
+from typing import Dict, List, Set, Tuple, Any
 from copy import deepcopy
+
+def rotate_ccw_square(l: List[List[Any]]) -> List[List[Any]]:
+    h, w = len(l), len(l[0])
+    out = [[0 for _ in range(h)] for _ in range(w)]
+    for c in range(w - 1, -1, -1):
+        for r in range(h):
+            out[w - c - 1][r] = l[r][c]
+    return out
+
+def rotate_ccw_square_2(l: List[List[Any]]) -> List[List[Any]]:
+    return list(reversed([list(t) for t in zip(*l)]))
 
 class Direction(Enum):
     LEFT = 1
@@ -60,11 +71,25 @@ class TiledRoom:
             case _:
                 return False
         
-        for row in range(len(self.room)):
-            for col in range(len(self.room[row])):
+        r = len(self.room)
+        c = len(self.room[0])
+        for row in range(r):
+            for col in range(c):
                 if self.room[row][col] == exit_char:
                     self.room[row][col] = '_' if obstacle == 0 else str(obstacle)
                     return True
+        # match direction:
+        #     case Direction.LEFT:
+        #         exit_index = r // 2, 0
+        #     case Direction.RIGHT:
+        #         exit_index = r // 2, c
+        #     case Direction.UP:
+        #         exit_index = 0, c // 2
+        #     case Direction.DOWN:
+        #         exit_index = r, c // 2
+        #     case _:
+        #         return False
+        # self.room[exit_index[0]][exit_index[1]] = '_' if obstacle == 0 else str(obstacle)
         return False
     
     def place_artifact(self, artifact: int | str):
@@ -828,21 +853,36 @@ class Room():
                 self.down = value
 
     def get_dirs(self) -> str:
+        rand = random.random()
+        rot = rand > 1
         def get_str(d: str):
-            match d:
-                case 'L': return 'L' if self.left else ''
-                case 'R': return 'R' if self.right else ''
-                case 'U': return 'U' if self.up else ''
-                case 'D': return 'D' if self.down else ''
-        return "".join([get_str(d) for d in 'LRUD'])
+            if not rot:
+                match d:
+                    case 'L': return 'L' if self.left else ''
+                    case 'R': return 'R' if self.right else ''
+                    case 'U': return 'U' if self.up else ''
+                    case 'D': return 'D' if self.down else ''
+            else:
+                match d:
+                    case 'L': return 'L' if self.down else ''
+                    case 'R': return 'R' if self.up else ''
+                    case 'U': return 'U' if self.left else ''
+                    case 'D': return 'D' if self.right else ''
+            
+        return "".join([get_str(d) for d in 'LRUD']), rot
 
     def __repr__(self):
         return "(" + " ".join([direction.name if self[direction] else "XXXX" for direction in Direction]) + ")"
     
     def get_txt_repr(self):
-        rooms = Room.presets[self.get_dirs()]
+        roomtype, rot = self.get_dirs()
+        rooms = Room.presets[roomtype]
         
         tiled_room = TiledRoom(random.choice(rooms))
+        # print(tiled_room)
+        if rot:
+            tiled_room.room = rotate_ccw_square_2(tiled_room.room)
+
         for direction, corridor in self.corridors.items():
             tiled_room.place_obstacle(corridor.type, direction)
         if self.artifact:
@@ -1036,7 +1076,7 @@ def gen_txt(dungeon: Dungeon, filename: str):
             # f.write('\n')
 
 if __name__ == '__main__':
-    random.seed(12345)
+    random.seed(123456)
     'w, h, p_corridor, p_door, num_types'
     dungeon = Dungeon(6, 6, 0.7, 0.75, 4)
     gen_txt(dungeon, 'dungeon.txt')
