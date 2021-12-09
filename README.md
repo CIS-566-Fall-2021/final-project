@@ -10,50 +10,76 @@ Start off by forking this repository. In your README, write a design doc to outl
 
 #### Introduction
 - What motivates your project?
+- I have been always amazed by VFX and various effects in moveis, such as Marvel. This course is my first time actually using Houdini for assignments and using nodes properly. After having a slight beignning experience from past assignment, I wanted to create some kind of effect like in moveis. For this project, I want to create a pattern creation tool, which creates a pattern based on object's shapes and forms.
 
 #### Goal
 - What do you intend to achieve with this project?
+- I hope I can create a tool that can be used for any mesh and objects to create cool animated effect of pattern geration based on their forms and shapes.
 
 #### Inspiration/reference:
-- You must have some form of reference material for your final project. Your reference may be a research paper, a blog post, some artwork, a video, another class at Penn, etc.  
-- Include in your design doc links to and images of your reference material.
+- Reference Images:
+  - Spaceship being visible with the patterns:
+    - <img height="360" src="img/Ref-1.png">
+  - Unique patterns being created in the pillars:
+    - <img height="360" src="img/Ref-2.png">
+  - Unique patterns forming the shape of the weapons:
+    - <img height="360" src="img/Ref-3.png">
 
 #### Specification:
 - Outline the main features of your project.
+  - Create a HDA using houdini that generates patterns based on the objects
+  - Various parameters that change the patterns and effects
+  - Create cool clips using it
 
 #### Techniques:
 - What are the main technical/algorithmic tools you’ll be using? Give an overview, citing specific papers/articles.
+  - The circular patterns from the references seem like it can be acheicved using curves in a smart way. The curves cannot be generated fully random, as it has to be bounded by the shape of the objects. I plan on adopting the concept of bezier curve, so that the curves can be constrained by points, which are based on the polygons of the object.
 
 #### Design:
-- How will your program fit together? Make a simple free-body diagram illustrating the pieces.
+- It will be a one HDA that have the parameters to modify, in order to create the patterns.
 
 #### Timeline:
-- Create a week-by-week set of milestones for each person in your group. Make sure you explicitly outline what each group member's duties will be.
+- Week 1: Go over concept of bezier curve and go thoguth some houdini tutorials to get used to the tool.
+- Week 2: Create basic HDA with the core functionality. Also add simple parameters if time allows.
+- Week 3: Add extra parameters for more room to diversify the patter effect. Then create some cool exmaples using the tool for demo.
 
 Submit your Design doc as usual via pull request against this repository.
 ## Milestone 2: Implementation part 1 (due 11/22)
-Begin implementing your engine! Don't worry too much about polish or parameter tuning -- this week is about getting together the bulk of your generator implemented. By the end of the week, even if your visuals are crude, the majority of your generator's functionality should be done.
 
-Put all your code in your forked repository.
+#### Inspiration/reference:
+- Current Effect with Circle:
+  - <img height="360" src="img/1-Circle.png">
+- Current Effect with Torus:
+  - <img height="360" src="img/1-Torus.png">
+- Demo link (Contains all the work from the beginning to the end):
+  - https://drive.google.com/file/d/1sWnxZTYipLPS3HunV9NaYE57L9MQka71/view?usp=sharing
 
-Submission: Add a new section to your README titled: Milestone #1, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what's giving you trouble?
-- Examples of your generators output so far
-We'll check your repository for updates. No need to create a new pull request.
+#### Progress Report:
+- Basic functionality of having several iterations of each face of the object to create basic circulating effect. Also have basic parameters to see the effect in animation using keyframes.
+    
 ## Milestone 3: Implementation part 2 (due 11/29)
-We're over halfway there! This week should be about fixing bugs and extending the core of your generator. Make sure by the end of this week _your generator works and is feature complete._ Any core engine features that don't make it in this week should be cut! Don't worry if you haven't managed to exactly hit your goals. We're more interested in seeing proof of your development effort than knowing your planned everything perfectly. 
 
-Put all your code in your forked repository.
+#### Images:
+- Current Effect with Cylinder:
+  - <img height="360" src="img/2-Cylinder.png">
+- Demo link (Contains all the work from the beginning to the end):
+  - https://drive.google.com/file/d/1sWnxZTYipLPS3HunV9NaYE57L9MQka71/view?usp=sharing
 
-Submission: Add a new section to your README titled: Milestone #3, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what did you have to cut and why? 
-- Detailed output from your generator, images, video, etc.
-We'll check your repository for updates. No need to create a new pull request.
-
-Come to class on the due date with a WORKING COPY of your project. We'll be spending time in class critiquing and reviewing your work so far.
+#### Progress Report:
+- Added few more parameters such as changing iterations and switching primitives to see the pattern effect. I will be adding more cool shapes to create better visual demo.
 
 ## Final submission (due 12/6)
-Time to polish! Spen this last week of your project using your generator to produce beautiful output. Add textures, tune parameters, play with colors, play with camera animation. Take the feedback from class critques and use it to take your project to the next level.
+
+#### Images
+- Screenshot of a Pawn with effect:
+  - <img height="360" src="img/Pawn.png">
+- Pawn with effect Demo:
+  - https://drive.google.com/file/d/1mz8MBiCTRei4MECP5p43aBbQcQ7oMnwV/view?usp=sharing
+- Demo link (Contains all the work from the beginning to the end):
+  - https://drive.google.com/file/d/1sWnxZTYipLPS3HunV9NaYE57L9MQka71/view?usp=sharing
+
+#### Progress Report:
+- The overall outcome is satisfying. If I had more time and expereince with Houdini, I would've go forth and get the actual bezier curve effects also as additional features for more circular patterns, intead of just spinning effect. That addition would've made the outcome more similar to the references. I added a pawn object file for more interesting demo than just primitives.
 
 Submission:
 - Push all your code / files to your repository
