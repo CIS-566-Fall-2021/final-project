@@ -1,117 +1,124 @@
-# Final Project!
+# Topdown Dungeon Generator
+#### By An Duong
+![](/img/generatorDrawOutput.gif)
 
-This is it! The culmination of your procedural graphics experience this semester. For your final project, we'd like to give you the time and space to explore a topic of your choosing. You may choose any topic you please, so long as you vet the topic and scope with an instructor or TA. We've provided some suggestions below. The scope of your project should be roughly 1.5 homework assignments). To help structure your time, we're breaking down the project into 4 milestones:
+[Live demo](https://onlyname4.itch.io/tilemap-generator)
 
-## Milestone 1: Project planning (due 11/15)
-Before submitting your first milestone, _you must get your project idea and scope approved by Rachel, Adam or a TA._
-
-### Design Doc
-Start off by forking this repository. In your README, write a design doc to outline your project goals and implementation plan. It must include the following sections:
-
+## Milestone 1 - Proposal
 #### Introduction
-- What motivates your project?
+In this project I will be implementing a topdown dungeon generator in Unity using Wave Function Collapse. I am interested in video game development and was curious about how dungeons were being generated in Roguelikes / Roguelites. Through this project I hope to gain exposure in procedural generation techniques for maps and dungeons.
 
 #### Goal
-- What do you intend to achieve with this project?
+The main goal is to create a topdown dungeon generator that generates at runtime, using tiles. A secondary goal is to create collisions for the walls and make a simple game using the generated dungeons.
 
 #### Inspiration/reference:
-- You must have some form of reference material for your final project. Your reference may be a research paper, a blog post, some artwork, a video, another class at Penn, etc.  
-- Include in your design doc links to and images of your reference material.
+[Martin Donald's Superpositions, Sudoku, the Wave Function Collapse algorithm](https://www.youtube.com/watch?v=2SuvO4Gi7uY)
 
-#### Specification:
-- Outline the main features of your project.
+[Robert Heaton's Wave Function Collapse Explained](https://robertheaton.com/2018/12/17/wavefunction-collapse-algorithm/)
+
+##### Overworld generation in Caves of Qud
+![](/img/cavesOfQudImage.png)
+
+##### Dungeon generation in Moonlighter (not necessarily from WFC)
+![](/img/moonlighterImage.jpg)
+
+#### Specification and Features:
+* Runtime generation of a tile based, topdown dungeon using WFC trained on a tileset.
+* If time allows, the player will be able to move a character around the dungeon, which will have collisions for bounds.
+* If time allows, player will be able to fight enemies in the dungeon.
 
 #### Techniques:
-- What are the main technical/algorithmic tools you’ll be using? Give an overview, citing specific papers/articles.
+The core of this project will be an implementation of Wave Function Collapse, an algorithm for procedurally generating textures or tilemaps using a small input texture or tileset ([WFC overview](https://github.com/mxgmn/WaveFunctionCollapse)). The algorithm will be given a tileset where each tile has a constraint on the types of tiles that could be adjacent to it. The dungeon will consist of a large tilemap, where each tile in the tilemap will begin as a superposition (all tiles could possibly be in this spot), and WFC will begin choosing specific tiles for these spots and propagating adjacency constraints until each superposition has collapsed into a single, specific tile.
 
 #### Design:
-- How will your program fit together? Make a simple free-body diagram illustrating the pieces.
+A tileset along with tile constraints will be fed into the WFC algorithm / tilemap generator. The generator will then modify a Unity tilemap at runtime, editing specific tiles of the tilemap as the possibilities of tiles collapse. This Unity tilemap will then be used in the game. If time allows, tilemap colliders will be created using Unity's builtin Tilemap Collider 2D component. A player character and enemies may also be added into the game.
+
+![](/img/CIS566FinalProjectDiagram.png)
+
+* Diagram of core components
 
 #### Timeline:
-- Create a week-by-week set of milestones for each person in your group. Make sure you explicitly outline what each group member's duties will be.
+* 11/15 - 11/22: Implement core functionality of WFC. Should be able to generate dungeons.
+* 11/22 - 11/29: Fix bugs and if possible add player character and enemies.
+* 11/29 - 12/6: Add particle effects and GUI.
 
-Submit your Design doc as usual via pull request against this repository.
-## Milestone 2: Implementation part 1 (due 11/22)
-Begin implementing your engine! Don't worry too much about polish or parameter tuning -- this week is about getting together the bulk of your generator implemented. By the end of the week, even if your visuals are crude, the majority of your generator's functionality should be done.
+## Milestone 2 - Implementation
+#### Progress:
+I was able to implement most of the core functionality of my map (instead of dungeon as it has become more general) generator. I decided to design the generator to accept any input tilemap consisting of any tileset instead of designing the generator around a specific tileset. This was a good decision since it increases the versatility of the generator, making it reusable across projects.
 
-Put all your code in your forked repository.
+#### Setbacks:
+There is a bug where sometimes WFC will converge instantly. Not sure how to reproduce it, but I'm confident I can fix it. I am also considering to implement backtracking or not. Right now I am solving neighbor conflicts by setting conflicting tiles to a user defined fallback tile, but this will lead to inconsistent generated maps depending on the input tilemap.
 
-Submission: Add a new section to your README titled: Milestone #1, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what's giving you trouble?
-- Examples of your generators output so far
-We'll check your repository for updates. No need to create a new pull request.
-## Milestone 3: Implementation part 2 (due 11/29)
-We're over halfway there! This week should be about fixing bugs and extending the core of your generator. Make sure by the end of this week _your generator works and is feature complete._ Any core engine features that don't make it in this week should be cut! Don't worry if you haven't managed to exactly hit your goals. We're more interested in seeing proof of your development effort than knowing your planned everything perfectly. 
+#### Results:
+##### Grasslands Input
+![](/img/GrasslandsInput.png)
 
-Put all your code in your forked repository.
+##### Grasslands Output
+![](/img/GeneratorGrasslands.png)
 
-Submission: Add a new section to your README titled: Milestone #3, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what did you have to cut and why? 
-- Detailed output from your generator, images, video, etc.
-We'll check your repository for updates. No need to create a new pull request.
+##### Dungeon Input
+![](/img/dungeonInput.png)
 
-Come to class on the due date with a WORKING COPY of your project. We'll be spending time in class critiquing and reviewing your work so far.
+##### Dungeon Output
+![](/img/GeneratorDungeon.png)
 
-## Final submission (due 12/6)
-Time to polish! Spen this last week of your project using your generator to produce beautiful output. Add textures, tune parameters, play with colors, play with camera animation. Take the feedback from class critques and use it to take your project to the next level.
+[Tileset from jamiebrownhill](https://jamiebrownhill.itch.io/solaria-demo)
 
-Submission:
-- Push all your code / files to your repository
-- Come to class ready to present your finished project
-- Update your README with two sections 
-  - final results with images and a live demo if possible
-  - post mortem: how did your project go overall? Did you accomplish your goals? Did you have to pivot?
+## Milestone 3 - Bugfixes and Features
+#### Progress:
+I was able to fix the bug in milestone 2 and also added in a form of backtracking. I originally wanted the generator to backtrack to the immediate, previous board whenever a conflict was made, and track "bad boards" by storing them into a hashset, but realized that this was very inefficient for large outputs and would take a very large amount of iterations to converge (>3000 iterations). Instead whenever there is a conflict the board will backtrack half the amount of steps it took from the beginning to the conflict. From very limited testing on an input tilemap that was prone to conflicts without backtracking, the board was able to converge every time with this backtracking implementation. In the event that the board cannot converge the program will report failure by showing the incomplete output (it will not crash).
 
-## Topic Suggestions
+I refined the map generation by choosing blank tiles with the least entropy (least number of remaining tiles in superposition) to randomly assign a tile to. I also added a weighted option to the generation. By weighting how WFC randomly assigns tiles to based on the frequency they show up in the input tilemap, the output will more closely match the input.
 
-### Create a generator in Houdini
+##### Town Input
+![](/img/townInput.png)
 
-### A CLASSIC 4K DEMO
-- In the spirit of the demo scene, create an animation that fits into a 4k executable that runs in real-time. Feel free to take inspiration from the many existing demos. Focus on efficiency and elegance in your implementation.
-- Example: 
-  - [cdak by Quite & orange](https://www.youtube.com/watch?v=RCh3Q08HMfs&list=PLA5E2FF8E143DA58C)
+##### Weighted (left) vs. Unweighted (right) Output
+<img src="/img/townOutputWeighted.png" width="40%"/> <img src="/img/townOutputUnweighted.png" width="40%"/>
 
-### A RE-IMPLEMENTATION
-- Take an academic paper or other pre-existing project and implement it, or a portion of it.
-- Examples:
-  - [2D Wavefunction Collapse Pokémon Town](https://gurtd.github.io/566-final-project/)
-  - [3D Wavefunction Collapse Dungeon Generator](https://github.com/whaoran0718/3dDungeonGeneration)
-  - [Reaction Diffusion](https://github.com/charlesliwang/Reaction-Diffusion)
-  - [WebGL Erosion](https://github.com/LanLou123/Webgl-Erosion)
-  - [Particle Waterfall](https://github.com/chloele33/particle-waterfall)
-  - [Voxelized Bread](https://github.com/ChiantiYZY/566-final)
+##### Dungeon Input
+![](/img/dungeonInput.png)
 
-### A FORGERY
-Taking inspiration from a particular natural phenomenon or distinctive set of visuals, implement a detailed, procedural recreation of that aesthetic. This includes modeling, texturing and object placement within your scene. Does not need to be real-time. Focus on detail and visual accuracy in your implementation.
-- Examples:
-  - [The Shrines](https://github.com/byumjin/The-Shrines)
-  - [Watercolor Shader](https://github.com/gracelgilbert/watercolor-stylization)
-  - [Sunset Beach](https://github.com/HanmingZhang/homework-final)
-  - [Sky Whales](https://github.com/WanruZhao/CIS566FinalProject)
-  - [Snail](https://www.shadertoy.com/view/ld3Gz2)
-  - [Journey](https://www.shadertoy.com/view/ldlcRf)
-  - [Big Hero 6 Wormhole](https://2.bp.blogspot.com/-R-6AN2cWjwg/VTyIzIQSQfI/AAAAAAAABLA/GC0yzzz4wHw/s1600/big-hero-6-disneyscreencaps.com-10092.jpg)
+##### Dungeon Output (weighted)
+![](/img/dungeonOutputWeighted.png)
 
-### A GAME LEVEL
-- Like generations of game makers before us, create a game which generates an navigable environment (eg. a roguelike dungeon, platforms) and some sort of goal or conflict (eg. enemy agents to avoid or items to collect). Aim to create an experience that will challenge players and vary noticeably in different playthroughs, whether that means procedural dungeon generation, careful resource management or an interesting AI model. Focus on designing a system that is capable of generating complex challenges and goals.
-- Examples:
-  - [Rhythm-based Mario Platformer](https://github.com/sgalban/platformer-gen-2D)
-  - [Pokémon Ice Puzzle Generator](https://github.com/jwang5675/Ice-Puzzle-Generator)
-  - [Abstract Exploratory Game](https://github.com/MauKMu/procedural-final-project)
-  - [Tiny Wings](https://github.com/irovira/TinyWings)
-  - Spore
-  - Dwarf Fortress
-  - Minecraft
-  - Rogue
+##### Islands Input
+![](/img/islandsInput.png)
 
-### AN ANIMATED ENVIRONMENT / MUSIC VISUALIZER
-- Create an environment full of interactive procedural animation. The goal of this project is to create an environment that feels responsive and alive. Whether or not animations are musically-driven, sound should be an important component. Focus on user interactions, motion design and experimental interfaces.
-- Examples:
-  - [The Darkside](https://github.com/morganherrmann/thedarkside)
-  - [Music Visualizer](https://yuruwang.github.io/MusicVisualizer/)
-  - [Abstract Mesh Animation](https://github.com/mgriley/cis566_finalproj)
-  - [Panoramical](https://www.youtube.com/watch?v=gBTTMNFXHTk)
-  - [Bound](https://www.youtube.com/watch?v=aE37l6RvF-c)
+##### Islands Output (weighted)
+![](/img/islandsOutputWeighted.png)
 
-### YOUR OWN PROPOSAL
-- You are of course welcome to propose your own topic . Regardless of what you choose, you and your team must research your topic and relevant techniques and come up with a detailed plan of execution. You will meet with some subset of the procedural staff before starting implementation for approval.
+I also added a UI for the program. Right now the user can see the input and output tilemaps, change the input tilemap to one of three options using a dropdown menu, change whether to use weighted generation or not, and recalculate the board.
+
+##### Program in Action
+![](/img/generatorInAction.gif)
+
+Instead of creating a game using my WFC implementation I decided to create a program that allows the user to generate tilemaps. I was more interested in the interactavity of tilemap generation. I plan to allow the user to paint input tilemaps using the three existing tilesets, and if time permits, allow them to constrain the output by painting tiles in the output before generation. Apart from these extra features, I've accomplished what I sought to do.
+
+## Final Results
+[Live demo](https://onlyname4.itch.io/tilemap-generator)
+
+I added in the ability to draw on the input tilemap with a tile palette, as well as constrain the output by also drawing on it.
+
+![](/img/generatorFinalUI.png)
+
+![](/img/generatorDrawOutput.gif)
+
+## Post Mortem
+Overall, I am very satisfied with how the project turned out. The end result was a playable toy that meets the polish and interactivity that I wanted, whilst showcasing tilemap generation using WFC. I originally planned to make a game using the tilemap generation, but instead opted to turn the focus onto the generation itself, which turned out well.
+
+## Credits
+[Dungeon and Islands tilemaps made with tileset from jamiebrownhill](https://jamiebrownhill.itch.io/solaria-demo)
+
+[UI and Town tilemap made with tilesets from KenneyNL](https://kenney.nl/)
+
+#### Helpful References
+[Martin Donald's Superpositions, Sudoku, the Wave Function Collapse algorithm](https://www.youtube.com/watch?v=2SuvO4Gi7uY)
+
+[Robert Heaton's Wave Function Collapse Explained](https://robertheaton.com/2018/12/17/wavefunction-collapse-algorithm/)
+
+[WFC Tilemap Implementation Steps from Rémy Devaux](https://trasevol.dog/2017/09/01/di19/)
+
+[WFC Tips and Tricks from BorisTheBrave](https://www.boristhebrave.com/2020/02/08/wave-function-collapse-tips-and-tricks/)
+
+[Inspiration for the application from Oskar Stålberg](https://oskarstalberg.com/game/wave/wave.html);

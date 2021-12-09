@@ -1,0 +1,19 @@
+/*
+/*/
+
+!README.md
+!.gitignore
+!/Assets/
+!/ProjectSettings/
+!/img/
+
+/Assets/TextMesh Pro
+/Assets/TextMesh Pro.meta
+/Assets/Tiles/CustomTiles/
+/Assets/Tiles/CustomTiles.meta
+/Assets/Tileset/CustomTilesets/
+/Assets/Tileset/CustomTilesets.meta
+/Assets/Palettes/CustomPalettes/
+/Assets/Palettes/CustomPalettes.meta
+/Assets/UI/CustomUI/
+/Assets/UI/CustomUI.meta
