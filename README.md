@@ -66,3 +66,14 @@ Now that I have successfully created a tool that procedurally models various typ
 1. Create at least 3 different types of flowers using the tool and output high quality renders.
 2. Add a stem feature (potentially having the user draw a curve for the stem to follow and have the flower blossom on the end of it)
 3. Add more procedural details to model the center of the flower: filaments, anthers, stigma, etc. 
+
+
+# Final Submission
+### Results
+To add the final touches on my tool, I created a feature that allows the user to create a curve based stem with fine tuned parameters such as the amount of stem taper and the curve resample size. The user can also choose to add randomly placed leaves along the stem, specifying the density, type of bend, and shape of the leaves. The most challenging part of adding the stem features was probably figuring out how to configure the normals so that they faced in the direction of the curve. I ended up using a polyframe node to set the normals to the tangent vectors of each point along the curve. This allows the flower to face in any direction that user specifies according to their drawn curve.
+
+Here is a final render of a vase of tulips and roses, created using my flower tool: ![image](renders/vase.png)
+
+### Final Thoughts
+This was an amazing to way to learn how powerful Houdini can be for procedural tool building. While it took a while to get the hang of the node system, I found it easy to translate my coding skills into a more visual form of scripting. I am really excited to continue working on this tool. I'd like to add a few more procedural elements, and maybe even add some animations of a flowers turning into other types of flowers!
+
