@@ -1,117 +1,136 @@
-# Final Project!
+# CIS 566 Final Project: Space Swarming
+Nathaniel Korzekwa
 
-This is it! The culmination of your procedural graphics experience this semester. For your final project, we'd like to give you the time and space to explore a topic of your choosing. You may choose any topic you please, so long as you vet the topic and scope with an instructor or TA. We've provided some suggestions below. The scope of your project should be roughly 1.5 homework assignments). To help structure your time, we're breaking down the project into 4 milestones:
+## Introduction
+The idea behind this project is to implement a space-themed simulation of
+spaceships (or optionally other agents) exhibiting swarm behavior. I
+experimented with a handful of different flocking/swarming algorithms, and ended
+up settling on a custom Boids-influenced algorithm based on touring around the
+generated solar system.
 
-## Milestone 1: Project planning (due 11/15)
-Before submitting your first milestone, _you must get your project idea and scope approved by Rachel, Adam or a TA._
+The planets get lonely, and only the swarming ships can make them feel better!
+Over time, planets gain in loneliness and thus become needy. The neediness grows
+super-linearly so even if ships are far away, the increasing rate of neediness
+will cause ships to go beserk if the planets are ignored too long.
 
-### Design Doc
-Start off by forking this repository. In your README, write a design doc to outline your project goals and implementation plan. It must include the following sections:
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/6472567/145521127-db6b299d-b546-48be-b97d-6eae4f3409f8.png">
+</p>
+<p align="center">Default scene.</p>
 
-#### Introduction
-- What motivates your project?
+## Features
+### Star Backdrop
+The stars in the backdrop are pretty simple, and they are based off of the idea
+behind Adam Mally's 'procedural skybox' as presented in CIS 560. Rays are cast
+from the origin based on the world-space position of the fragment coordinate.
 
-#### Goal
-- What do you intend to achieve with this project?
+From that, we can get a normalized 'ray' vector from the origin, and stars are
+represented as specific points on a sphere. The 'ray' vector is can be dotted
+with the vector representing the star's position on the unit spehere, and an
+exponential falloff function is used to create a blurred radius.
 
-#### Inspiration/reference:
-- You must have some form of reference material for your final project. Your reference may be a research paper, a blog post, some artwork, a video, another class at Penn, etc.  
-- Include in your design doc links to and images of your reference material.
+I had originally hoped (and may revisit) the idea of adding nebulae noise to the
+backdrop but that might be a project in and of itself unless I wanted to directly
+take some work from elsewhere.
 
-#### Specification:
-- Outline the main features of your project.
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/6472567/145521125-67c28125-4e68-40f4-9306-cf2e624e808e.png">
+</p>
+<p align="center">The stars.</p>
 
-#### Techniques:
-- What are the main technical/algorithmic tools you’ll be using? Give an overview, citing specific papers/articles.
+### Procedural Planets
+Extending on the idea from HW1, I decided to make a whole solar system of
+planets. There are 4 'types' of planets:
+- An Ocean-style planet (this is taken from my HW1 with some optimizations)
+- A Gas planet (very simple noise-textured sphere with y-axis distortions)
+- A desert planet (layered perlin noise with arid color palette)
+- A rock/ice planet (uses worley noise points and distance to transform input
+to FBM/perlin)
 
-#### Design:
-- How will your program fit together? Make a simple free-body diagram illustrating the pieces.
+I would have liked to explore anisotropic noise for the rock planet to simulate
+desert terrain (and to have a noise type other than Perlin... yeeesh). I may
+revisit it, but the math was too heavy for my tired brain at the end of all my
+projects.
 
-#### Timeline:
-- Create a week-by-week set of milestones for each person in your group. Make sure you explicitly outline what each group member's duties will be.
+### Swarming Ships
+The ships follow an algorithm close to Boids. The basic idea is that at each
+step, a given ship's position is updated by the following rule:
 
-Submit your Design doc as usual via pull request against this repository.
-## Milestone 2: Implementation part 1 (due 11/22)
-Begin implementing your engine! Don't worry too much about polish or parameter tuning -- this week is about getting together the bulk of your generator implemented. By the end of the week, even if your visuals are crude, the majority of your generator's functionality should be done.
+    x' = x + s * d
 
-Put all your code in your forked repository.
+Where x' is the new position, x is the old position, s is a configurable speed
+coefficient and d is the ship's direction or heading.
 
-Submission: Add a new section to your README titled: Milestone #1, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what's giving you trouble?
-- Examples of your generators output so far
-We'll check your repository for updates. No need to create a new pull request.
-## Milestone 3: Implementation part 2 (due 11/29)
-We're over halfway there! This week should be about fixing bugs and extending the core of your generator. Make sure by the end of this week _your generator works and is feature complete._ Any core engine features that don't make it in this week should be cut! Don't worry if you haven't managed to exactly hit your goals. We're more interested in seeing proof of your development effort than knowing your planned everything perfectly. 
+After updating each ship's position, the direction is also updated. I will
+refrain from writing an update formula here since it is likely confusing, and
+will instead give a high level overview:
 
-Put all your code in your forked repository.
+1. Collision detection is done on all other ships, planets, and the sun: the
+inverse of the squared distance is calculated, and the vector FROM the potential
+colliding object to the ship is added, weighted by the squared distance.
+2. Displacement from the ship's N nearest neighbors is computed and summed (N is
+configurable, and there is an optional maximum distance).
+3. Direction vectors of the nearest N neighbors are summed.
+4. Planets have a "neediness value" that grows quadratically with time 
+(and diminishes when ships are nearby). The the vectors from the ship to all
+planets weighted by neediness and inverse distance are summed.
+5. A "default" swarming formation is calculated by an SDF of a sphere
+around the sun. The vector to the closest point on that sphere is calulated
+and weighted by a configurable coefficient.
 
-Submission: Add a new section to your README titled: Milestone #3, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what did you have to cut and why? 
-- Detailed output from your generator, images, video, etc.
-We'll check your repository for updates. No need to create a new pull request.
+All the above values are summed together to get a new vector, and that vector is
+normalized, let's call it v. Then, the new direction vector d is found by:
 
-Come to class on the due date with a WORKING COPY of your project. We'll be spending time in class critiquing and reviewing your work so far.
+    d = d * inertia + v * (1 - inertia)
 
-## Final submission (due 12/6)
-Time to polish! Spen this last week of your project using your generator to produce beautiful output. Add textures, tune parameters, play with colors, play with camera animation. Take the feedback from class critques and use it to take your project to the next level.
 
-Submission:
-- Push all your code / files to your repository
-- Come to class ready to present your finished project
-- Update your README with two sections 
-  - final results with images and a live demo if possible
-  - post mortem: how did your project go overall? Did you accomplish your goals? Did you have to pivot?
+## Architecture
+The basic design follows from the interplay between the swarm engine and the
+3D representations of the agents. All the ship positionl and orientational
+calculations are done CPU side and piped into a shader for instanced ships:
 
-## Topic Suggestions
+    ----------------
+    |     UI       |
+    | Set Params   |
+    |              |
+    ----------------
+        |
+        v
+    ----------------            -----------------
+    |     CPU      |   on tick  |     GPU       |
+    | Swarm Update |  ------>   | Render Agents |
+    |              |            |               |
+    ----------------            -----------------
 
-### Create a generator in Houdini
+### Rendering stuff
+I also have implemented a partial 2-pass bloom implementation. It proceeds as
+follows:
 
-### A CLASSIC 4K DEMO
-- In the spirit of the demo scene, create an animation that fits into a 4k executable that runs in real-time. Feel free to take inspiration from the many existing demos. Focus on efficiency and elegance in your implementation.
-- Example: 
-  - [cdak by Quite & orange](https://www.youtube.com/watch?v=RCh3Q08HMfs&list=PLA5E2FF8E143DA58C)
+1. Using multi-target rendering, all ships are drawn to a separate buffer. The
+main buffer is blurred using a horizontal and vertical gaussian pass. MTR ensures
+that when I combine the framebuffers, the depth testing is done properly.
 
-### A RE-IMPLEMENTATION
-- Take an academic paper or other pre-existing project and implement it, or a portion of it.
-- Examples:
-  - [2D Wavefunction Collapse Pokémon Town](https://gurtd.github.io/566-final-project/)
-  - [3D Wavefunction Collapse Dungeon Generator](https://github.com/whaoran0718/3dDungeonGeneration)
-  - [Reaction Diffusion](https://github.com/charlesliwang/Reaction-Diffusion)
-  - [WebGL Erosion](https://github.com/LanLou123/Webgl-Erosion)
-  - [Particle Waterfall](https://github.com/chloele33/particle-waterfall)
-  - [Voxelized Bread](https://github.com/ChiantiYZY/566-final)
+2. The blurred image (excluding ships) is averaged together with the original
+image, and tone-mapping is done. Unfortunately, I couldn't figure out how to
+write to textures with more than BYTES per color channel (drawing to float
+textures is not supported in WebGL. Int16/32 are allowed, but that has it's own
+headache I didn't want to deal with), so HDR was not able to be used.
 
-### A FORGERY
-Taking inspiration from a particular natural phenomenon or distinctive set of visuals, implement a detailed, procedural recreation of that aesthetic. This includes modeling, texturing and object placement within your scene. Does not need to be real-time. Focus on detail and visual accuracy in your implementation.
-- Examples:
-  - [The Shrines](https://github.com/byumjin/The-Shrines)
-  - [Watercolor Shader](https://github.com/gracelgilbert/watercolor-stylization)
-  - [Sunset Beach](https://github.com/HanmingZhang/homework-final)
-  - [Sky Whales](https://github.com/WanruZhao/CIS566FinalProject)
-  - [Snail](https://www.shadertoy.com/view/ld3Gz2)
-  - [Journey](https://www.shadertoy.com/view/ldlcRf)
-  - [Big Hero 6 Wormhole](https://2.bp.blogspot.com/-R-6AN2cWjwg/VTyIzIQSQfI/AAAAAAAABLA/GC0yzzz4wHw/s1600/big-hero-6-disneyscreencaps.com-10092.jpg)
+3. The bloom-ed planets are drawn alongside the untouched ships, giving the
+planets a bit of a glow (though the color has bled a bit :().
 
-### A GAME LEVEL
-- Like generations of game makers before us, create a game which generates an navigable environment (eg. a roguelike dungeon, platforms) and some sort of goal or conflict (eg. enemy agents to avoid or items to collect). Aim to create an experience that will challenge players and vary noticeably in different playthroughs, whether that means procedural dungeon generation, careful resource management or an interesting AI model. Focus on designing a system that is capable of generating complex challenges and goals.
-- Examples:
-  - [Rhythm-based Mario Platformer](https://github.com/sgalban/platformer-gen-2D)
-  - [Pokémon Ice Puzzle Generator](https://github.com/jwang5675/Ice-Puzzle-Generator)
-  - [Abstract Exploratory Game](https://github.com/MauKMu/procedural-final-project)
-  - [Tiny Wings](https://github.com/irovira/TinyWings)
-  - Spore
-  - Dwarf Fortress
-  - Minecraft
-  - Rogue
+## Changes
+I ditched the original Particle Search Optimization method. It turns out that
+it's just what it says it is: an optimization method. It's not meant for flocking
+or agents with orientation. It also likes to converge which is obviously not
+what I was going for.
 
-### AN ANIMATED ENVIRONMENT / MUSIC VISUALIZER
-- Create an environment full of interactive procedural animation. The goal of this project is to create an environment that feels responsive and alive. Whether or not animations are musically-driven, sound should be an important component. Focus on user interactions, motion design and experimental interfaces.
-- Examples:
-  - [The Darkside](https://github.com/morganherrmann/thedarkside)
-  - [Music Visualizer](https://yuruwang.github.io/MusicVisualizer/)
-  - [Abstract Mesh Animation](https://github.com/mgriley/cis566_finalproj)
-  - [Panoramical](https://www.youtube.com/watch?v=gBTTMNFXHTk)
-  - [Bound](https://www.youtube.com/watch?v=aE37l6RvF-c)
+I did however try a number of different implementations of swarming and flocking
+which are still in the 'swarm' source folder.
 
-### YOUR OWN PROPOSAL
-- You are of course welcome to propose your own topic . Regardless of what you choose, you and your team must research your topic and relevant techniques and come up with a detailed plan of execution. You will meet with some subset of the procedural staff before starting implementation for approval.
+## References
+- Color palette for sun: https://www.shadertoy.com/view/XlSSzK
+- Bloom inspiration: https://learnopengl.com/Advanced-Lighting/Bloom
+- Space ship model: https://www.cgtrader.com/free-3d-models/space/spaceship/star-sparrow-modular-spaceship
+- Texturing: https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Using_textures_in_WebGL
+- Lots of stuff from 560 and previous homeworks.
