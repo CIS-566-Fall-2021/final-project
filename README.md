@@ -2,116 +2,122 @@
 
 This is it! The culmination of your procedural graphics experience this semester. For your final project, we'd like to give you the time and space to explore a topic of your choosing. You may choose any topic you please, so long as you vet the topic and scope with an instructor or TA. We've provided some suggestions below. The scope of your project should be roughly 1.5 homework assignments). To help structure your time, we're breaking down the project into 4 milestones:
 
-## Milestone 1: Project planning (due 11/15)
-Before submitting your first milestone, _you must get your project idea and scope approved by Rachel, Adam or a TA._
-
 ### Design Doc
-Start off by forking this repository. In your README, write a design doc to outline your project goals and implementation plan. It must include the following sections:
 
 #### Introduction
-- What motivates your project?
+I have a lot of experience in interior environment modelling, however, not so much exterior. I have once attempted to model a street-view environment piece, however found it time consuming and difficult to get right. I also do love Japanese architecture and Japan itself. Thus, combining those two interests, and drawing some inspiration from this poster in my bedroom wall, I want to create a tool that can procedurally generate traditional 'minka' to be placed in a courtyard scene. I was really inspired after the Houdini-environment assignment. I had never used Houdini before, and since it is such an industry standard tool, I figured this would be a good opportunity to experiment more with it. 
+
 
 #### Goal
-- What do you intend to achieve with this project?
+As a minimum viable product, I hope to create an art tool that procedurally creates a traditional japanese minka. Users can customise number of stories, width and height, number of sections, roof slant, whether it sits on top of an elevated platform with staris etc. Colours can be customised too. As a stretch goal, I want to put these houses in a courtyard layout. Placement of the minka would be procedural too. 
 
 #### Inspiration/reference:
-- You must have some form of reference material for your final project. Your reference may be a research paper, a blog post, some artwork, a video, another class at Penn, etc.  
-- Include in your design doc links to and images of your reference material.
+I was inspired from this poster in my bedroom wall, and this series of youtube videos:
+![image](https://user-images.githubusercontent.com/59979404/141842228-30ea29e6-5119-4356-adaa-fb21b245b9fb.png)
+https://www.youtube.com/watch?v=TwCthsWsI7Y&ab_channel=RaduCius
+https://www.youtube.com/watch?v=dpqsePcSRkk&ab_channel=Houdini
+
+I found this tutorial on how to procedural create a european style house, which I can adapt for my purposes: https://www.youtube.com/watch?v=WuNTFrDLABY&ab_channel=SimonHoudini
+
+There are also a handful tutorials on creating procedural cities. I can reduce the scale of the city to a smaller courtyard. 
+https://www.youtube.com/watch?v=n3m9E4-NkqE&t=522s&ab_channel=%D0%94%D0%B5%D0%BD%D0%B8%D1%81VFX
 
 #### Specification:
-- Outline the main features of your project.
+- Create a HDA in houdini that generates a traditional japanese Minka procedrally
+- Add sliders to adjust various parts of the model including colour
+- If I don't get to placing the houses in a procedurally generated courtyard map, I will just use my tool to populate a fixed scene. 
+- Aim to get a really nice render!
+
+Create a basic tool that generates a single flower procedurally
+Import a petal with a texture and rotate around center n number of times
+Add blooming animation that follows pattern from visual reference
+Fine tune tool to add more variance and input controls
+Focus on getting a really nice render of one flower - will have to learn how to light a scene
+Use flower tool to fill a bouquet of flowers or populate some organic scene
 
 #### Techniques:
 - What are the main technical/algorithmic tools you’ll be using? Give an overview, citing specific papers/articles.
+- I came into this class with little to no experience with Houdini, so I look forward to experimenting and learning how to use this piece of software as my technical challenge. I don't want to over complicate this project too much, so just focusing on the basics of understanding how to use the graph editor, and vex expressions to achieve the exterior of the Japanese house.
+- https://www.youtube.com/watch?v=Ri9AAF_hB6Q&ab_channel=IlliaStatkevych
+- https://www.artstation.com/marketplace/p/y3DV/houdini-tutorial-procedural-japanese-castle-in-unreal-engine-4
 
 #### Design:
-- How will your program fit together? Make a simple free-body diagram illustrating the pieces.
+- I don't think my project suits a free-body diagram. In words, however, my minka house tool will be controlled by various inputs/sliders as a Houdini Digital Asset. This tool can be used for populating scenes quickly and with lot of variety.
 
 #### Timeline:
-- Create a week-by-week set of milestones for each person in your group. Make sure you explicitly outline what each group member's duties will be.
+- WEEK 1: Work through some houdini procedural house examples, and adapt what I have learned to create a basic Japanese house tool. Focus on breaking down a Japanese house into distinct features (roof, floors, windows and doors, shape)
+- WEEK 2: Add more polish to the generator tool as well as texture the house. Give users ability to change the colours of the house. Look into courtyard layout and proceduralism if I have time.
+- WEEK 3: Use my tool to create a cool scene in a static/generated courtyard. Render multiple scenes. Add a sky, some trees, etc. to mimic reference images.
 
-Submit your Design doc as usual via pull request against this repository.
-## Milestone 2: Implementation part 1 (due 11/22)
-Begin implementing your engine! Don't worry too much about polish or parameter tuning -- this week is about getting together the bulk of your generator implemented. By the end of the week, even if your visuals are crude, the majority of your generator's functionality should be done.
+## Milestone 2: 
 
-Put all your code in your forked repository.
+### Images
 
-Submission: Add a new section to your README titled: Milestone #1, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what's giving you trouble?
-- Examples of your generators output so far
-We'll check your repository for updates. No need to create a new pull request.
-## Milestone 3: Implementation part 2 (due 11/29)
-We're over halfway there! This week should be about fixing bugs and extending the core of your generator. Make sure by the end of this week _your generator works and is feature complete._ Any core engine features that don't make it in this week should be cut! Don't worry if you haven't managed to exactly hit your goals. We're more interested in seeing proof of your development effort than knowing your planned everything perfectly. 
+![ms_2_example](https://user-images.githubusercontent.com/59979404/142963979-001d21b8-8c74-468a-9cae-eaf9351b54de.PNG)
 
-Put all your code in your forked repository.
+![ms_3_example](https://user-images.githubusercontent.com/59979404/142964543-53526590-0bb7-47cf-81ff-f4c569303c97.PNG)
 
-Submission: Add a new section to your README titled: Milestone #3, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what did you have to cut and why? 
-- Detailed output from your generator, images, video, etc.
-We'll check your repository for updates. No need to create a new pull request.
+![ms_1_example](https://user-images.githubusercontent.com/59979404/142964615-c00c0edc-cea7-43ad-af4a-c0610a54dd8b.PNG)
 
-Come to class on the due date with a WORKING COPY of your project. We'll be spending time in class critiquing and reviewing your work so far.
+![ms_5_example](https://user-images.githubusercontent.com/59979404/143037730-60164ee0-e580-407f-b408-9b2c0a4cf2a0.PNG)
 
-## Final submission (due 12/6)
-Time to polish! Spen this last week of your project using your generator to produce beautiful output. Add textures, tune parameters, play with colors, play with camera animation. Take the feedback from class critques and use it to take your project to the next level.
+### Progress Report 1!
 
-Submission:
-- Push all your code / files to your repository
-- Come to class ready to present your finished project
-- Update your README with two sections 
-  - final results with images and a live demo if possible
-  - post mortem: how did your project go overall? Did you accomplish your goals? Did you have to pivot?
+#### Implemented the following: 
 
-## Topic Suggestions
+- Main generator is almost done! The tool is able of generating a traditional Japanese minka-esque looking structure. The house is currently limited to two floors. The minka sits on an elevated platform with a railing, which is reachable via stairs. The house also has windows and doors.
+- The following aspects can be procedurally generated: width and height of the main structure. number of extrusions/divets on the first floor, roof is automatically calculated, number of doors, stairs, windows, dimensions and number of steps of stairs. 
 
-### Create a generator in Houdini
+#### To dos: 
+- I need to add more variation to the second floor. Currently to achieve the iconic tapered roof, the second floor's shape is pretty much fixed. I'll have to figure out how to add overhangs to the second floor.
 
-### A CLASSIC 4K DEMO
-- In the spirit of the demo scene, create an animation that fits into a 4k executable that runs in real-time. Feel free to take inspiration from the many existing demos. Focus on efficiency and elegance in your implementation.
-- Example: 
-  - [cdak by Quite & orange](https://www.youtube.com/watch?v=RCh3Q08HMfs&list=PLA5E2FF8E143DA58C)
+- Next week I'll add colour/materials, and maybe add more logic so that steps spawn near doors, and windows spawn only on walls that face the outside.
 
-### A RE-IMPLEMENTATION
-- Take an academic paper or other pre-existing project and implement it, or a portion of it.
-- Examples:
-  - [2D Wavefunction Collapse Pokémon Town](https://gurtd.github.io/566-final-project/)
-  - [3D Wavefunction Collapse Dungeon Generator](https://github.com/whaoran0718/3dDungeonGeneration)
-  - [Reaction Diffusion](https://github.com/charlesliwang/Reaction-Diffusion)
-  - [WebGL Erosion](https://github.com/LanLou123/Webgl-Erosion)
-  - [Particle Waterfall](https://github.com/chloele33/particle-waterfall)
-  - [Voxelized Bread](https://github.com/ChiantiYZY/566-final)
 
-### A FORGERY
-Taking inspiration from a particular natural phenomenon or distinctive set of visuals, implement a detailed, procedural recreation of that aesthetic. This includes modeling, texturing and object placement within your scene. Does not need to be real-time. Focus on detail and visual accuracy in your implementation.
-- Examples:
-  - [The Shrines](https://github.com/byumjin/The-Shrines)
-  - [Watercolor Shader](https://github.com/gracelgilbert/watercolor-stylization)
-  - [Sunset Beach](https://github.com/HanmingZhang/homework-final)
-  - [Sky Whales](https://github.com/WanruZhao/CIS566FinalProject)
-  - [Snail](https://www.shadertoy.com/view/ld3Gz2)
-  - [Journey](https://www.shadertoy.com/view/ldlcRf)
-  - [Big Hero 6 Wormhole](https://2.bp.blogspot.com/-R-6AN2cWjwg/VTyIzIQSQfI/AAAAAAAABLA/GC0yzzz4wHw/s1600/big-hero-6-disneyscreencaps.com-10092.jpg)
+## Milestone 2: 
 
-### A GAME LEVEL
-- Like generations of game makers before us, create a game which generates an navigable environment (eg. a roguelike dungeon, platforms) and some sort of goal or conflict (eg. enemy agents to avoid or items to collect). Aim to create an experience that will challenge players and vary noticeably in different playthroughs, whether that means procedural dungeon generation, careful resource management or an interesting AI model. Focus on designing a system that is capable of generating complex challenges and goals.
-- Examples:
-  - [Rhythm-based Mario Platformer](https://github.com/sgalban/platformer-gen-2D)
-  - [Pokémon Ice Puzzle Generator](https://github.com/jwang5675/Ice-Puzzle-Generator)
-  - [Abstract Exploratory Game](https://github.com/MauKMu/procedural-final-project)
-  - [Tiny Wings](https://github.com/irovira/TinyWings)
-  - Spore
-  - Dwarf Fortress
-  - Minecraft
-  - Rogue
+### Images
 
-### AN ANIMATED ENVIRONMENT / MUSIC VISUALIZER
-- Create an environment full of interactive procedural animation. The goal of this project is to create an environment that feels responsive and alive. Whether or not animations are musically-driven, sound should be an important component. Focus on user interactions, motion design and experimental interfaces.
-- Examples:
-  - [The Darkside](https://github.com/morganherrmann/thedarkside)
-  - [Music Visualizer](https://yuruwang.github.io/MusicVisualizer/)
-  - [Abstract Mesh Animation](https://github.com/mgriley/cis566_finalproj)
-  - [Panoramical](https://www.youtube.com/watch?v=gBTTMNFXHTk)
-  - [Bound](https://www.youtube.com/watch?v=aE37l6RvF-c)
+![ms2_example](https://user-images.githubusercontent.com/59979404/143985218-20257670-92e8-40d1-bad2-9cf41fd4efb0.PNG)
+![ms2_example_3](https://user-images.githubusercontent.com/59979404/143985219-6cf46255-e6ee-405a-b76c-760093cf38c7.PNG)
+![ms2_example_2](https://user-images.githubusercontent.com/59979404/143985221-88da0d74-a5ef-4047-b53d-dce3664cedd6.PNG)
 
-### YOUR OWN PROPOSAL
-- You are of course welcome to propose your own topic . Regardless of what you choose, you and your team must research your topic and relevant techniques and come up with a detailed plan of execution. You will meet with some subset of the procedural staff before starting implementation for approval.
+### Progress Report 2!
+
+#### Implemented the following: 
+
+- Added a courtyard functionality. So far, you can add a singular courtyard in the center of the structure and adjust the size. If there is a courtyard, there will be no second floor, however. I decided to go with this feature instead of window overhangs as I thought this courtyard cutout had the biggest visual impact.
+- Added some materials to everything except the windows and doors. The windows and doors are an fbx I created in maya that I have not textured. I am thinking of replacing it with a procedurally modelled ones so I can easily texture them and adjust their look
+- Didn't manage to fix the second floor or add overhangs due to time constraints
+
+#### To dos: 
+- Texture the windows
+- Create a scene with multiple houses. Add grass, trees, a background and render a nice scene
+- My tool runs really slowly (due to the number of computations and nodes). I want to find a way to simplify it a little to improve run time
+- Add more sliders for maximum variability
+
+
+## Milestone 3:
+
+Please look at minka_tool.hdanc, and final-project-scene.hipnc as my final submissions! Sorry there are a lot of texture files, and a few fbxes.
+
+### Images
+![test_render_04](https://user-images.githubusercontent.com/59979404/144917022-de85d0f1-7dd3-4e08-9c8c-359438dc6c6e.png)
+![test_render_02](https://user-images.githubusercontent.com/59979404/144917024-6bd69639-13a0-4b60-b6b8-0f6d44c7314d.png)
+![test_render_03](https://user-images.githubusercontent.com/59979404/144917027-6f8507d3-4684-4129-a5d7-36bd1a55b8e1.png)
+
+### Progress Report 3!
+
+I think my project went really well! I started off with little to no exerperience in procedural modelling, but after milestone 1 I felt as if I had greatly developed my understanding of Houdini. My traditional Japanese house generator is capable of creating 1-2 story high houses, with an optional courtyard (which sacrifices the second floor). The following aspects can be edited/changed through the HDA UI:
+- House base shape, base height, number of wall extrusions
+- Size of courtyard in the center(can be 0 for no courtyard)
+- Number of doors, windows, stairs
+- Railing, platform depth and height
+- Colours of all elements
+- Most features have seeds to allow users to adjust variation with the same count
+
+The features are best visualised in the renders above. I tried to create a small scene with multiple minkas of varying heights, shapes, etc. I will continue to work on creating better renders, since there is some visible material issues/stretching. 
+
+I think I checked off all of my original minimum viable product goals. The only stretch goal I did not achieve was that the houses themselves were going to be procedurally placed. The houses we're placed manually in the scene above. However, the the trees were procedurally placed so that it would spawn on the outer perimeter of the houses.
+
+There are a few remaining bugs or issues. Stairs warp a little bit when the height of the platform is too high. Due to the scale of the generator, the tool runs a little slow at times. 
