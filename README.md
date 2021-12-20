@@ -1,117 +1,57 @@
 # Final Project!
 
-This is it! The culmination of your procedural graphics experience this semester. For your final project, we'd like to give you the time and space to explore a topic of your choosing. You may choose any topic you please, so long as you vet the topic and scope with an instructor or TA. We've provided some suggestions below. The scope of your project should be roughly 1.5 homework assignments). To help structure your time, we're breaking down the project into 4 milestones:
+Example of a full map:
 
-## Milestone 1: Project planning (due 11/15)
-Before submitting your first milestone, _you must get your project idea and scope approved by Rachel, Adam or a TA._
+![](fullmap.png)
 
-### Design Doc
-Start off by forking this repository. In your README, write a design doc to outline your project goals and implementation plan. It must include the following sections:
+Single room to better see the textures:
+
+![](room.png)
 
 #### Introduction
 - What motivates your project?
 
+We want to create a dungeon crawler rogue-like game. The basic idea is to have a player start in a procedurally generated dungeon and have the player get to the final room and
+proceed to the next level. We want there to be some number of "abilities" that the player can unlock, and some obstacles/puzzles that can't be bypassed except by the use
+of these abilities. For the generator, we want to be able to take in a set of inputs (placements of points of interests, obstacle/puzzle elements, start and end positions) which would then be used to generate a solvable dungeon. There may or may not be combat elements based on time contraints, but basic combat elements with enemies/boss seem very possible. This game would be played from a top-down view (like 2.5d) on a grid (although this could probably be changed to free-form/hexagonal/etc with enough persuasion).
+
 #### Goal
-- What do you intend to achieve with this project?
+- What have you achieved with this project?
+
+We generate a solvable horror level with obstacle and unlockable elements. The start point is represented by a purple tile, and the endpoint is represented by a yellow tile. The obstacles are represented by tombstones, and the unlockable element is the corresponding colored flower.
+
+Once you've picked up a flower, you can "unlock" all tombstones of that corresponding color. The level is solvable, meaning that the player is able to get to the final room without encountering a configuration where the player can't get to the end because an ability is locked behind an unbypassable obstacle. Currently our project is not playable, and only generates a map.
+
+To generate the map, we first have an empty grid of rooms. An initial path is carved starting from a room on the bottom row. To construct the path, a random direction from left, right, up is chosen to continue the path. An exit room is placed when up is chosen on the top row. Then we iterate through each room left to right, top to bottom, and place an exit to the bottom and/or to the right with some probability. We also place exits if the rooms adjacent have an exit leading in as well. After all the exits are added, each "corridor" has a chance of getting a tombstone added as an obstacle, and the tombstone is chosen from one of 4 different types. To place the keys (bouqets) to these obstacles ensure the map be solvable, we use BFS to construct a connected component graph where each connected component is a set of rooms that are connected without obstacles. Edges in this graph are corridors which contain an obstacle. We then find the shortest path from the start connected component to the end connected component in this graph using BFS again. Then for each connected component in this graph we add the key corresponding to the obstacle in a random room in the connected component.
+
+The output of the map generator is text file, where different symbols correspond to different elements. We read in and store this file in an array, and use it as a reference for which tile to draw. All tiles of the same type are drawn using instanced shading.
+
+The interactive demo also supports camera movement. You can zoom in and out of the map by scrolling, and pan around using the right mouse button click and drag.
 
 #### Inspiration/reference:
-- You must have some form of reference material for your final project. Your reference may be a research paper, a blog post, some artwork, a video, another class at Penn, etc.  
-- Include in your design doc links to and images of your reference material.
+
+Our inpiration comes from a few games: [Spelunky](https://tinysubversions.com/spelunkyGen/), Crypt of the Necrodancer and some of the older 2D Legend of Zelda games as well as other dungeon generators online.
+
+Crypt of the Necrodancer gameplay: https://youtu.be/3dQU5QK_Bh8
+We like how in this game the dungeon is generated using a start and end goal, and the entire level is filled with enemies to get past in order to descend the staircase.
+
+Legend of Zelda: Link's Awakening: https://youtu.be/UQlP9sHf5Ho?t=3927
+In this snippet, we see how Link equips a feather to jump over a pit to kill enemies and get to the next room, a similar idea to what we want to implement with "abilities" solving "obstacles"
+
+Mario Maker: https://youtu.be/w3FJDipEdtA
+The idea of placing down elements on a map would be similar to (but less complex than) how objects are placed to handcraft a Mario Maker level. However we want procedural generation to still take the reins and generate content.
+
+Basic dungeon generator: https://donjon.bin.sh/d20/dungeon/
+Just a basic dungeon generator but one that would be similar to how we plan to generate a 2D grid dungeon
 
 #### Specification:
-- Outline the main features of your project.
+
+Developer mode to enable placing of elements to be used in the generation of a dungeon level. Be able to define other rules such as walls that the generator must obey.
 
 #### Techniques:
-- What are the main technical/algorithmic tools you’ll be using? Give an overview, citing specific papers/articles.
+
+Pathfinding algorithms (DFS,BFS, Uniform Cost Search, etc) https://www.redblobgames.com/pathfinding/a-star/introduction.html
 
 #### Design:
-- How will your program fit together? Make a simple free-body diagram illustrating the pieces.
 
-#### Timeline:
-- Create a week-by-week set of milestones for each person in your group. Make sure you explicitly outline what each group member's duties will be.
-
-Submit your Design doc as usual via pull request against this repository.
-## Milestone 2: Implementation part 1 (due 11/22)
-Begin implementing your engine! Don't worry too much about polish or parameter tuning -- this week is about getting together the bulk of your generator implemented. By the end of the week, even if your visuals are crude, the majority of your generator's functionality should be done.
-
-Put all your code in your forked repository.
-
-Submission: Add a new section to your README titled: Milestone #1, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what's giving you trouble?
-- Examples of your generators output so far
-We'll check your repository for updates. No need to create a new pull request.
-## Milestone 3: Implementation part 2 (due 11/29)
-We're over halfway there! This week should be about fixing bugs and extending the core of your generator. Make sure by the end of this week _your generator works and is feature complete._ Any core engine features that don't make it in this week should be cut! Don't worry if you haven't managed to exactly hit your goals. We're more interested in seeing proof of your development effort than knowing your planned everything perfectly. 
-
-Put all your code in your forked repository.
-
-Submission: Add a new section to your README titled: Milestone #3, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what did you have to cut and why? 
-- Detailed output from your generator, images, video, etc.
-We'll check your repository for updates. No need to create a new pull request.
-
-Come to class on the due date with a WORKING COPY of your project. We'll be spending time in class critiquing and reviewing your work so far.
-
-## Final submission (due 12/6)
-Time to polish! Spen this last week of your project using your generator to produce beautiful output. Add textures, tune parameters, play with colors, play with camera animation. Take the feedback from class critques and use it to take your project to the next level.
-
-Submission:
-- Push all your code / files to your repository
-- Come to class ready to present your finished project
-- Update your README with two sections 
-  - final results with images and a live demo if possible
-  - post mortem: how did your project go overall? Did you accomplish your goals? Did you have to pivot?
-
-## Topic Suggestions
-
-### Create a generator in Houdini
-
-### A CLASSIC 4K DEMO
-- In the spirit of the demo scene, create an animation that fits into a 4k executable that runs in real-time. Feel free to take inspiration from the many existing demos. Focus on efficiency and elegance in your implementation.
-- Example: 
-  - [cdak by Quite & orange](https://www.youtube.com/watch?v=RCh3Q08HMfs&list=PLA5E2FF8E143DA58C)
-
-### A RE-IMPLEMENTATION
-- Take an academic paper or other pre-existing project and implement it, or a portion of it.
-- Examples:
-  - [2D Wavefunction Collapse Pokémon Town](https://gurtd.github.io/566-final-project/)
-  - [3D Wavefunction Collapse Dungeon Generator](https://github.com/whaoran0718/3dDungeonGeneration)
-  - [Reaction Diffusion](https://github.com/charlesliwang/Reaction-Diffusion)
-  - [WebGL Erosion](https://github.com/LanLou123/Webgl-Erosion)
-  - [Particle Waterfall](https://github.com/chloele33/particle-waterfall)
-  - [Voxelized Bread](https://github.com/ChiantiYZY/566-final)
-
-### A FORGERY
-Taking inspiration from a particular natural phenomenon or distinctive set of visuals, implement a detailed, procedural recreation of that aesthetic. This includes modeling, texturing and object placement within your scene. Does not need to be real-time. Focus on detail and visual accuracy in your implementation.
-- Examples:
-  - [The Shrines](https://github.com/byumjin/The-Shrines)
-  - [Watercolor Shader](https://github.com/gracelgilbert/watercolor-stylization)
-  - [Sunset Beach](https://github.com/HanmingZhang/homework-final)
-  - [Sky Whales](https://github.com/WanruZhao/CIS566FinalProject)
-  - [Snail](https://www.shadertoy.com/view/ld3Gz2)
-  - [Journey](https://www.shadertoy.com/view/ldlcRf)
-  - [Big Hero 6 Wormhole](https://2.bp.blogspot.com/-R-6AN2cWjwg/VTyIzIQSQfI/AAAAAAAABLA/GC0yzzz4wHw/s1600/big-hero-6-disneyscreencaps.com-10092.jpg)
-
-### A GAME LEVEL
-- Like generations of game makers before us, create a game which generates an navigable environment (eg. a roguelike dungeon, platforms) and some sort of goal or conflict (eg. enemy agents to avoid or items to collect). Aim to create an experience that will challenge players and vary noticeably in different playthroughs, whether that means procedural dungeon generation, careful resource management or an interesting AI model. Focus on designing a system that is capable of generating complex challenges and goals.
-- Examples:
-  - [Rhythm-based Mario Platformer](https://github.com/sgalban/platformer-gen-2D)
-  - [Pokémon Ice Puzzle Generator](https://github.com/jwang5675/Ice-Puzzle-Generator)
-  - [Abstract Exploratory Game](https://github.com/MauKMu/procedural-final-project)
-  - [Tiny Wings](https://github.com/irovira/TinyWings)
-  - Spore
-  - Dwarf Fortress
-  - Minecraft
-  - Rogue
-
-### AN ANIMATED ENVIRONMENT / MUSIC VISUALIZER
-- Create an environment full of interactive procedural animation. The goal of this project is to create an environment that feels responsive and alive. Whether or not animations are musically-driven, sound should be an important component. Focus on user interactions, motion design and experimental interfaces.
-- Examples:
-  - [The Darkside](https://github.com/morganherrmann/thedarkside)
-  - [Music Visualizer](https://yuruwang.github.io/MusicVisualizer/)
-  - [Abstract Mesh Animation](https://github.com/mgriley/cis566_finalproj)
-  - [Panoramical](https://www.youtube.com/watch?v=gBTTMNFXHTk)
-  - [Bound](https://www.youtube.com/watch?v=aE37l6RvF-c)
-
-### YOUR OWN PROPOSAL
-- You are of course welcome to propose your own topic . Regardless of what you choose, you and your team must research your topic and relevant techniques and come up with a detailed plan of execution. You will meet with some subset of the procedural staff before starting implementation for approval.
+![image](https://user-images.githubusercontent.com/49851189/141921568-039dcb2e-6987-420a-a288-4e13c92c30fc.png)
