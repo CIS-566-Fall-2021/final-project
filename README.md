@@ -1,117 +1,106 @@
 # Final Project!
 
-This is it! The culmination of your procedural graphics experience this semester. For your final project, we'd like to give you the time and space to explore a topic of your choosing. You may choose any topic you please, so long as you vet the topic and scope with an instructor or TA. We've provided some suggestions below. The scope of your project should be roughly 1.5 homework assignments). To help structure your time, we're breaking down the project into 4 milestones:
+## Live Demo:  https://eddieh80.github.io/final-project/
 
 ## Milestone 1: Project planning (due 11/15)
-Before submitting your first milestone, _you must get your project idea and scope approved by Rachel, Adam or a TA._
-
-### Design Doc
-Start off by forking this repository. In your README, write a design doc to outline your project goals and implementation plan. It must include the following sections:
 
 #### Introduction
-- What motivates your project?
+
+My final project is motivated by a Chinese painting of some horses by an artist named 徐悲鴻 (Xu Beihong) that was in my house when I was growing up as a kid. It is also inspired by Grace’s Watercolor Shader that was demoed as an example of a final project from past years, which I thought was really cool. I think it would be cool to be able to take an SDF scene and recreate it into a stylized version that is similar to that of an ink painting.
 
 #### Goal
-- What do you intend to achieve with this project?
+
+Create a shader in WebGL that takes in an SDF scene and stylizes the appearance of the geometry to make it look like a traditional Chinese ink painting. Specifically will create a movable SDF horse model to mimic the inspiration of the project.
 
 #### Inspiration/reference:
-- You must have some form of reference material for your final project. Your reference may be a research paper, a blog post, some artwork, a video, another class at Penn, etc.  
-- Include in your design doc links to and images of your reference material.
+
+Picture of the painting at home:
+
+![](Horse.png)
+
+Picture of just one horse by same artist:
+
+![](OneHorse.png)
+
+References:
+
+![](Example1.png)
+
+- Color Slides (https://cis566-procedural-graphics.github.io/color.pdf)
+- Hatching GLSL (https://www.youtube.com/watch?v=ml9v8PZ5j10&ab_channel=helloworld)
+- NPR Rendering (https://www.youtube.com/watch?v=gT9qU_fJNuw&ab_channel=ChrisKnott)
+- NPR Example Shader (https://www.shadertoy.com/view/MscSzf)
+- NPR Paper (https://www.researchgate.net/publication/236973460_Non-Photorealistic_Rendering)
+- Watercolor Shader (https://github.com/gracelgilbert/watercolor-stylization)
+
 
 #### Specification:
-- Outline the main features of your project.
+- Raymarching and SDFs
+- Ink Shader
+- User Input
+  - Change width of outline
+  - Change noise in shading
+  - Change pose of model
+  - Change position of light
 
 #### Techniques:
-- What are the main technical/algorithmic tools you’ll be using? Give an overview, citing specific papers/articles.
+- Raymarching
+  - Main method to render scene by marching rays along scene until running into objects
+- SDFs
+  - Used to determine the ray's distance between objects in the scene
+- Noise Functions
+  - Used to displace vertices and act as threshold for 
+- Toon Shading
+  - Used to create the general non-photorealistic shading effect
+- User Input
+  - Vary the position of the model as well as the shading
 
 #### Design:
-- How will your program fit together? Make a simple free-body diagram illustrating the pieces.
+![](FlowChart.png)
 
 #### Timeline:
-- Create a week-by-week set of milestones for each person in your group. Make sure you explicitly outline what each group member's duties will be.
+Week 1: Create main SDF scene with basic shading
 
-Submit your Design doc as usual via pull request against this repository.
+Week 2: Create shader that creates the ink painting effect
+
+Week 3: Fine tune details and add user input
+
 ## Milestone 2: Implementation part 1 (due 11/22)
-Begin implementing your engine! Don't worry too much about polish or parameter tuning -- this week is about getting together the bulk of your generator implemented. By the end of the week, even if your visuals are crude, the majority of your generator's functionality should be done.
 
-Put all your code in your forked repository.
+So far, I am a bit behind in terms of my project goals mainly because last week was quite busy for me. Conceptually the SDF modeling of the scene is not too difficult for me since I have done it before in the homeworks, but fine tuning the parameters still takes a while.
 
-Submission: Add a new section to your README titled: Milestone #1, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what's giving you trouble?
-- Examples of your generators output so far
-We'll check your repository for updates. No need to create a new pull request.
+![](Milestone2.1.png)
+
 ## Milestone 3: Implementation part 2 (due 11/29)
-We're over halfway there! This week should be about fixing bugs and extending the core of your generator. Make sure by the end of this week _your generator works and is feature complete._ Any core engine features that don't make it in this week should be cut! Don't worry if you haven't managed to exactly hit your goals. We're more interested in seeing proof of your development effort than knowing your planned everything perfectly. 
 
-Put all your code in your forked repository.
+Implemented a toon shading effect mixed with some FBM noise to shade in the horse SDF model. Also added geometry for the mane and tail and also added a displacement function to distort the geometry a bit to create a more natural feel. Still need to improve the shader to make it look more ink like, and also need to add user input in order to generate variations of the same horse by changing the base color, changing limb length, changing the angle of the legs, etc.. Will prioritize adding features to generate variations of the horse model for the final deadline.
 
-Submission: Add a new section to your README titled: Milestone #3, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what did you have to cut and why? 
-- Detailed output from your generator, images, video, etc.
-We'll check your repository for updates. No need to create a new pull request.
+![](Milestone3.1.png)
 
-Come to class on the due date with a WORKING COPY of your project. We'll be spending time in class critiquing and reviewing your work so far.
+![](Milestone3.2.png)
 
 ## Final submission (due 12/6)
-Time to polish! Spen this last week of your project using your generator to produce beautiful output. Add textures, tune parameters, play with colors, play with camera animation. Take the feedback from class critques and use it to take your project to the next level.
 
-Submission:
-- Push all your code / files to your repository
-- Come to class ready to present your finished project
-- Update your README with two sections 
-  - final results with images and a live demo if possible
-  - post mortem: how did your project go overall? Did you accomplish your goals? Did you have to pivot?
+Resulting Images:
 
-## Topic Suggestions
+![](GUI.png)
 
-### Create a generator in Houdini
+![](Horse1.png)
 
-### A CLASSIC 4K DEMO
-- In the spirit of the demo scene, create an animation that fits into a 4k executable that runs in real-time. Feel free to take inspiration from the many existing demos. Focus on efficiency and elegance in your implementation.
-- Example: 
-  - [cdak by Quite & orange](https://www.youtube.com/watch?v=RCh3Q08HMfs&list=PLA5E2FF8E143DA58C)
+![](Horse2.png)
 
-### A RE-IMPLEMENTATION
-- Take an academic paper or other pre-existing project and implement it, or a portion of it.
-- Examples:
-  - [2D Wavefunction Collapse Pokémon Town](https://gurtd.github.io/566-final-project/)
-  - [3D Wavefunction Collapse Dungeon Generator](https://github.com/whaoran0718/3dDungeonGeneration)
-  - [Reaction Diffusion](https://github.com/charlesliwang/Reaction-Diffusion)
-  - [WebGL Erosion](https://github.com/LanLou123/Webgl-Erosion)
-  - [Particle Waterfall](https://github.com/chloele33/particle-waterfall)
-  - [Voxelized Bread](https://github.com/ChiantiYZY/566-final)
+![](Horse3.png)
 
-### A FORGERY
-Taking inspiration from a particular natural phenomenon or distinctive set of visuals, implement a detailed, procedural recreation of that aesthetic. This includes modeling, texturing and object placement within your scene. Does not need to be real-time. Focus on detail and visual accuracy in your implementation.
-- Examples:
-  - [The Shrines](https://github.com/byumjin/The-Shrines)
-  - [Watercolor Shader](https://github.com/gracelgilbert/watercolor-stylization)
-  - [Sunset Beach](https://github.com/HanmingZhang/homework-final)
-  - [Sky Whales](https://github.com/WanruZhao/CIS566FinalProject)
-  - [Snail](https://www.shadertoy.com/view/ld3Gz2)
-  - [Journey](https://www.shadertoy.com/view/ldlcRf)
-  - [Big Hero 6 Wormhole](https://2.bp.blogspot.com/-R-6AN2cWjwg/VTyIzIQSQfI/AAAAAAAABLA/GC0yzzz4wHw/s1600/big-hero-6-disneyscreencaps.com-10092.jpg)
+![](Horse4.png)
 
-### A GAME LEVEL
-- Like generations of game makers before us, create a game which generates an navigable environment (eg. a roguelike dungeon, platforms) and some sort of goal or conflict (eg. enemy agents to avoid or items to collect). Aim to create an experience that will challenge players and vary noticeably in different playthroughs, whether that means procedural dungeon generation, careful resource management or an interesting AI model. Focus on designing a system that is capable of generating complex challenges and goals.
-- Examples:
-  - [Rhythm-based Mario Platformer](https://github.com/sgalban/platformer-gen-2D)
-  - [Pokémon Ice Puzzle Generator](https://github.com/jwang5675/Ice-Puzzle-Generator)
-  - [Abstract Exploratory Game](https://github.com/MauKMu/procedural-final-project)
-  - [Tiny Wings](https://github.com/irovira/TinyWings)
-  - Spore
-  - Dwarf Fortress
-  - Minecraft
-  - Rogue
+![](Horse5.png)
 
-### AN ANIMATED ENVIRONMENT / MUSIC VISUALIZER
-- Create an environment full of interactive procedural animation. The goal of this project is to create an environment that feels responsive and alive. Whether or not animations are musically-driven, sound should be an important component. Focus on user interactions, motion design and experimental interfaces.
-- Examples:
-  - [The Darkside](https://github.com/morganherrmann/thedarkside)
-  - [Music Visualizer](https://yuruwang.github.io/MusicVisualizer/)
-  - [Abstract Mesh Animation](https://github.com/mgriley/cis566_finalproj)
-  - [Panoramical](https://www.youtube.com/watch?v=gBTTMNFXHTk)
-  - [Bound](https://www.youtube.com/watch?v=aE37l6RvF-c)
+![](Horse6.png)
 
-### YOUR OWN PROPOSAL
-- You are of course welcome to propose your own topic . Regardless of what you choose, you and your team must research your topic and relevant techniques and come up with a detailed plan of execution. You will meet with some subset of the procedural staff before starting implementation for approval.
+![](Horse7.png)
+
+### Post Mortem
+
+Overall I would say I am fairly happy with how my project turned out, although it ended up being quite different then what I wanted to do with it going into things. I think this is mainly because I was still a bit vague of what I wanted to accomplish with my project because I wasn't sure how to implement all of the 
+ideas I wanted to do. I'm happy that I ended up with a type of horse generator with non-photorealistic shading, but I definitely could have done a better job with the shader. The main thing that changed was that I was initially planning to make a shader that replicated the elements of a Chinese ink painting, but in the end when I tried replicated those elements I ended up using toon shading with FBM noise, which I ended up liking and sticking with. From there, I added 
+elements to the GUI to allow users to change the pose of the SDF horse model, adjust the colors of the toon shading, adjust the noise used in the toon shading, move the light, as well as be able to generate random horses that essentially randomize the elements stated above. In terms of things I could work on in the future for this project, I would definitely add more customization in terms of the body of the model (like adjusting leg length, body width, etc.), as well as work on the shader more to make it more interesting and more visually accurate of what I wanted to do with the project in the first place.
