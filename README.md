@@ -1,117 +1,118 @@
-# Final Project!
+# Final Project Design Document
 
-This is it! The culmination of your procedural graphics experience this semester. For your final project, we'd like to give you the time and space to explore a topic of your choosing. You may choose any topic you please, so long as you vet the topic and scope with an instructor or TA. We've provided some suggestions below. The scope of your project should be roughly 1.5 homework assignments). To help structure your time, we're breaking down the project into 4 milestones:
+## Introduction
+Modeling and building a large city can be tedious and hard to manage, so a procedural city generator can save the day for artists and provides extra control over many parameters such as streets, buildings, props and other game specific elements such as traffic, and random events.
 
-## Milestone 1: Project planning (due 11/15)
-Before submitting your first milestone, _you must get your project idea and scope approved by Rachel, Adam or a TA._
+## Goal
+We intend to make a city generator in NYC style with procedural roads and buildings. The generator could be exported to a game engine like UE4 with adjustable parameters.
 
-### Design Doc
-Start off by forking this repository. In your README, write a design doc to outline your project goals and implementation plan. It must include the following sections:
+## Inspiration/reference:
+![](Spdierman2.png)
+*[Marvel’s Spider-Man by Insomniac Games](https://www.playstation.com/en-us/games/marvels-spider-man/)*
 
-#### Introduction
-- What motivates your project?
+![](Spiderman1.png)
+*[Marvel’s Spider-Man, meet Houdini | David Santiago | GDC 2019](https://www.youtube.com/watch?v=D0ERCi9mMZg)*
 
-#### Goal
-- What do you intend to achieve with this project?
+## Specification:
+- Procedurally generate roads (city structures)
+- Procedurally generate buildings
+- Automatically fit the textures
 
-#### Inspiration/reference:
-- You must have some form of reference material for your final project. Your reference may be a research paper, a blog post, some artwork, a video, another class at Penn, etc.  
-- Include in your design doc links to and images of your reference material.
+## Techniques:
+- Procedural UV mapping: Given the building size, generate the according UV map. 
+- Road generation: Use noise functions or L-Systems to generate the position of the roads.
+- Building generation: Procedural extrusion of a plane or a box to generate a random building.
 
-#### Specification:
-- Outline the main features of your project.
+## Design:
+![](./Design.png)
 
-#### Techniques:
-- What are the main technical/algorithmic tools you’ll be using? Give an overview, citing specific papers/articles.
+### Final Result in Unreal Engine 4
 
-#### Design:
-- How will your program fit together? Make a simple free-body diagram illustrating the pieces.
+![](./ue4_result.png)
 
-#### Timeline:
-- Create a week-by-week set of milestones for each person in your group. Make sure you explicitly outline what each group member's duties will be.
+![](./ue4_result_2.png)
 
-Submit your Design doc as usual via pull request against this repository.
-## Milestone 2: Implementation part 1 (due 11/22)
-Begin implementing your engine! Don't worry too much about polish or parameter tuning -- this week is about getting together the bulk of your generator implemented. By the end of the week, even if your visuals are crude, the majority of your generator's functionality should be done.
+## Final Submission:
+### Final Result in Houdini: 
+![](houdini_result_1.png)
 
-Put all your code in your forked repository.
+![](houdini_result_2.png)
 
-Submission: Add a new section to your README titled: Milestone #1, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what's giving you trouble?
-- Examples of your generators output so far
-We'll check your repository for updates. No need to create a new pull request.
-## Milestone 3: Implementation part 2 (due 11/29)
-We're over halfway there! This week should be about fixing bugs and extending the core of your generator. Make sure by the end of this week _your generator works and is feature complete._ Any core engine features that don't make it in this week should be cut! Don't worry if you haven't managed to exactly hit your goals. We're more interested in seeing proof of your development effort than knowing your planned everything perfectly. 
+![](houdini_result_3.png)
 
-Put all your code in your forked repository.
+### Control Parameters:
 
-Submission: Add a new section to your README titled: Milestone #3, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what did you have to cut and why? 
-- Detailed output from your generator, images, video, etc.
-We'll check your repository for updates. No need to create a new pull request.
+#### City:
+- ```City Grid Size``` : define the overall boundary of the city 
+- ```Road Desity``` : define the density of roads within the grid
+- ```Random Seed```: add some randomness 
+- ```Street Light Interval```: the interval between street lights 
+- ```Citizen Number```:  number of citizen scattered 
+- ```Sidewalk Color``` ```Road Color``` ```Pedestrian color``` ```Street Lamp Color```: define the color of sidewalk, road, pedestrian and streep lamp
 
-Come to class on the due date with a WORKING COPY of your project. We'll be spending time in class critiquing and reviewing your work so far.
+#### Building:
+- ```Height``` ```Width``` ```Depth```: define the dimesion of the building
+- ```Lower level wall type``` : switch between different mesh for lower level wall
+- ```Upper level wall type``` : switch between different mesh for upper level wall
+- ```Upper level window``` : the frequency of windows at upper level
+- ```Upper level door``` : the frequency of doors at upper level
 
-## Final submission (due 12/6)
-Time to polish! Spen this last week of your project using your generator to produce beautiful output. Add textures, tune parameters, play with colors, play with camera animation. Take the feedback from class critques and use it to take your project to the next level.
+You can tune the parameter in Unreal using Houdini engine as well!
+![](./unrealcontrol.png)
 
-Submission:
-- Push all your code / files to your repository
-- Come to class ready to present your finished project
-- Update your README with two sections 
-  - final results with images and a live demo if possible
-  - post mortem: how did your project go overall? Did you accomplish your goals? Did you have to pivot?
 
-## Topic Suggestions
+### Post Mortem:
+#### Accomplished: 
+- City structure generation with roads, sidewalks, street lights, and citizens
+- Procedural building generation
+- Combined the building generation and the road generation to a lively city
+- Created an HDA in which users could generate cities simply by adjusting parameters and click the "generate building" button.
+- Successfully export the HDA to Unreal Engine 4
 
-### Create a generator in Houdini
+#### Have to pivot:
+- We did not use UV maps to texture the buildings. Instead, we combined geometries with color together to form a building-like geometry.
+- Due to the time limit, we are not able to generate curly roads in the city. All roads are straight.
+- Due to unknown efficiency problems, our buildings generated on the city structure could only be seen after we render the scene or exported to Unreal Engine 4, but not visible in the Houdini viewport.
 
-### A CLASSIC 4K DEMO
-- In the spirit of the demo scene, create an animation that fits into a 4k executable that runs in real-time. Feel free to take inspiration from the many existing demos. Focus on efficiency and elegance in your implementation.
-- Example: 
-  - [cdak by Quite & orange](https://www.youtube.com/watch?v=RCh3Q08HMfs&list=PLA5E2FF8E143DA58C)
+## Timeline:
+### Lanqing Bao:
+- 11.22: ~~Find a nice building texture and calculate the uv texture mapping for a random size building.~~ updated 11/20: find this way not very doable, switch to generate mesh instead
+- 11.29: ~~Integrate the uv calculation into teammate ground generation.~~ updated 11/28: finish the basic building mesh generation
+- 12.06: Touch up and maybe add more texture maps. updated 11/28: plus intergation with road generation, import the generated scene into Unreal!
 
-### A RE-IMPLEMENTATION
-- Take an academic paper or other pre-existing project and implement it, or a portion of it.
-- Examples:
-  - [2D Wavefunction Collapse Pokémon Town](https://gurtd.github.io/566-final-project/)
-  - [3D Wavefunction Collapse Dungeon Generator](https://github.com/whaoran0718/3dDungeonGeneration)
-  - [Reaction Diffusion](https://github.com/charlesliwang/Reaction-Diffusion)
-  - [WebGL Erosion](https://github.com/LanLou123/Webgl-Erosion)
-  - [Particle Waterfall](https://github.com/chloele33/particle-waterfall)
-  - [Voxelized Bread](https://github.com/ChiantiYZY/566-final)
+### Yilei Li:
+- 11.22: Find a way to procedurally generate a building from a blank ground. Visualize the building in a simple way.
+- 11.29: Incorporate with Haowei to generate buildings on the ground layout.
+- 12.06: Incorporate with Lanqing to generate polished buildings.
 
-### A FORGERY
-Taking inspiration from a particular natural phenomenon or distinctive set of visuals, implement a detailed, procedural recreation of that aesthetic. This includes modeling, texturing and object placement within your scene. Does not need to be real-time. Focus on detail and visual accuracy in your implementation.
-- Examples:
-  - [The Shrines](https://github.com/byumjin/The-Shrines)
-  - [Watercolor Shader](https://github.com/gracelgilbert/watercolor-stylization)
-  - [Sunset Beach](https://github.com/HanmingZhang/homework-final)
-  - [Sky Whales](https://github.com/WanruZhao/CIS566FinalProject)
-  - [Snail](https://www.shadertoy.com/view/ld3Gz2)
-  - [Journey](https://www.shadertoy.com/view/ldlcRf)
-  - [Big Hero 6 Wormhole](https://2.bp.blogspot.com/-R-6AN2cWjwg/VTyIzIQSQfI/AAAAAAAABLA/GC0yzzz4wHw/s1600/big-hero-6-disneyscreencaps.com-10092.jpg)
+### Haowei Li:
+- 11.22: Find a way to generate the road structure or the city, and visualize the roads in a simple way.
+- 11.29: Define the blocks for procedural buildings generation.
+- 12.06: Integrate the roads with the procedural buildings with other teammates. Polish all the work.
 
-### A GAME LEVEL
-- Like generations of game makers before us, create a game which generates an navigable environment (eg. a roguelike dungeon, platforms) and some sort of goal or conflict (eg. enemy agents to avoid or items to collect). Aim to create an experience that will challenge players and vary noticeably in different playthroughs, whether that means procedural dungeon generation, careful resource management or an interesting AI model. Focus on designing a system that is capable of generating complex challenges and goals.
-- Examples:
-  - [Rhythm-based Mario Platformer](https://github.com/sgalban/platformer-gen-2D)
-  - [Pokémon Ice Puzzle Generator](https://github.com/jwang5675/Ice-Puzzle-Generator)
-  - [Abstract Exploratory Game](https://github.com/MauKMu/procedural-final-project)
-  - [Tiny Wings](https://github.com/irovira/TinyWings)
-  - Spore
-  - Dwarf Fortress
-  - Minecraft
-  - Rogue
+## MileStone 1:
+### Progress: 
+We have figured out using the grid, scatter, and blast node in Houdini to generate the basic road structure of the city. The city can now generate roads with random citizens, side walks, and street lights. (All represented by simple geometries)
+#### Screenshots:
+![](./Result.png)
 
-### AN ANIMATED ENVIRONMENT / MUSIC VISUALIZER
-- Create an environment full of interactive procedural animation. The goal of this project is to create an environment that feels responsive and alive. Whether or not animations are musically-driven, sound should be an important component. Focus on user interactions, motion design and experimental interfaces.
-- Examples:
-  - [The Darkside](https://github.com/morganherrmann/thedarkside)
-  - [Music Visualizer](https://yuruwang.github.io/MusicVisualizer/)
-  - [Abstract Mesh Animation](https://github.com/mgriley/cis566_finalproj)
-  - [Panoramical](https://www.youtube.com/watch?v=gBTTMNFXHTk)
-  - [Bound](https://www.youtube.com/watch?v=aE37l6RvF-c)
+- The yellow tubes represent the street lamps with parameterized interval distance and the red tube represents the pedestrians. 
 
-### YOUR OWN PROPOSAL
-- You are of course welcome to propose your own topic . Regardless of what you choose, you and your team must research your topic and relevant techniques and come up with a detailed plan of execution. You will meet with some subset of the procedural staff before starting implementation for approval.
+![](./Result2.png)
+
+### Issues & planning:
+We are still working on the building generation, and we expect it to be down soon. The plan is to fill the holes left on the ground and what we are thinking about is to mimic the approach used in most games where only the outer side of the building is being generated. It is similar to the idea of effcient rendering in Mini Minecraft project during CIS 560. So we planed to utilze points on polypath but with boxes to block everything. We are still fixing some weird issues in tight angles so it can support meshes other than boxes. Our approach is to isolate these angles by some attribute wrangle and do something special with them.
+
+## MileStone 2:
+### Progress: 
+We have the road and building generation working seperately now. This week we focus more on the building generation. Firstly we tried to map some nice 2D wall & window texture to random size boxes and struggled with calculating UV, which didn't work very well both visually and mathmatically. Thus we switch to model generation. To simplify, all the building will be cuboid and we modeled several pattern like plain wall, brick wall, door etc and assemble them randomly. 
+#### Screenshots:
+![](./result.gif)
+
+- Building generation
+
+![](./3.png)
+- Some adjustable parameters
+
+### Issues & planning:
+Next we are going to combine building and road generation together and polish them. Right now everything is plain colored so we will probably add some textures. We have to work on more about tiling to ensure there is no weird repetition. 
